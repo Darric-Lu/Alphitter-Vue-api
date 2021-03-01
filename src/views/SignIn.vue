@@ -2,7 +2,7 @@
   <div class="container py-5">
     <div>
         <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="">
-      </div>
+    </div>
     <form class="w-50" @submit.prevent.stop="handleSubmit">
       <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">

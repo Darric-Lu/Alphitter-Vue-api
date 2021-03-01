@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-lg-2 left-col">
         <!-- Sidebar -->
+        <Sidebar />
       </div>
       <div class="col-lg-6 mid-col">
         <div class="mid-up">
@@ -19,6 +20,17 @@
     </div>
   </div>
 </template>
+
+<script>
+import Sidebar from '../components/Sidebar'
+
+export default {
+  name: 'UserselfLike',
+  components: {
+    Sidebar,
+  }
+}
+</script>
 
 <style scoped>
 .container {
