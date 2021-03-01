@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import SignIn from '../views/SignIn'
 import SignUp from '../views/SignUp'
+import AdminSignIn from '../views/AdminSignIn'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path:'/signup',
     name: 'sign-up',
     component: SignUp
+  },
+  {
+    path:'/admin/signin',
+    name: 'admin-sign-in',
+    component: AdminSignIn
   },
   {
     path: '*',
