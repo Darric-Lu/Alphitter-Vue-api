@@ -47,7 +47,8 @@
 
 <style scoped>
 .wrapping {
-  height: 1196px;
+  height: 1200px;
+  box-sizing: border-box;
 }
 .logo-img {
   width: 30px;

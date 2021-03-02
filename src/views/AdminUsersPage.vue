@@ -12,7 +12,7 @@
 <style scoped>
 .col-3,
 .col-9 {
-  border: 0.2rem black solid;
+  /* border: 0.2rem black solid; */
   background-color: rgb(255, 255, 255);
   height: 1196px;
 }
