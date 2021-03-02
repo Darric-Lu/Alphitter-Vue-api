@@ -25,6 +25,7 @@
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
+          <twitterCardTable />
         </div>
       </div>
       <div class="col-lg-3 right-col">
@@ -36,11 +37,13 @@
 
 <script>
 import Sidebar from '../components/Sidebar'
+import twitterCardTable from '../components/twitterCardTable'
 
 export default {
   name: 'TweetMain',
   components: {
     Sidebar,
+    twitterCardTable
   }
 }
 </script>
@@ -78,9 +81,8 @@ export default {
 }
 .mid-down {
   border: 1px solid black;
-  margin-top: 10px;
   width: 100%;
-  height: 600px;
+  height: auto;
 }
 .mid-header {
   background: #FFFFFF;

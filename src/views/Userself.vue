@@ -12,6 +12,7 @@
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
+          <twitterCardTable />
         </div>
       </div>
       <div class="col-lg-3 right-col">
@@ -23,11 +24,13 @@
 
 <script>
 import Sidebar from '../components/Sidebar'
+import twitterCardTable from '../components/twitterCardTable'
 
 export default {
   name: 'Userself',
   components: {
     Sidebar,
+    twitterCardTable
   }
 }
 </script>
