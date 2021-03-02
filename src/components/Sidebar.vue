@@ -44,25 +44,29 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn btn-link"
               data-bs-dismiss="modal"
               aria-label="Close"
-            ></button>
+              @click.prevent.stop="closeModal"
+            >X</button>
           </div>
-          <div class="modal-body">...</div>
+          <div class="modal-body">
+            <span class="textarea">
+              <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="">
+              <textarea class="form-control" placeholder="有甚麼新鮮事?" id="floatingTextarea2" style="height: 100px"></textarea>
+            </span>
+          </div>
           <div class="modal-footer">
             <button
-              type="button"
-              class="btn btn-secondary"
+              type="submit"
+              class="btn btn-secondary tweet"
               data-bs-dismiss="modal"
               @click.prevent.stop="closeModal"
             >
-              Close
+              推文
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -113,6 +117,18 @@ img {
   font-weight: bold;
   width: 100%;
   height: 45px;
+}
+.tweet {
+  background: #ff6600;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+}
+.textarea {
+  display: flex;
+}
+textarea{
+  border-style: none;
 }
 .logout {
   justify-content: flex-end;
