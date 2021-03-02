@@ -8,6 +8,7 @@
       <div class="col-lg-6 mid-col">
         <div class="mid-up">
           <!-- UserNavbar -->
+          <UserNavbar />
           <!-- Userprofile -->
         </div>
         <div class="mid-down">
@@ -25,12 +26,14 @@
 <script>
 import Sidebar from '../components/Sidebar'
 import twitterCardTable from '../components/twitterCardTable'
+import UserNavbar from '../components/UserNavbar'
 
 export default {
   name: 'UserselfLike',
   components: {
     Sidebar,
-    twitterCardTable
+    twitterCardTable,
+    UserNavbar
   }
 }
 </script>

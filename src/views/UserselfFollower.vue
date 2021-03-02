@@ -8,6 +8,7 @@
       <div class="col-lg-6 mid-col">
         <div class="mid-up">
           <!-- UserNavbar -->
+          <UserNavbar />
         </div>
         <div class="mid-down">
           <!-- FollowersTable -->
@@ -22,11 +23,13 @@
 
 <script>
 import Sidebar from '../components/Sidebar'
+import UserNavbar from '../components/UserNavbar'
 
 export default {
   name: 'UserselfFollower',
   components: {
     Sidebar,
+    UserNavbar
   }
 }
 </script>

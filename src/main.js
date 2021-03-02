@@ -9,11 +9,12 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 Vue.config.productionTip = false
 
-library.add(faHome, faUser, faCog, faSignInAlt, faComment, faHeart)
+library.add(faHome, faUser, faCog, faSignInAlt, faComment, faHeart, faArrowLeft)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
