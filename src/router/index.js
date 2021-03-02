@@ -16,52 +16,67 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/signin',
+    path: '/signin',
     name: 'sign-in',
     component: SignIn
   },
   {
-    path:'/signup',
+    path: '/signup',
     name: 'sign-up',
     component: SignUp
   },
   {
-    path:'/admin/signin',
+    path: '/admin',
+    exact: true,
+    redirect: '/admin/twitter'
+  },
+  {
+    path: '/admin/twitter',
+    name: 'admin-twitter',
+    component: () => import('../views/AdminTwitterPage.vue')
+  },
+  {
+    path: '/admin/users',
+    name: 'admin-users',
+    component: () => import('../views/AdminUsersPage.vue')
+  },
+  {
+    path: '/admin/signin',
     name: 'admin-sign-in',
     component: AdminSignIn
   },
   {
-    path:'/main',
+    path: '/main',
     name: 'main',
     component: TweetMain
   },
   {
-    path:'/reply_list',
+    path: '/reply_list',
     name: 'reply-list',
     component: ReplyList
   },
   {
-    path:'/user/self',
+    path: '/user/self',
     name: 'user-self',
     component: Userself
   },
   {
-    path:'/user/self/like',
+    path: '/user/self/like',
     name: 'user-self-like',
     component: UserselfLike
   },
   {
-    path:'/user/self/follower',
+    path: '/user/self/follower',
     name: 'user-self-follower',
     component: UserselfFollower
   },
   {
-    path:'/user/self/following',
+    path: '/user/self/following',
     name: 'user-self-following',
     component: UserselfFollowing
   },
   {
-    path:'/user/other',
+    path: '/user/other',
     name: 'user-other',
     component: UserOther
   },
