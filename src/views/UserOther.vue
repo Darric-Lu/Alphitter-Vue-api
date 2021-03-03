@@ -12,6 +12,8 @@
           <!-- Userprofile -->
           <UserProfile />
         </div>
+        <!-- Tab -->
+        <Tab />
         <div class="mid-down">
           <!-- twitterCardTable -->
           <twitterCardTable />
@@ -29,6 +31,7 @@ import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
+import Tab from "../components/Tab"
 
 export default {
   name: "UserOther",
@@ -37,6 +40,7 @@ export default {
     twitterCardTable,
     UserNavbar,
     UserProfile,
+    Tab
   },
 };
 </script>

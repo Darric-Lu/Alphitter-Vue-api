@@ -12,6 +12,8 @@
           <!-- Userprofile -->
           <UserProfile />
         </div>
+        <!-- tab -->
+        <Tab />
         <div class="mid-down">
           <!-- twitterCardTable -->
           <twitterCardTable />
@@ -29,6 +31,7 @@ import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
+import Tab from "../components/Tab"
 
 export default {
   name: "Userself",
@@ -37,6 +40,7 @@ export default {
     twitterCardTable,
     UserNavbar,
     UserProfile,
+    Tab
   },
 };
 </script>
@@ -65,7 +69,7 @@ export default {
   margin-right: auto;
   margin-left: auto;
   width: 600px;
-  height: 1202px;
+  height: auto;
 }
 .right-col {
   border: 1px solid blue;
@@ -81,6 +85,6 @@ export default {
   border: 1px solid black;
   margin-top: 10px;
   width: 100%;
-  height: 600px;
+  height: auto;
 }
 </style>
