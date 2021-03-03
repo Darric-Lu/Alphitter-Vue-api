@@ -1,7 +1,7 @@
 <template>
   <nav class="d-flex flex-column wrapping">
     <div class="twitter row mt-4 d-flex justify-content-center">
-      <div class="twitter-icon col-2">
+      <div class="twitter-icon col-2 ml-1">
         <img
           class="logo-img"
           src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
@@ -50,6 +50,9 @@
   height: 1200px;
   box-sizing: border-box;
 }
+.twitter-icon {
+  position: relative;
+}
 .logo-img {
   width: 30px;
   height: 100%;
@@ -62,6 +65,10 @@
 }
 .logout {
   justify-content: flex-end;
+}
+.twitter-content,
+.userCard-content {
+  font-size: 1rem;
 }
 </style> 
 

@@ -1,10 +1,10 @@
 <template>
-  <div class="container-lg">
+  <div class="container-xxl">
     <div class="row">
-      <div class="col-3">
+      <div class="col-2">
         <AdminSideBar />
       </div>
-      <div class="col-9">
+      <div class="col-10">
         <AdminTwitterCardTable />
       </div>
     </div>
