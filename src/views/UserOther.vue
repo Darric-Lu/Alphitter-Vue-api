@@ -6,10 +6,11 @@
         <Sidebar />
       </div>
       <div class="col-lg-6 mid-col">
-        <div class="mid-up">
-          <!-- UserNavbar -->
-          <UserNavbar />
+        <!-- UserNavbar -->
+        <UserNavbar />
+        <div class="user-other">
           <!-- Userprofile -->
+          <UserProfile />
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
@@ -24,18 +25,20 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar'
-import twitterCardTable from '../components/twitterCardTable'
-import UserNavbar from '../components/UserNavbar'
+import Sidebar from "../components/Sidebar";
+import twitterCardTable from "../components/twitterCardTable";
+import UserNavbar from "../components/UserNavbar";
+import UserProfile from "../components/UserProfile";
 
 export default {
-  name: 'UserOther',
+  name: "UserOther",
   components: {
     Sidebar,
     twitterCardTable,
-    UserNavbar
-  }
-}
+    UserNavbar,
+    UserProfile,
+  },
+};
 </script>
 
 <style scoped>
@@ -69,7 +72,7 @@ export default {
   width: 350px;
   height: 517px;
 }
-.mid-up {
+.user-other {
   border: 1px solid green;
   width: 100%;
   height: 400px;
