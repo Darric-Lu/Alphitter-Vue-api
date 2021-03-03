@@ -6,10 +6,9 @@
         <Sidebar />
       </div>
       <div class="col-lg-6 mid-col">
-        <div class="mid-up">
-          <!-- UserNavbar -->
-          <UserNavbar />
-        </div>
+        <!-- UserNavbar -->
+        <UserNavbar />
+        <div class="mid-up"></div>
         <div class="mid-down">
           <!-- FollowingsTable -->
         </div>
@@ -22,16 +21,16 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar'
-import UserNavbar from '../components/UserNavbar'
+import Sidebar from "../components/Sidebar";
+import UserNavbar from "../components/UserNavbar";
 
 export default {
-  name: 'UserselfFollowing',
+  name: "UserselfFollowing",
   components: {
     Sidebar,
-    UserNavbar
-  }
-}
+    UserNavbar,
+  },
+};
 </script>
 
 <style scoped>

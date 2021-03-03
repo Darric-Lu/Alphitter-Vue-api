@@ -20,7 +20,7 @@
         <button type="button" class="btn btn-link">設定</button>
       </span>
       <button
-        class="btn btn-sm btn-block mt-3"
+        class="btn btn-sm btn-block mt-3 tweetButton"
         type="button"
         data-bs-toggle="modal"
         data-bs-target="#newTweet"
@@ -50,18 +50,28 @@
               data-bs-dismiss="modal"
               aria-label="Close"
               @click.prevent.stop="closeModal"
-            >X</button>
+            >
+              X
+            </button>
           </div>
           <div class="modal-body">
             <span class="textarea">
-              <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="">
-              <textarea class="form-control" placeholder="有甚麼新鮮事?" id="floatingTextarea2" style="height: 100px"></textarea>
+              <img
+                src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+                alt=""
+              />
+              <textarea
+                class="form-control"
+                placeholder="有甚麼新鮮事?"
+                id="floatingTextarea2"
+                style="height: 100px"
+              ></textarea>
             </span>
           </div>
           <div class="modal-footer">
             <button
               type="submit"
-              class="btn btn-secondary tweet"
+              class="btn btn-secondary tweetSubmit"
               data-bs-dismiss="modal"
               @click.prevent.stop="closeModal"
             >
@@ -110,7 +120,7 @@ img {
   height: 240px;
   /* top: 78px; */
 }
-.btn-block {
+.tweetButton {
   background: #ff6600;
   border-radius: 50px;
   color: white;
@@ -118,7 +128,7 @@ img {
   width: 100%;
   height: 45px;
 }
-.tweet {
+.tweetSubmit {
   background: #ff6600;
   border-radius: 50px;
   color: white;
@@ -127,7 +137,7 @@ img {
 .textarea {
   display: flex;
 }
-textarea{
+textarea {
   border-style: none;
 }
 .logout {
