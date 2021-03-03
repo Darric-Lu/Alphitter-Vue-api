@@ -60,6 +60,9 @@
 </template>
 
 <script>
+import authorizationAPI from '../apis/authorization'
+import { Toast } from '../utils/helpers'
+
 export default {
   name: "SignIn",
   data() {
@@ -69,14 +72,19 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
-      const data = JSON.stringify({
-        accountNumber: this.accountNumber,
+    async handleSubmit() {
+      try {
+        const response = await authorizationAPI.signIn({
+        account: this.accountNumber,
         password: this.password
       })
-
-      // TODO: 向後端驗證使用者登入資訊是否合法
-      console.log('data', data)
+      console.log(response)
+      } catch(error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法登入，請稍後再試'
+        })
+      }
     }
   }
 }
