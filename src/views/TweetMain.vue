@@ -25,7 +25,10 @@
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
-          <twitterCardTable />
+          <twitterCardTable 
+          :tweets="tweets"
+          :users="users"
+          />
         </div>
       </div>
       <div class="col-lg-3 right-col">
@@ -35,15 +38,138 @@
   </div>
 </template>
 
+
 <script>
 import Sidebar from '../components/Sidebar'
 import twitterCardTable from '../components/twitterCardTable'
+
+const dummydata = {
+  'users': [
+    {
+      'id': 1,
+      'accountNumber': '@abc',
+      'name': 'Russ Kertzmann',
+      'email': 'user6@example.com',
+      'password': '1234578',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'description': 'sed',
+      'followersCounts': 45,
+      'followingsCounts': 45,
+    },
+    {
+      'id': 2,
+      'accountNumber': '@efg',
+      'name': 'Russ Kertzmann',
+      'email': 'user6@example.com',
+      'password': '1234578',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'description': 'sed',
+      'followersCounts': 12,
+      'followingsCounts': 34,
+    },
+    {
+      'id': 3,
+      'accountNumber': '@hij',
+      'name': 'Russ Kertzmann',
+      'email': 'user6@example.com',
+      'password': '1234578',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'description': 'sed',
+      'followersCounts': 68,
+      'followingsCounts': 3347,
+    },
+    {
+      'id': 4,
+      'accountNumber': '@klm',
+      'name': 'Russ Kertzmann',
+      'email': 'user6@example.com',
+      'password': '1234578',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'description': 'sed',
+      'followersCounts': 699,
+      'followingsCounts': 3332,
+    },
+    {
+      'id': 5,
+      'accountNumber': '@npq',
+      'name': 'Russ Kertzmann',
+      'email': 'user6@example.com',
+      'password': '1234578',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'description': 'sed',
+      'followersCounts': 9,
+      'followingsCounts': 332,
+    },
+  ],
+  'tweets': [
+    {
+      'id': 1,
+      'accountNumber': '@abc',
+      'name': 'Russ Kertzmann',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'content': '難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。',
+      'createdAt': '2019-07-30T16:24:55.443Z',
+      'updatedAt': '2019-07-30T16:24:55.443Z',
+    },
+    {
+      'id': 2,
+      'accountNumber': '@efg',
+      'name': 'Russ Kertzmann',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'content': '難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。',
+      'createdAt': '2019-07-30T16:24:55.443Z',
+      'updatedAt': '2019-07-30T16:24:55.443Z',
+    },
+    {
+      'id': 3,
+      'accountNumber': '@hij',
+      'name': 'Russ Kertzmann',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'content': '難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。',
+      'createdAt': '2019-07-30T16:24:55.443Z',
+      'updatedAt': '2019-07-30T16:24:55.443Z',
+    },
+    {
+      'id': 4,
+      'accountNumber': '@klm',
+      'name': 'Russ Kertzmann',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'content': '難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。',
+      'createdAt': '2019-07-30T16:24:55.443Z',
+      'updatedAt': '2019-07-30T16:24:55.443Z',
+    },
+    {
+      'id': 5,
+      'accountNumber': '@npq',
+      'name': 'Russ Kertzmann',
+      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
+      'content': '難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。',
+      'createdAt': '2019-07-30T16:24:55.443Z',
+      'updatedAt': '2019-07-30T16:24:55.443Z',
+    }
+  ]
+}
 
 export default {
   name: 'TweetMain',
   components: {
     Sidebar,
     twitterCardTable
+  },
+  data() {
+    return {
+      users:[],
+      tweets: [],
+    }
+  },
+  created() {
+    this.fetchMain()
+  },
+  methods: {
+    fetchMain() {
+      this.users = dummydata.users
+      this.tweets = dummydata.tweets
+    }
   }
 }
 </script>
