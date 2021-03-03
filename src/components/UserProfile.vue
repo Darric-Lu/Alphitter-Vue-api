@@ -14,7 +14,12 @@
     </div>
     <div class="information">
       <div class="edit">
-        <button type="button" class="btn btn-outline editButton">
+        <button type="button" 
+        class="btn btn-outline editButton" 
+        data-bs-toggle="modal"
+        data-bs-target="#editInformation"
+        @click.prevent.stop="showModal"
+        >
           編輯個人資料
         </button>
       </div>
@@ -22,16 +27,88 @@
         <span><strong>Name</strong></span>
         <span>@account</span>
       </div>
-      <p>
+      <div>
         Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
         sint.
-      </p>
+      </div>
       <div class="follow">
         <strong>34個</strong>追隨中 <strong>59位</strong>跟隨者
       </div>
     </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="editInformation"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn btn-link"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click.prevent.stop="closeModal"
+            >
+              X
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="editContainer">
+              <div class="coverPhoto">
+              <img
+                src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
+                alt=""
+                class="coverPhoto"
+              />
+            </div>
+              <span class="textarea">
+                <img
+                  src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+                  alt=""
+                />
+                <textarea
+                  class="form-control"
+                  placeholder="有甚麼新鮮事?"
+                  id="floatingTextarea2"
+                  style="height: 100px"
+                ></textarea>
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-secondary tweetSubmit"
+              data-bs-dismiss="modal"
+              @click.prevent.stop="closeModal"
+            >
+              推文
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+import $ from "jquery";
+
+export default {
+  methods: {
+    showModal() {
+      $("#newTweet").modal("show");
+    },
+    closeModal() {
+      $("#newTweet").modal("hide");
+    },
+  },
+};
+</script>
 
 <style scoped>
 .userprofile {
@@ -51,11 +128,14 @@
   height: 200px;
   width: 100%;
 }
+.information {
+  height: 175px;
+  width: 100%;
+}
 .edit {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-  margin-bottom: 19px;
 }
 .editButton {
   background: white;
@@ -69,6 +149,6 @@
 .name-text {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 </style>
