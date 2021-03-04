@@ -7,7 +7,7 @@
         <div class="tweet-img">
           <img
             class="tweet-img-user"
-            src="../../image/Icon.svg"
+            src="../assets/Icon.svg"
             alt="ALPHAcamp logo"
           />
         </div>

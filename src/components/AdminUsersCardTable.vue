@@ -24,11 +24,11 @@
             <p class="card-account">@AC</p>
             <p class="">
               <span class="card-tweets bold">
-                <img src="./../../image/comment-alt.svg" alt="" />
+                <img src="./../assets/comment-alt.svg" alt="" />
                 1.5k
               </span>
               <span class="card-liked bold">
-                <img src="./../../image/heart.svg" alt="" />
+                <img src="./../assets/heart.svg" alt="" />
                 20k
               </span>
             </p>
@@ -61,11 +61,11 @@
             <p class="card-account">@{{ user.account }}</p>
             <p class="">
               <span class="card-tweets bold">
-                <img src="./../../image/comment-alt.svg" alt="" />
+                <img src="./../assets/comment-alt.svg" alt="" />
                 {{ user.replyCount }}k
               </span>
               <span class="card-liked bold">
-                <img src="./../../image/heart.svg" alt="" />
+                <img src="./../assets/heart.svg" alt="" />
                 {{ user.likeCount }}k
               </span>
             </p>
