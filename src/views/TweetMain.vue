@@ -31,8 +31,9 @@
           />
         </div>
       </div>
-      <div class="col-lg-3 right-col">
+      <div class="col-lg-3 right-col p-0">
         <!-- Recommendationtable -->
+        <RecommendationTable />
       </div>
     </div>
   </div>
@@ -255,3 +256,14 @@ span {
   height: 517px;
 }
 </style>
+
+<script>
+import RecommendationTable from "../components/RecommendationTable";
+
+export default {
+  name: "TweetMain",
+  components: {
+    RecommendationTable,
+  },
+};
+</script>
