@@ -12,6 +12,7 @@
             <img
               src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
               alt=""
+              class="avatar"
             />
             <span class="name-text">
               <span>Name</span>
@@ -28,11 +29,11 @@
           <div class="response py-2">35 回覆次數 666 喜歡次數</div>
           <div class="divider"></div>
           <div class="responseIcon pt-2">
-            <span class="pr-5">
-              <font-awesome-icon icon="comment" />
+            <span class="pe-5 comment">
+              <img src="../assets/comment-alt.svg" alt="">
             </span>
-            <span class="pl-5">
-              <font-awesome-icon icon="heart" />
+            <span class="ps-5 heart">
+              <img src="../assets/heart.svg" alt="">
             </span>
           </div>
         </div>
@@ -72,7 +73,7 @@ export default {
 }
 .left-col {
   border: 1px solid blue;
-  width: 235px;
+  /* width: 235px; */
   height: 1196px;
 }
 .mid-col {
@@ -81,7 +82,7 @@ export default {
   border: 1px solid blue;
   margin-right: auto;
   margin-left: auto;
-  width: 600px;
+  /* width: 600px; */
   height: 1202px;
 }
 .mid-header {
@@ -102,7 +103,7 @@ export default {
 .name {
   display: flex;
 }
-img {
+.avatar {
   /* position: absolute; */
   width: 50px;
   height: 50px;
@@ -118,6 +119,10 @@ img {
   border-top: 1px solid #e6ecf0;
   width: 98%;
 }
+.comment .heart {
+  width: 24px;
+  height: 24px;
+}
 .mid-down {
   border: 1px solid black;
   margin-top: 10px;
@@ -126,7 +131,7 @@ img {
 }
 .right-col {
   border: 1px solid blue;
-  width: 350px;
+  /* width: 350px; */
   height: 517px;
 }
 </style>

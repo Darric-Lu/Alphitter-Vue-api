@@ -188,7 +188,7 @@ export default {
 }
 .left-col {
   border: 1px solid blue;
-  width: 235px;
+  /* width: 235px; */
   height: 1196px;
 }
 .mid-col {
@@ -197,7 +197,7 @@ export default {
   border: 1px solid blue;
   margin-right: auto;
   margin-left: auto;
-  width: 600px;
+  /* width: 600px; */
   height: 1202px;
 }
 .twitterEditCard {
@@ -251,7 +251,7 @@ span {
 }
 .right-col {
   border: 1px solid blue;
-  width: 350px;
+  /* width: 350px; */
   height: 517px;
 }
 </style>
