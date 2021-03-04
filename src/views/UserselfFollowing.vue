@@ -8,13 +8,14 @@
       <div class="col-lg-6 mid-col">
         <!-- UserNavbar -->
         <UserNavbar />
-        <div class="mid-up"></div>
         <div class="mid-down">
           <!-- FollowingsTable -->
+          <FollowingsTable />
         </div>
       </div>
       <div class="col-lg-3 right-col">
         <!-- Recommendationtable -->
+        <Recommendationtable />
       </div>
     </div>
   </div>
@@ -23,12 +24,16 @@
 <script>
 import Sidebar from "../components/Sidebar";
 import UserNavbar from "../components/UserNavbar";
+import FollowingsTable from "../components/FollowingsTable";
+import Recommendationtable from "../components/RecommendationTable";
 
 export default {
   name: "UserselfFollowing",
   components: {
     Sidebar,
     UserNavbar,
+    FollowingsTable,
+    Recommendationtable,
   },
 };
 </script>
@@ -73,6 +78,6 @@ export default {
   border: 1px solid black;
   margin-top: 10px;
   width: 100%;
-  height: 600px;
+  /* height: 600px; */
 }
 </style>

@@ -8,8 +8,6 @@ import TweetMain from '../views/TweetMain.vue'
 import ReplyList from '../views/TweetReplyList.vue'
 import Userself from '../views/Userself.vue'
 import UserselfLike from '../views/UserselfLike.vue'
-import UserselfFollower from '../views/UserselfFollower.vue'
-import UserselfFollowing from '../views/UserselfFollowing.vue'
 import UserOther from '../views/UserOther.vue'
 
 Vue.use(VueRouter)
@@ -21,7 +19,7 @@ const routes = [
     redirect: '/main'
   },
   {
-    path:'/signin',
+    path: '/signin',
     name: 'sign-in',
     component: SignIn
   },
@@ -73,12 +71,12 @@ const routes = [
   {
     path: '/user/self/follower',
     name: 'user-self-follower',
-    component: UserselfFollower
+    component: () => import('../views/UserselfFollower.vue')
   },
   {
     path: '/user/self/following',
     name: 'user-self-following',
-    component: UserselfFollowing
+    component: () => import('../views/UserselfFollowing.vue')
   },
   {
     path: '/user/other',

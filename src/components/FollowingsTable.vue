@@ -3,12 +3,12 @@
     <div class="status-table d-flex">
       <div class="text-center">
         <router-link :to="{ name: 'user-self-follower' }">
-          <div class="followers active">跟隨者</div>
+          <div class="followers">跟隨者</div>
         </router-link>
       </div>
       <div class="following text-center">
         <router-link :to="{ name: 'user-self-following' }">
-          <div class="following">正在跟隨</div>
+          <div class="following active">正在跟隨</div>
         </router-link>
       </div>
     </div>
@@ -30,10 +30,10 @@
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
           sint. Velit officia consequat duis enim velit mollit.
         </p>
-        <!-- <div class="is-following-btn text-center following-active">
+        <div class="is-following-btn text-center following-active">
           正在跟隨
-        </div> -->
-        <div class="is-following-btn text-center following-none">跟隨</div>
+        </div>
+        <!-- <div class="is-following-btn text-center following-none">跟隨</div> -->
       </div>
     </div>
     <!--  -->
@@ -151,20 +151,20 @@ export default {
     return {
       tweets: [
         {
-          id: 1,
-          name: "ALPHAcamp",
-          account: "ac",
+          id: 6,
+          name: "路人甲",
+          account: "someone",
           image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
           article:
             "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
           isFollowing: true,
         },
         {
-          id: 2,
-          name: "Darric",
-          account: "DL",
+          id: 5,
+          name: "stan_wang",
+          account: "stan",
           image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
           article:
             "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
           isFollowing: true,
@@ -187,26 +187,26 @@ export default {
             "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
           article:
             "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: false,
+          isFollowing: true,
         },
         {
-          id: 5,
-          name: "stan_wang",
-          account: "stan",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: false,
-        },
-        {
-          id: 6,
-          name: "路人甲",
-          account: "someone",
+          id: 1,
+          name: "ALPHAcamp",
+          account: "ac",
           image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
           article:
             "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: false,
+          isFollowing: true,
+        },
+        {
+          id: 2,
+          name: "Darric",
+          account: "DL",
+          image:
+            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+          article:
+            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
+          isFollowing: true,
         },
       ],
     };
