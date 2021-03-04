@@ -131,10 +131,6 @@
   height: 40%;
   object-fit: cover;
 }
-.card-img-top {
-  /* height: 40%; */
-  /* object-fit: cover; */
-}
 .card-body {
   background-color: #f6f7f8;
 }

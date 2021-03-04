@@ -12,8 +12,9 @@
           <!-- twitterCardTable -->
         </div>
       </div>
-      <div class="col-lg-3 right-col">
+      <div class="col-lg-3 right-col p-0">
         <!-- Recommendationtable -->
+        <RecommendationTable />
       </div>
     </div>
   </div>
@@ -46,7 +47,7 @@
   height: 1202px;
 }
 .right-col {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   width: 350px;
   height: 517px;
 }
@@ -62,3 +63,14 @@
   height: 600px;
 }
 </style>
+
+<script>
+import RecommendationTable from "../components/RecommendationTable";
+
+export default {
+  name: "TweetMain",
+  components: {
+    RecommendationTable,
+  },
+};
+</script>
