@@ -81,7 +81,7 @@ const routes = [
     component: UserselfFollowing
   },
   {
-    path: '/user/other',
+    path: '/user/:id',
     name: 'user-other',
     component: UserOther
   },
