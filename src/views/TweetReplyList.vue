@@ -10,23 +10,23 @@
         <div class="twitterCard">
           <div class="name">
             <img
-              src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+              :src="tweet.User.avatar"
               alt=""
               class="avatar"
             />
             <span class="name-text">
-              <span>Name</span>
-              <span>@account</span>
+              <span>{{ tweet.User.name }}</span>
+              <span>@{{ tweet.User.account }}</span>
             </span>
           </div>
           <div class="text my-3">
             <div>
-              難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。
+              {{ tweet.description }}
             </div>
-            <div class="pt-2">DATE area</div>
+            <div class="pt-2"> {{ tweet.createdAt }}</div>
           </div>
           <div class="divider"></div>
-          <div class="response py-2">35 回覆次數 666 喜歡次數</div>
+          <div class="response py-2">{{ tweet.Replies.length }} 回覆次數 {{ tweet.Likes.length }} 喜歡次數</div>
           <div class="divider"></div>
           <div class="responseIcon pt-2">
             <span class="pe-5 comment">
@@ -37,8 +37,18 @@
             </span>
           </div>
         </div>
-        <div class="mid-down">
+        <div class="twitterReplies">
           <!-- twitterCardTable -->
+          <div class="row tweetReply" v-for="reply in replies" :key="reply.id">
+            <div class="col-lg-1">
+              <img src="../assets/heart.svg" alt="">
+            </div>
+            <div class="col-lg-10">
+              <p>Name @account • {{ reply.createdAt }}</p>
+              <p>回覆 @{{ tweet.User.name }}</p>
+              <p>{{ reply.comment }}</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-lg-3 right-col">
@@ -51,11 +61,99 @@
 <script>
 import Sidebar from "../components/Sidebar";
 
+// GET api/tweets/:id
+const dummydata = {
+    "id": 1,
+    "description": "repudiandae",
+    "UserId": 1,
+    "createdAt": "2021-03-03T16:14:20.000Z",
+    "updatedAt": "2021-03-03T16:14:20.000Z",
+    "User": {
+        "id": 1,
+        "name": "root",
+        "email": "root@example.com",
+        "account": "root",
+        "password": "$2a$10$k/8PhvsPm3PqlNcc/OfmHO1o7Mo9LubVdbJzIvGRNWPF86QXrU6DS",
+        "avatar": null,
+        "cover": null,
+        "introduction": null,
+        "role": "admin",
+        "createdAt": "2021-03-03T16:14:19.000Z",
+        "updatedAt": "2021-03-03T16:14:19.000Z"
+    },
+    "Replies": [
+        {
+            "id": 3,
+            "comment": "consequatur corporis aut",
+            "UserId": 5,
+            "TweetId": 1,
+            "createdAt": "2021-03-02T11:47:05.000Z",
+            "updatedAt": "2021-03-02T11:47:05.000Z"
+        },
+        {
+            "id": 4,
+            "comment": "Aut labore quas corporis nihil nulla sint. Quo illum blanditiis minima corrupti consequatur quam consectetur culpa. Vel nobis consequatur cupiditate. Qui in nostrum incidunt voluptates velit.",
+            "UserId": 4,
+            "TweetId": 1,
+            "createdAt": "2021-03-02T11:47:05.000Z",
+            "updatedAt": "2021-03-02T11:47:05.000Z"
+        },
+        {
+            "id": 5,
+            "comment": "ipsum",
+            "UserId": 1,
+            "TweetId": 1,
+            "createdAt": "2021-03-02T11:47:05.000Z",
+            "updatedAt": "2021-03-02T11:47:05.000Z"
+        },
+        {
+            "id": 153,
+            "comment": "Eos odio sint consequatur eos quasi. Qui amet at est in velit sit odio. Et officiis voluptatum. Repudiandae quasi quas magni. Earum molestiae officiis tempora doloremque ratione molestias et ipsa. Quas soluta perspiciatis dolor.",
+            "UserId": 5,
+            "TweetId": 1,
+            "createdAt": "2021-03-03T16:14:20.000Z",
+            "updatedAt": "2021-03-03T16:14:20.000Z"
+        },
+        {
+            "id": 154,
+            "comment": "laudantium",
+            "UserId": 3,
+            "TweetId": 1,
+            "createdAt": "2021-03-03T16:14:20.000Z",
+            "updatedAt": "2021-03-03T16:14:20.000Z"
+        },
+        {
+            "id": 155,
+            "comment": "distinctio quia libero",
+            "UserId": 1,
+            "TweetId": 1,
+            "createdAt": "2021-03-03T16:14:20.000Z",
+            "updatedAt": "2021-03-03T16:14:20.000Z"
+        }
+    ],
+    "Likes": []
+}
+
 export default {
   name: "TweetReplyList",
   components: {
     Sidebar,
   },
+  data() {
+    return {
+      tweet: {},
+      replies: [],
+    }
+  },
+  created() {
+    this.fetchTweet()
+  },
+  methods: {
+    fetchTweet() {
+      this.tweet = dummydata
+      this.replies = dummydata.Replies
+    }
+  }
 };
 </script>
 
