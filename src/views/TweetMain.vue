@@ -30,7 +30,7 @@
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
-          <TwitterCardTable :tweets="tweets" />
+          <twitterCardTable :tweets="tweets" />
         </div>
       </div>
       <div class="col-lg-3 right-col p-0">
@@ -44,9 +44,11 @@
 
 <script>
 import Sidebar from "../components/Sidebar";
-import TwitterCardTable from "../components/twitterCardTable";
+import twitterCardTable from "../components/twitterCardTable";
+import RecommendationTable from "../components/RecommendationTable";
 
-const dummytweets = [
+// GET api/tweets
+const dummydata = [
   {
     id: 1,
     description: "repudiandae",
@@ -272,7 +274,8 @@ export default {
   name: "TweetMain",
   components: {
     Sidebar,
-    TwitterCardTable,
+    twitterCardTable,
+    RecommendationTable,
   },
   data() {
     return {
@@ -284,7 +287,7 @@ export default {
   },
   methods: {
     fetchMain() {
-      this.tweets = dummytweets;
+      this.tweets = dummydata;
     },
   },
 };
@@ -371,14 +374,3 @@ span {
   height: 517px;
 }
 </style>
-
-<script>
-import RecommendationTable from "../components/RecommendationTable";
-
-export default {
-  name: "TweetMain",
-  components: {
-    RecommendationTable,
-  },
-};
-</script>
