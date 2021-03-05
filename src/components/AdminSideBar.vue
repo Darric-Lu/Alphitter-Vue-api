@@ -1,7 +1,7 @@
 <template>
   <nav class="d-flex flex-column wrapping">
     <div class="twitter row mt-4 d-flex justify-content-center">
-      <div class="twitter-icon col-2 ml-1">
+      <div class="twitter-icon col-2 me-3 me-md-0 ms-md-3">
         <img
           class="logo-img"
           src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
