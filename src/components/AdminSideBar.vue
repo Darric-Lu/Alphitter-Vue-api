@@ -11,7 +11,10 @@
       <div class="twitter-content col-8 d-none d-md-block"></div>
     </div>
     <router-link :to="{ name: 'admin-twitter' }" class="nav-link">
-      <div class="twitter row mt-4 d-flex justify-content-center">
+      <div
+        class="twitter row mt-4 d-flex justify-content-center"
+        :class="active.twitterContent"
+      >
         <div class="twitter-icon col-2">
           <font-awesome-icon icon="home" />
         </div>
@@ -21,7 +24,10 @@
       </div>
     </router-link>
     <router-link :to="{ name: 'admin-users' }" class="nav-link">
-      <div class="userCard row mt-3 d-flex justify-content-center">
+      <div
+        class="userCard row mt-3 d-flex justify-content-center"
+        :class="active.userContent"
+      >
         <div class="userCard-icon col-2">
           <font-awesome-icon icon="user" />
         </div>
@@ -60,6 +66,7 @@
 .row {
   color: rgb(20, 20, 20);
 }
+
 .row:hover {
   color: rgb(255, 102, 0, 1);
 }
@@ -69,11 +76,24 @@
 .twitter-content,
 .userCard-content {
   font-size: 1rem;
+  font-weight: 800;
+}
+.active {
+  color: #ff6600;
 }
 </style> 
 
 <script>
 export default {
   name: "AdminSideBar",
+  props: {
+    active: {
+      type: Object,
+      default: () => ({
+        twitterContent: "",
+        userContent: "",
+      }),
+    },
+  },
 };
 </script>

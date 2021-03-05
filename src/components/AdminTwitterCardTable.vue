@@ -186,7 +186,7 @@ export default {
           name: "路人甲",
           image:
             "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
-          account: "stan",
+          account: "someone",
           time: "5小時前",
           content: "我也要來學習了。",
         },
