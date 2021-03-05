@@ -7,7 +7,7 @@
       </div>
       <div class="col-lg-6 mid-col">
         <!-- UserNavbar -->
-        <UserNavbar />
+        <UserNavbar :tweets="tweets"/>
         <div class="user-profile">
           <!-- Userprofile -->
           <UserProfile />
@@ -255,6 +255,7 @@ const dummydata =  [
   },
 ];
 
+// GET api/tweets
 const dummyUser = {
   currentUser: {
     id: 1,
