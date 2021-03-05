@@ -79,7 +79,7 @@ const routes = [
     component: () => import('../views/UserselfFollowing.vue')
   },
   {
-    path: '/user/other',
+    path: '/user/:id',
     name: 'user-other',
     component: UserOther
   },

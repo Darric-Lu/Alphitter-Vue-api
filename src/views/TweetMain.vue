@@ -9,26 +9,28 @@
         <div class="twitterEditCard">
           <div class="mid-header">首頁</div>
           <div class="textarea">
-              <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="">
-              <textarea class="form-control" placeholder="有甚麼新鮮事?" id="floatingTextarea2" style="height: 100px">
-              </textarea>
-              <span>
-                <button
-                type="submit"
-                class="btn btn-secondary tweet"
-                >
+            <img
+              src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+              alt=""
+            />
+            <textarea
+              class="form-control"
+              placeholder="有甚麼新鮮事?"
+              id="floatingTextarea2"
+              style="height: 100px"
+            >
+            </textarea>
+            <span>
+              <button type="submit" class="btn btn-secondary tweet">
                 推文
-                </button>
-              </span>
+              </button>
+            </span>
           </div>
           <div class="divider"></div>
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
-          <twitterCardTable 
-          :tweets="tweets"
-          :users="users"
-          />
+          <TwitterCardTable :tweets="tweets" />
         </div>
       </div>
       <div class="col-lg-3 right-col p-0">
@@ -41,151 +43,251 @@
 
 
 <script>
-import Sidebar from '../components/Sidebar'
-import twitterCardTable from '../components/twitterCardTable'
+import Sidebar from "../components/Sidebar";
+import TwitterCardTable from "../components/twitterCardTable";
 
-const dummydata = {
-  users: [
-    {
+const dummytweets = [
+  {
+    id: 1,
+    description: "repudiandae",
+    UserId: 1,
+    createdAt: "2021-03-03T16:14:20.000Z",
+    updatedAt: "2021-03-03T16:14:20.000Z",
+    User: {
       id: 1,
-      accountNumber: "@abc",
-      name: "Russ Kertzmann",
-      email: "user6@example.com",
-      password: "1234578",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      description: "sed",
-      followersCounts: 45,
-      followingsCounts: 45,
+      name: "root",
+      email: "root@example.com",
+      account: "root",
+      password: "$2a$10$k/8PhvsPm3PqlNcc/OfmHO1o7Mo9LubVdbJzIvGRNWPF86QXrU6DS",
+      avatar: null,
+      cover: null,
+      introduction: null,
+      role: "admin",
+      createdAt: "2021-03-03T16:14:19.000Z",
+      updatedAt: "2021-03-03T16:14:19.000Z",
     },
-    {
-      id: 2,
-      accountNumber: "@efg",
-      name: "Russ Kertzmann",
-      email: "user6@example.com",
-      password: "1234578",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      description: "sed",
-      followersCounts: 12,
-      followingsCounts: 34,
-    },
-    {
-      id: 3,
-      accountNumber: "@hij",
-      name: "Russ Kertzmann",
-      email: "user6@example.com",
-      password: "1234578",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      description: "sed",
-      followersCounts: 68,
-      followingsCounts: 3347,
-    },
-    {
-      id: 4,
-      accountNumber: "@klm",
-      name: "Russ Kertzmann",
-      email: "user6@example.com",
-      password: "1234578",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      description: "sed",
-      followersCounts: 699,
-      followingsCounts: 3332,
-    },
-    {
-      id: 5,
-      accountNumber: "@npq",
-      name: "Russ Kertzmann",
-      email: "user6@example.com",
-      password: "1234578",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      description: "sed",
-      followersCounts: 9,
-      followingsCounts: 332,
-    },
-  ],
-  tweets: [
-    {
+    Replies: [
+      {
+        id: 3,
+        comment: "consequatur corporis aut",
+        UserId: 5,
+        TweetId: 1,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 4,
+        comment:
+          "Aut labore quas corporis nihil nulla sint. Quo illum blanditiis minima corrupti consequatur quam consectetur culpa. Vel nobis consequatur cupiditate. Qui in nostrum incidunt voluptates velit.",
+        UserId: 4,
+        TweetId: 1,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 5,
+        comment: "ipsum",
+        UserId: 1,
+        TweetId: 1,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 153,
+        comment:
+          "Eos odio sint consequatur eos quasi. Qui amet at est in velit sit odio. Et officiis voluptatum. Repudiandae quasi quas magni. Earum molestiae officiis tempora doloremque ratione molestias et ipsa. Quas soluta perspiciatis dolor.",
+        UserId: 5,
+        TweetId: 1,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+      {
+        id: 154,
+        comment: "laudantium",
+        UserId: 3,
+        TweetId: 1,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+      {
+        id: 155,
+        comment: "distinctio quia libero",
+        UserId: 1,
+        TweetId: 1,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+    ],
+    Likes: [],
+  },
+  {
+    id: 2,
+    description: "Consequatur qui odio aspernatur qui.",
+    UserId: 1,
+    createdAt: "2021-03-03T16:14:20.000Z",
+    updatedAt: "2021-03-03T16:14:20.000Z",
+    User: {
       id: 1,
-      accountNumber: "@abc",
-      name: "Russ Kertzmann",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      content:
-        "難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。",
-      createdAt: "2019-07-30T16:24:55.443Z",
-      updatedAt: "2019-07-30T16:24:55.443Z",
+      name: "root",
+      email: "root@example.com",
+      account: "root",
+      password: "$2a$10$k/8PhvsPm3PqlNcc/OfmHO1o7Mo9LubVdbJzIvGRNWPF86QXrU6DS",
+      avatar: null,
+      cover: null,
+      introduction: null,
+      role: "admin",
+      createdAt: "2021-03-03T16:14:19.000Z",
+      updatedAt: "2021-03-03T16:14:19.000Z",
     },
-    {
-      id: 2,
-      accountNumber: "@efg",
-      name: "Russ Kertzmann",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      content:
-        "難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。",
-      createdAt: "2019-07-30T16:24:55.443Z",
-      updatedAt: "2019-07-30T16:24:55.443Z",
+    Replies: [
+      {
+        id: 6,
+        comment: "Aut autem qui vel voluptatem non.",
+        UserId: 3,
+        TweetId: 2,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 7,
+        comment:
+          "Repellendus ut enim odit. Quia molestiae aut corrupti eligendi aut omnis est mollitia ut. Voluptatibus minus eum consectetur laboriosam eos. Corrupti ullam blanditiis doloremque qui excepturi doloribus maxime. Sed dolorum neque sit qui ipsum quam ex at. Necessitatibus cumque id eaque deserunt id.",
+        UserId: 4,
+        TweetId: 2,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 8,
+        comment: "aliquid",
+        UserId: 4,
+        TweetId: 2,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 156,
+        comment:
+          "Aperiam qui dicta facere ut deserunt fugit et. Ipsam et praesentium voluptates aut optio. Autem similique eaque voluptatum et voluptas occaecati. Doloremque dolor et rerum provident ratione doloremque omnis veniam eaque. Accusamus quos et exercitationem.\n \rCorporis ab placeat consequatur qui voluptate praesentium illo eum. Itaque quaerat et exercitationem magni omnis unde. Suscipit dolore magni ad ducimus officiis. Consequatur odio tempora soluta at quas quia esse.\n \rLibero aspernatur exercitationem enim incidunt officiis voluptatem doloremque eligendi et. Blanditiis cum impedit nesciunt quod nihil consequuntur. Nulla est dolore non recusandae a. Est atque voluptatibus occaecati voluptas accusamus quae dolore fugiat. Est sapiente eveniet tempore expedita voluptatem labore magni non.",
+        UserId: 5,
+        TweetId: 2,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+      {
+        id: 157,
+        comment: "voluptatibus",
+        UserId: 1,
+        TweetId: 2,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+      {
+        id: 158,
+        comment: "et",
+        UserId: 5,
+        TweetId: 2,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+    ],
+    Likes: [],
+  },
+  {
+    id: 3,
+    description: "fugiat",
+    UserId: 1,
+    createdAt: "2021-03-03T16:14:20.000Z",
+    updatedAt: "2021-03-03T16:14:20.000Z",
+    User: {
+      id: 1,
+      name: "root",
+      email: "root@example.com",
+      account: "root",
+      password: "$2a$10$k/8PhvsPm3PqlNcc/OfmHO1o7Mo9LubVdbJzIvGRNWPF86QXrU6DS",
+      avatar: null,
+      cover: null,
+      introduction: null,
+      role: "admin",
+      createdAt: "2021-03-03T16:14:19.000Z",
+      updatedAt: "2021-03-03T16:14:19.000Z",
     },
-    {
-      id: 3,
-      accountNumber: "@hij",
-      name: "Russ Kertzmann",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      content:
-        "難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。",
-      createdAt: "2019-07-30T16:24:55.443Z",
-      updatedAt: "2019-07-30T16:24:55.443Z",
-    },
-    {
-      id: 4,
-      accountNumber: "@klm",
-      name: "Russ Kertzmann",
-      image:
-        "https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367",
-      content:
-        "難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。",
-      createdAt: "2019-07-30T16:24:55.443Z",
-      updatedAt: "2019-07-30T16:24:55.443Z",
-    },
-    {
-      'id': 5,
-      'accountNumber': '@npq',
-      'name': 'Russ Kertzmann',
-      'image': 'https://loremflickr.com/320/240/restaurant,food/?random=56.98329738383367',
-      'content': '難生養美創市所。自車要北親成用孩員，知科便有況生接人前是馬收把清百己量般事有得又士來然房的；點創知期後，如同陸中不養日之形。長他局再改、個國加；農不此，安平後取天仍治西才有小究無開院現著醫晚。',
-      'createdAt': '2019-07-30T16:24:55.443Z',
-      'updatedAt': '2019-07-30T16:24:55.443Z',
-    }
-  ]
-}
+    Replies: [
+      {
+        id: 9,
+        comment:
+          "Sequi aspernatur enim praesentium voluptas consequatur. Qui dolor doloremque rem culpa. Possimus dicta corporis est omnis aut est. Voluptas dolorem enim aperiam praesentium atque est. Voluptate illo assumenda dolorem.",
+        UserId: 3,
+        TweetId: 3,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 10,
+        comment: "Autem sint facere sit non nesciunt expedita saepe.",
+        UserId: 5,
+        TweetId: 3,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 11,
+        comment: "Atque et eaque cum qui similique laborum.",
+        UserId: 5,
+        TweetId: 3,
+        createdAt: "2021-03-02T11:47:05.000Z",
+        updatedAt: "2021-03-02T11:47:05.000Z",
+      },
+      {
+        id: 159,
+        comment:
+          "Voluptas a beatae eligendi rerum. Quaerat dolores consectetur beatae iste porro eligendi. Voluptas et accusamus optio provident provident perferendis aspernatur nesciunt. Laudantium ut quo voluptatem. Enim deserunt odit non.",
+        UserId: 5,
+        TweetId: 3,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+      {
+        id: 160,
+        comment: "Dolores illum veniam nobis eaque et.",
+        UserId: 3,
+        TweetId: 3,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+      {
+        id: 161,
+        comment: "veritatis illum deserunt",
+        UserId: 4,
+        TweetId: 3,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+      },
+    ],
+    Likes: [],
+  },
+];
 
 export default {
-  name: 'TweetMain',
+  name: "TweetMain",
   components: {
     Sidebar,
-    twitterCardTable
+    TwitterCardTable,
   },
   data() {
     return {
-      users:[],
       tweets: [],
-    }
+    };
   },
   created() {
-    this.fetchMain()
+    this.fetchMain();
   },
   methods: {
     fetchMain() {
-      this.users = dummydata.users
-      this.tweets = dummydata.tweets
-    }
-  }
-}
+      this.tweets = dummytweets;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -225,8 +327,8 @@ export default {
   height: auto;
 }
 .mid-header {
-  background: #FFFFFF;
-  border: 1px solid #E6ECF0;
+  background: #ffffff;
+  border: 1px solid #e6ecf0;
   box-sizing: border-box;
   padding: 2px;
   font-weight: bold;
@@ -243,7 +345,7 @@ img {
 .textarea {
   display: flex;
 }
-textarea{
+textarea {
   border-style: none;
 }
 span {
