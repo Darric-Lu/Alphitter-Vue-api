@@ -2,13 +2,19 @@
   <div class="container user-profile px-0">
     <div class="user-title-cut">
       <img
+        v-if="cerruntUser.titleImage"
         class="user-title-pic"
         :src="cerruntUser.titleImage"
         alt="使用者標題照片"
       />
     </div>
     <div class="avatar">
-      <img class="avatar-img" :src="cerruntUser.userImage" alt="使用者大頭貼" />
+      <img
+        v-if="cerruntUser.userImage"
+        class="avatar-img"
+        :src="cerruntUser.userImage"
+        alt="使用者大頭貼"
+      />
     </div>
     <div class="information">
       <div class="edit d-flex flex-row-reverse">
@@ -16,7 +22,7 @@
           type="button"
           class="btn edit-button"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#editModal"
         >
           編輯個人資料
         </button>
@@ -28,14 +34,18 @@
           {{ cerruntUser.SelfIntroduction }}
         </div>
         <div class="follow mt-2">
-          <span class="followers-content"
+          <router-link
+            :to="{ name: 'user-self-following' }"
+            class="followers-content"
             ><span class="bold">{{ cerruntUser.followersCount }}個</span>
             <span class="gray">跟隨中</span>
-          </span>
-          <span class="following-content ms-2"
+          </router-link>
+          <router-link
+            :to="{ name: 'user-self-follower' }"
+            class="following-content ms-2"
             ><span class="bold">{{ cerruntUser.followingCount }}位</span>
-            <span class="gray">跟隨者</span></span
-          >
+            <span class="gray">跟隨者</span>
+          </router-link>
         </div>
       </div>
     </div>
@@ -43,32 +53,89 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="editModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button
+            <div
               type="button"
-              class="btn-close"
+              class="close-btn"
               data-bs-dismiss="modal"
               aria-label="Close"
-            ></button>
+            ></div>
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span class="title-content">編輯個人資料</span>
+            </h5>
+            <button class="save-btn">儲存</button>
           </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="modal-body p-0">
+            <div class="user-title-cut">
+              <img
+                v-if="cerruntUser.titleImage"
+                class="user-title-pic"
+                :src="cerruntUser.titleImage"
+                alt="使用者標題照片"
+              />
+              <div class="add-photo-btn">
+                <img
+                  src="../assets/addPhoto.svg"
+                  alt="新增/修改照片"
+                  title="修改照片"
+                />
+              </div>
+              <div class="delete-photo-btn">
+                <img
+                  src="../assets/crossWhite.svg"
+                  alt="刪除照片"
+                  title="刪除照片"
+                />
+              </div>
+            </div>
+            <div class="modal-avatar">
+              <img
+                v-if="cerruntUser.userImage"
+                class="modal-avatar-img"
+                :src="cerruntUser.userImage"
+                alt="使用者大頭貼"
+              />
+              <div class="chang-photo-btn">
+                <img
+                  src="../assets/addPhoto.svg"
+                  alt="新增/修改使用者大頭貼"
+                  title="修改大頭貼"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="form-group input-data name-data">
+              <label for="name" class="ms-2 fw-bold">名稱</label>
+              <textarea
+                v-model="cerruntUser.name"
+                id="name"
+                class="form-control"
+                name="name"
+                rows="1"
+                required
+              />
+            </div>
+
+            <div class="form-group input-data introduction-data">
+              <label for="introduction" class="ms-3 fw-bold">自我介紹</label>
+              <textarea
+                v-model="cerruntUser.SelfIntroduction"
+                id="introduction"
+                class="form-control"
+                rows="3"
+                name="introduction"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -77,55 +144,12 @@
 </template>
 
 <script>
-const dummyCerruntUser = {
-  cerruntUser: {
-    account: "ClaireLi",
-    name: "Claire",
-    userImage:
-      "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-    titleImage:
-      "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
-    followersCount: "10",
-    followingCount: "20",
-    SelfIntroduction:
-      " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
-  },
-};
 export default {
   name: "UserProfile",
-  cerruntUser: {
-    account: "",
-    name: "",
-    userImage: "",
-    titleImage: "",
-    followersCount: "",
-    followingCount: "",
-    SelfIntroduction: "",
-  },
-  created() {
-    this.fetchCerruntUser();
-  },
-  methods: {
-    fetchCerruntUser() {
-      const {
-        account,
-        name,
-        userImage,
-        titleImage,
-        followersCount,
-        followingCount,
-        SelfIntroduction,
-      } = dummyCerruntUser.cerruntUser;
-      this.cerruntUser = {
-        ...this.cerruntUser,
-        account,
-        name,
-        userImage,
-        titleImage,
-        followersCount,
-        followingCount,
-        SelfIntroduction,
-      };
+  props: {
+    cerruntUser: {
+      type: Object,
+      required: true,
     },
   },
 };
@@ -139,9 +163,11 @@ export default {
   height: 200px;
   width: 100%;
   overflow: hidden;
+  background-color: #999999;
 }
 .user-title-pic {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 .avatar {
@@ -154,6 +180,8 @@ export default {
   left: 14px;
   /* z-index: 999; */
   overflow: hidden;
+  background: url("../assets/working-with-laptop.svg");
+  background-color: #999999;
 }
 .avatar-img {
   width: 100%;
@@ -195,11 +223,117 @@ export default {
 .follow {
   font-size: 15px;
 }
+.followers-content,
+.following-content {
+  text-decoration: none;
+  color: black;
+}
+
 .bold {
   font-weight: 900;
 }
 .gray {
   color: rgb(101, 119, 134, 1);
   font-weight: 600;
+}
+/* modal */
+.close-btn {
+  position: absolute;
+  top: 19.5px;
+  left: 19.5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+.close-btn::before,
+.close-btn::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2px; /* cross thickness */
+  background-color: #ff6600;
+}
+
+.close-btn::before {
+  transform: rotate(45deg);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg);
+}
+.title-content {
+  font-weight: 700;
+  margin-left: 79px;
+}
+.save-btn {
+  background: #ff6600;
+  border-radius: 50px;
+  border: 1px solid #ff6600;
+  color: #ffffff;
+  font-weight: bold;
+  width: 64px;
+  height: 30px;
+  /* margin: 10px 15px 0 0; */
+}
+.modal-avatar {
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  height: 180px;
+  width: 180px;
+  top: 100px;
+  left: 20px;
+  /* z-index: 999; */
+  overflow: hidden;
+  background: url("../assets/working-with-laptop.svg");
+  background-color: #999999;
+}
+.modal-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.add-photo-btn,
+.delete-photo-btn {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 90px;
+  cursor: pointer;
+}
+.add-photo-btn {
+  left: 45%;
+}
+.delete-photo-btn {
+  left: 55%;
+}
+.chang-photo-btn {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+.name-data {
+  margin: 80px 15px 0 15px;
+}
+.introduction-data {
+  margin: 20px 15px 0 15px;
+}
+.input-data {
+  background-color: #f5f8fa;
+  border-bottom: 2px #657786 solid;
+}
+textarea {
+  background-color: #f5f8fa;
+  border-style: none;
+}
+textarea:focus {
+  background-color: #f5f8fa;
 }
 </style>

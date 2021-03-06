@@ -101,7 +101,7 @@
             <div class="modal-img-cut">
               <img
                 class="cerrunt-user-img"
-                src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG"
+                :src="cerruntUser.userImage"
                 alt=""
               />
             </div>
@@ -143,6 +143,10 @@ export default {
         self: "",
         setting: "",
       }),
+    },
+    cerruntUser: {
+      type: Object,
+      required: true,
     },
   },
   data() {

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar -->
-        <Sidebar :active="active" />
+        <Sidebar :active="active" :cerruntUser="cerruntUser" />
       </div>
       <div class="row col-10 px-0">
         <div class="col-12 col-lg-8 px-0 mid-col">
@@ -11,7 +11,7 @@
           <UserNavbar />
           <div class="user-profile">
             <!-- Userprofile -->
-            <UserProfile />
+            <UserProfile :cerruntUser="cerruntUser" />
           </div>
           <!-- tab -->
           <Tab />
@@ -38,6 +38,21 @@ import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
 
 // GET api/tweets
+const dummyCerruntUser = {
+  cerruntUser: {
+    account: "ClaireLi",
+    name: "Claire",
+    userImage:
+      "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+    titleImage:
+      "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
+    followersCount: "10",
+    followingCount: "20",
+    SelfIntroduction:
+      " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
+  },
+};
+
 const dummydata = [
   {
     id: 1,
@@ -290,16 +305,47 @@ export default {
         self: "active",
         setting: "row",
       },
+      cerruntUser: {
+        account: "",
+        name: "",
+        userImage: "",
+        titleImage: "",
+        followersCount: "",
+        followingCount: "",
+        SelfIntroduction: "",
+      },
     };
   },
   created() {
     const currentUserId = this.currentUserId;
     this.fetchUserself(currentUserId);
+    this.fetchCerruntUser();
   },
   methods: {
     fetchUserself(currentUserId) {
       // 用filter篩選currentUser的tweets
       this.tweets = dummydata.filter((data) => data.UserId === currentUserId);
+    },
+    fetchCerruntUser() {
+      const {
+        account,
+        name,
+        userImage,
+        titleImage,
+        followersCount,
+        followingCount,
+        SelfIntroduction,
+      } = dummyCerruntUser.cerruntUser;
+      this.cerruntUser = {
+        ...this.cerruntUser,
+        account,
+        name,
+        userImage,
+        titleImage,
+        followersCount,
+        followingCount,
+        SelfIntroduction,
+      };
     },
   },
 };
