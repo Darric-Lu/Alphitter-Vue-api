@@ -2,11 +2,11 @@
   <div class="comtainer">
     <div class="row tweetRow" v-for="tweet in tweets" :key="tweet.id">
       <div class="col-lg-1">
-        <img :src="tweet.User.avatar" alt="" class="tweetImage">
+        <img :src="tweet.avatar" alt="" class="tweetImage" @click.prevent.stop="userOther(tweet.UserId)">
       </div>
       <div class="col-lg-10 tweetContent">
         <p>{{ tweet.User.name }} {{ tweet.User.account }} • {{ tweet.createdAt }}</p>
-        <p>{{ tweet.description }}</p>
+        <p @click.prevent.stop="tweetReply">{{ tweet.description }}</p>
         <div class="responseIcon pt-2">
             <span class="pe-5 comment">
               <img src="../assets/comment-alt.svg" alt="">
@@ -27,6 +27,15 @@ export default {
       type: Array,
       require: true
     },
+  },
+  methods: {
+    tweetReply() {
+      this.$router.push('/reply_list')
+    },
+    userOther(userId) {
+      this.$router.push(`/user/:${userId}`)
+      console.log(userId)
+    }
   }
 }
 </script>
