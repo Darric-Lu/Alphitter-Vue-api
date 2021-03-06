@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container just">
     <div class="row">
-      <div class="col-lg-2 left-col">
+      <div class="col-2 left-col">
         <!-- Sidebar -->
         <Sidebar />
       </div>
-      <div class="col-lg-6 mid-col">
+      <div class="col-10 col-lg-7 mid-col">
         <!-- UserNavbar -->
         <UserNavbar />
         <div class="user-profile">
@@ -16,10 +16,10 @@
         <Tab />
         <div class="mid-down">
           <!-- twitterCardTable -->
-          <twitterCardTable :tweets="tweets"/>
+          <twitterCardTable :tweets="tweets" />
         </div>
       </div>
-      <div class="col-lg-3 right-col">
+      <div class="col-3 d-none d-lg-block right-col">
         <!-- Recommendationtable -->
       </div>
     </div>
@@ -31,9 +31,9 @@ import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
-import Tab from "../components/Tab"
+import Tab from "../components/Tab";
 
-const dummydata =  [
+const dummydata = [
   {
     id: 1,
     description: "repudiandae",
@@ -258,13 +258,13 @@ const dummydata =  [
 const dummyUser = {
   currentUser: {
     id: 1,
-    name: '管理者',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
+    name: "管理者",
+    email: "root@example.com",
+    image: "https://i.pravatar.cc/300",
+    isAdmin: true,
   },
-  isAuthenticated: true
-}
+  isAuthenticated: true,
+};
 
 export default {
   name: "Userself",
@@ -273,38 +273,38 @@ export default {
     twitterCardTable,
     UserNavbar,
     UserProfile,
-    Tab
+    Tab,
   },
   data() {
     return {
       tweets: [],
-      currentUserId: dummyUser.currentUser.id
-    }
+      currentUserId: dummyUser.currentUser.id,
+    };
   },
   created() {
-    const currentUserId = this.currentUserId
-    this.fetchUserself(currentUserId)
+    const currentUserId = this.currentUserId;
+    this.fetchUserself(currentUserId);
   },
   methods: {
     fetchUserself(currentUserId) {
       // 用filter篩選currentUser的tweets
-      this.tweets = dummydata.filter((data) => data.UserId === currentUserId)
-    }
-  }
+      this.tweets = dummydata.filter((data) => data.UserId === currentUserId);
+    },
+  },
 };
 </script>
 
 <style scoped>
-.container {
+/* .container {
   margin-right: auto;
   margin-left: auto;
   padding-right: 15px;
   padding-left: 15px;
   width: 100%;
-}
+} */
 .row {
-  display: flex;
-  border: 1px solid crimson;
+  /* display: flex; */
+  /* border: 1px solid crimson; */
 }
 .left-col {
   border: 1px solid blue;
@@ -312,11 +312,11 @@ export default {
   height: 1196px;
 }
 .mid-col {
-  display: flex;
-  flex-flow: column wrap;
+  /* display: flex; */
+  /* flex-flow: column wrap; */
   border: 1px solid blue;
-  margin-right: auto;
-  margin-left: auto;
+  /* margin-right: auto; */
+  /* margin-left: auto; */
   /* width: 600px; */
   height: auto;
 }

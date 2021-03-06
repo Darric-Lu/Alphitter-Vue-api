@@ -14,11 +14,11 @@
     </div>
     <div class="information">
       <div class="edit">
-        <button type="button" 
-        class="btn btn-outline editButton" 
-        data-bs-toggle="modal"
-        data-bs-target="#editInformation"
-        @click.prevent.stop="showModal"
+        <button
+          type="button"
+          class="btn btn-outline editButton"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
         >
           編輯個人資料
         </button>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- Modal -->
-    <div
+    <!-- <div
       class="modal fade"
       id="editInformation"
       tabindex="-1"
@@ -59,12 +59,12 @@
           <div class="modal-body">
             <div class="editContainer">
               <div class="coverPhoto">
-              <img
-                src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
-                alt=""
-                class="coverPhoto"
-              />
-            </div>
+                <img
+                  src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
+                  alt=""
+                  class="coverPhoto"
+                />
+              </div>
               <span class="textarea">
                 <img
                   src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
@@ -84,10 +84,54 @@
               type="submit"
               class="btn btn-secondary tweetSubmit"
               data-bs-dismiss="modal"
-              @click.prevent.stop="closeModal"
             >
               推文
             </button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- test -->
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">...</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -96,17 +140,17 @@
 </template>
 
 <script>
-import $ from "jquery";
+// import $ from "jquery";
 
 export default {
-  methods: {
-    showModal() {
-      $("#newTweet").modal("show");
-    },
-    closeModal() {
-      $("#newTweet").modal("hide");
-    },
-  },
+  // methods: {
+  //   showModal() {
+  //     $("#newTweet").modal("show");
+  //   },
+  //   closeModal() {
+  //     $("#newTweet").modal("hide");
+  //   },
+  // },
 };
 </script>
 
