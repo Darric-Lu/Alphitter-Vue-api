@@ -5,8 +5,8 @@
         <!-- Sidebar -->
         <Sidebar :active="active" />
       </div>
-      <div class="row col-10 mid-col">
-        <div class="col-12 col-lg-8">
+      <div class="row col-10 px-0">
+        <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- UserNavbar -->
           <UserNavbar />
           <div class="user-profile">
@@ -38,7 +38,7 @@ import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
 
 // GET api/tweets
-const dummydata =  [
+const dummydata = [
   {
     id: 1,
     description: "repudiandae",
@@ -318,7 +318,8 @@ export default {
 .mid-col {
   /* display: flex; */
   /* flex-flow: column wrap; */
-  border: 1px solid blue;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
   /* margin-right: auto; */
   /* margin-left: auto; */
   /* width: 600px; */
@@ -330,9 +331,9 @@ export default {
   height: 517px;
 }
 .user-profile {
-  border: 1px solid green;
+  /* border: 1px solid green; */
   width: 100%;
-  height: 375px;
+  height: 400px;
 }
 .mid-down {
   border: 1px solid black;

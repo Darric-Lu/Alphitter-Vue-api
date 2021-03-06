@@ -1,22 +1,20 @@
 <template>
-  <div class="container userprofile">
-    <img
-      src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
-      alt=""
-      class="avatar"
-    />
-    <div class="coverPhoto">
+  <div class="container user-profile px-0">
+    <div class="user-title-cut">
       <img
-        src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
-        alt=""
-        class="coverPhoto"
+        class="user-title-pic"
+        :src="cerruntUser.titleImage"
+        alt="使用者標題照片"
       />
     </div>
+    <div class="avatar">
+      <img class="avatar-img" :src="cerruntUser.userImage" alt="使用者大頭貼" />
+    </div>
     <div class="information">
-      <div class="edit">
+      <div class="edit d-flex flex-row-reverse">
         <button
           type="button"
-          class="btn btn-outline editButton"
+          class="btn edit-button"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
@@ -24,84 +22,23 @@
         </button>
       </div>
       <div class="name-text">
-        <span><strong>Name</strong></span>
-        <span>@account</span>
-      </div>
-      <div>
-        Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-        sint.
-      </div>
-      <div class="follow">
-        <strong>34個</strong>追隨中 <strong>59位</strong>跟隨者
-      </div>
-    </div>
-    <!-- Modal -->
-    <!-- <div
-      class="modal fade"
-      id="editInformation"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button
-              type="button"
-              class="btn btn-link"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click.prevent.stop="closeModal"
-            >
-              X
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="editContainer">
-              <div class="coverPhoto">
-                <img
-                  src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
-                  alt=""
-                  class="coverPhoto"
-                />
-              </div>
-              <span class="textarea">
-                <img
-                  src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
-                  alt=""
-                />
-                <textarea
-                  class="form-control"
-                  placeholder="有甚麼新鮮事?"
-                  id="floatingTextarea2"
-                  style="height: 100px"
-                ></textarea>
-              </span>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-secondary tweetSubmit"
-              data-bs-dismiss="modal"
-            >
-              推文
-            </button>
-          </div>
+        <span class="name-content">{{ cerruntUser.name }}</span>
+        <span class="name-account">@{{ cerruntUser.account }}</span>
+        <div class="mt-3">
+          {{ cerruntUser.SelfIntroduction }}
+        </div>
+        <div class="follow mt-2">
+          <span class="followers-content"
+            ><span class="bold">{{ cerruntUser.followersCount }}個</span>
+            <span class="gray">跟隨中</span>
+          </span>
+          <span class="following-content ms-2"
+            ><span class="bold">{{ cerruntUser.followingCount }}位</span>
+            <span class="gray">跟隨者</span></span
+          >
         </div>
       </div>
-    </div> -->
-
-    <!-- test -->
-    <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
-      Launch demo modal
-    </button>
+    </div>
 
     <!-- Modal -->
     <div
@@ -140,23 +77,72 @@
 </template>
 
 <script>
-// import $ from "jquery";
-
+const dummyCerruntUser = {
+  cerruntUser: {
+    account: "ClaireLi",
+    name: "Claire",
+    userImage:
+      "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+    titleImage:
+      "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
+    followersCount: "10",
+    followingCount: "20",
+    SelfIntroduction:
+      " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
+  },
+};
 export default {
-  // methods: {
-  //   showModal() {
-  //     $("#newTweet").modal("show");
-  //   },
-  //   closeModal() {
-  //     $("#newTweet").modal("hide");
-  //   },
-  // },
+  name: "UserProfile",
+  cerruntUser: {
+    account: "",
+    name: "",
+    userImage: "",
+    titleImage: "",
+    followersCount: "",
+    followingCount: "",
+    SelfIntroduction: "",
+  },
+  created() {
+    this.fetchCerruntUser();
+  },
+  methods: {
+    fetchCerruntUser() {
+      const {
+        account,
+        name,
+        userImage,
+        titleImage,
+        followersCount,
+        followingCount,
+        SelfIntroduction,
+      } = dummyCerruntUser.cerruntUser;
+      this.cerruntUser = {
+        ...this.cerruntUser,
+        account,
+        name,
+        userImage,
+        titleImage,
+        followersCount,
+        followingCount,
+        SelfIntroduction,
+      };
+    },
+  },
 };
 </script>
 
 <style scoped>
-.userprofile {
+.user-profile {
   position: relative;
+}
+.user-title-cut {
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}
+.user-title-pic {
+  width: 100%;
+  object-fit: cover;
 }
 .avatar {
   position: absolute;
@@ -166,33 +152,54 @@ export default {
   width: 140px;
   top: 124px;
   left: 14px;
-  z-index: 999;
+  /* z-index: 999; */
+  overflow: hidden;
 }
-.coverPhoto {
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.information {
   height: 200px;
   width: 100%;
 }
-.information {
-  height: 175px;
-  width: 100%;
-}
-.buttongroup {
+/* .buttongroup {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-}
-button {
+} */
+.edit-button {
   background: white;
   border-radius: 50px;
   border: 1px solid #ff6600;
   color: #ff6600;
   font-weight: bold;
-  width: 92px;
+  width: 122px;
   height: 40px;
+  margin: 10px 15px 0 0;
 }
 .name-text {
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
+  margin: 19px 0 0 15px;
+}
+.name-content {
+  font-weight: 800;
+  font-size: 19px;
+}
+.name-account {
+  color: #657786;
+  font-size: 15px;
+}
+.follow {
+  font-size: 15px;
+}
+.bold {
+  font-weight: 900;
+}
+.gray {
+  color: rgb(101, 119, 134, 1);
+  font-weight: 600;
 }
 </style>
