@@ -33,6 +33,7 @@ import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
 import Tab from "../components/Tab"
 
+// GET api/tweets
 const dummydata =  [
   {
     id: 1,
@@ -255,7 +256,6 @@ const dummydata =  [
   },
 ];
 
-// GET api/tweets
 const dummyUser = {
   currentUser: {
     id: 1,
@@ -279,7 +279,8 @@ export default {
   data() {
     return {
       tweets: [],
-      currentUserId: dummyUser.currentUser.id
+      currentUserId: dummyUser.currentUser.id,
+      user: {}
     }
   },
   created() {

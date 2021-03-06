@@ -7,7 +7,7 @@
       </div>
       <div class="col-lg-6 mid-col">
         <!-- UserNavbar -->
-        <UserNavbar />
+        <UserNavbar :tweets="tweets"/>
         <div class="user-other">
           <!-- Userprofile -->
           <UserProfile />
@@ -33,6 +33,7 @@ import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
 import Tab from "../components/Tab"
 
+// GET api/tweets/:id
 const dummydata =  [
   {
     id: 1,
@@ -271,21 +272,24 @@ export default {
   },
   created() {
     const { id: currentUserId } = this.$route.params
-    const id = Number(currentUserId)
-    this.fetchUserOther(id)
-    console.log('created',typeof id, id)
+    this.fetchUserOther(currentUserId)
+    console.log('created',typeof currentUserId, currentUserId)
   },
   methods: {
     fetchUserOther(currentUserId) {
-      console.log('currentUserId',typeof currentUserId)
-      // 用filter篩選currentUser的tweets
-      // 這邊資料型別不一樣，為何!!!!
-      // 現在在created階段用Number轉成數字了，但猜測是因為非同步的關係導致created比methods晚觸發
-      this.tweets = dummydata.filter((data) => {
-        data.UserId === currentUserId
-        console.log('data.UserId',typeof data.UserId, data.UserId)
-        console.log('currentUserId:',typeof currentUserId, currentUserId)
-      })
+      console.log('fetchUserOther id:', currentUserId)
+      this.tweets = dummydata
+
+      // console.log('currentUserId',typeof currentUserId)
+      // // 用filter篩選currentUser的tweets
+      // // 這邊資料型別不一樣，為何!!!!
+      // // 現在在created階段用Number轉成數字了，但猜測是因為非同步的關係導致created比methods晚觸發
+      // // 後來用==弱型別去判斷解決，但也不行...
+      // this.tweets = dummydata.filter((data) => {
+      //   data.UserId == currentUserId
+      //   console.log('data.UserId',typeof data.UserId, data.UserId)
+      //   console.log('currentUserId:',typeof currentUserId, currentUserId)
+      // })
     }
   }
 };
