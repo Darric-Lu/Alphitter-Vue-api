@@ -8,24 +8,27 @@
       <div class="col-lg-6 mid-col">
         <div class="twitterEditCard">
           <div class="mid-header">首頁</div>
-          <div class="textarea">
-            <img
-              src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
-              alt=""
-            />
-            <textarea
-              class="form-control"
-              placeholder="有甚麼新鮮事?"
-              id="floatingTextarea2"
-              style="height: 100px"
-            >
-            </textarea>
-            <span>
-              <button type="submit" class="btn btn-secondary tweet">
-                推文
-              </button>
-            </span>
-          </div>
+          <form action="" @submit.stop.prevent="handleSubmit">
+            <div class="textarea">
+              <img
+                src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+                alt=""
+              />
+              <textarea
+                class="form-control"
+                placeholder="有甚麼新鮮事?"
+                id="floatingTextarea2"
+                style="height: 100px"
+                v-model="text"
+              >
+              </textarea>
+              <span>
+                <button type="submit" class="btn btn-secondary tweet">
+                  推文
+                </button>
+              </span>
+            </div>
+          </form>
           <div class="divider"></div>
         </div>
         <div class="mid-down">
@@ -279,6 +282,7 @@ export default {
   },
   data() {
     return {
+      text:'',
       tweets: [],
     };
   },
@@ -289,6 +293,9 @@ export default {
     fetchMain() {
       this.tweets = dummydata;
     },
+    handleSubmit () {
+      console.log('submit')
+    }
   },
 };
 </script>
