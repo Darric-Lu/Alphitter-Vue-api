@@ -1,26 +1,29 @@
 <template>
-  <div class="container just">
+  <div class="container-xxl">
     <div class="row">
-      <div class="col-2 left-col">
+      <div class="col-2">
         <!-- Sidebar -->
-        <Sidebar />
+        <Sidebar :active="active" />
       </div>
-      <div class="col-10 col-lg-7 mid-col">
-        <!-- UserNavbar -->
-        <UserNavbar />
-        <div class="user-profile">
-          <!-- Userprofile -->
-          <UserProfile />
+      <div class="row col-10 mid-col">
+        <div class="col-12 col-lg-8">
+          <!-- UserNavbar -->
+          <UserNavbar />
+          <div class="user-profile">
+            <!-- Userprofile -->
+            <UserProfile />
+          </div>
+          <!-- tab -->
+          <Tab />
+          <div class="mid-down">
+            <!-- twitterCardTable -->
+            <twitterCardTable :tweets="tweets" />
+          </div>
         </div>
-        <!-- tab -->
-        <Tab />
-        <div class="mid-down">
-          <!-- twitterCardTable -->
-          <twitterCardTable :tweets="tweets" />
+        <div class="col-4 d-none d-lg-block right-col">
+          <!-- Recommendationtable -->
+          <RecommendationTable />
         </div>
-      </div>
-      <div class="col-3 d-none d-lg-block right-col">
-        <!-- Recommendationtable -->
       </div>
     </div>
   </div>
@@ -31,6 +34,7 @@ import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
+import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
 
 const dummydata = [
@@ -274,11 +278,17 @@ export default {
     UserNavbar,
     UserProfile,
     Tab,
+    RecommendationTable,
   },
   data() {
     return {
       tweets: [],
       currentUserId: dummyUser.currentUser.id,
+      active: {
+        home: "row",
+        self: "active",
+        setting: "row",
+      },
     };
   },
   created() {
@@ -295,20 +305,13 @@ export default {
 </script>
 
 <style scoped>
-/* .container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 15px;
-  padding-left: 15px;
-  width: 100%;
-} */
-.row {
-  /* display: flex; */
-  /* border: 1px solid crimson; */
+.col-2 {
+  box-sizing: border-box;
+  height: 1196px;
 }
 .left-col {
   border: 1px solid blue;
-  /* width: 235px; */
+
   height: 1196px;
 }
 .mid-col {
@@ -321,7 +324,7 @@ export default {
   height: auto;
 }
 .right-col {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   /* width: 350px; */
   height: 517px;
 }

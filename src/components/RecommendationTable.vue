@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapping">
+  <div class="wrapping mt-3">
     <div class="recommmendation-title ps-3">跟隨誰</div>
     <!-- 原始 -->
     <div class="user">
