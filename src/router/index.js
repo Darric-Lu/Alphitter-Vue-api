@@ -3,14 +3,17 @@ import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import SignIn from '../views/SignIn.vue'
 import SignUp from '../views/SignUp.vue'
+import UserSetting from '../views/UserSetting'
 import AdminSignIn from '../views/AdminSignIn.vue'
 import TweetMain from '../views/TweetMain.vue'
 import ReplyList from '../views/TweetReplyList.vue'
 import Userself from '../views/Userself.vue'
 import UserselfLike from '../views/UserselfLike.vue'
+import Userselftweetsandreplies from '../views/UserselfTweetsandReplies'
 import UserselfFollower from '../views/UserselfFollower.vue'
 import UserselfFollowing from '../views/UserselfFollowing.vue'
 import UserOther from '../views/UserOther.vue'
+// import { component } from 'vue/types/umd'
 
 Vue.use(VueRouter)
 
@@ -29,6 +32,11 @@ const routes = [
     path: '/signup',
     name: 'sign-up',
     component: SignUp
+  },
+  {
+    path: '/setting',
+    name: 'setting',
+    component: UserSetting
   },
   {
     path: '/admin',
@@ -69,6 +77,11 @@ const routes = [
     path: '/user/self/like',
     name: 'user-self-like',
     component: UserselfLike
+  },
+  {
+    path: '/user/self/tweetsandreplies',
+    name: 'user-self-tweetsandreplies',
+    component: Userselftweetsandreplies
   },
   {
     path: '/user/self/follower',
