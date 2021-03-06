@@ -24,7 +24,7 @@ const routes = [
     redirect: '/main'
   },
   {
-    path:'/signin',
+    path: '/signin',
     name: 'sign-in',
     component: SignIn
   },
@@ -86,12 +86,12 @@ const routes = [
   {
     path: '/user/self/follower',
     name: 'user-self-follower',
-    component: UserselfFollower
+    component: () => import('../views/UserselfFollower.vue')
   },
   {
     path: '/user/self/following',
     name: 'user-self-following',
-    component: UserselfFollowing
+    component: () => import('../views/UserselfFollowing.vue')
   },
   {
     path: '/user/:id',

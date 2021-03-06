@@ -1,85 +1,37 @@
 <template>
   <div class="wrapping">
     <div class="users-title fw-bold">使用者列表</div>
-    <div class="wrapping-users row px-3">
-      <!-- 原始 -->
-      <div class="px-1 mt-2">
-        <div class="card">
-          <div class="user-img">
-            <img
-              src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg"
-              alt=""
-              class="user-img-picture"
-            />
-          </div>
-          <div class="user-title-img">
-            <img
-              src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg"
-              class="card-img-top"
-              alt=""
-            />
-          </div>
-          <div class="card-body text-center p-0 pt-5">
-            <h5 class="card-name">ALPHAcamp</h5>
-            <p class="card-account">@AC</p>
-            <p class="">
-              <span class="card-tweets bold">
-                <img src="./../../image/comment-alt.svg" alt="" />
-                1.5k
-              </span>
-              <span class="card-liked bold">
-                <img src="./../../image/heart.svg" alt="" />
-                20k
-              </span>
-            </p>
-            <p class="">
-              <span class="card-following"
-                ><span class="bold">34個</span>
-                <span class="gray">跟隨中</span>
-              </span>
-              <span class="card-followed"
-                ><span class="bold">5位</span>
-                <span class="gray">跟隨者</span></span
-              >
-            </p>
-          </div>
+    <div class="wrapping-users">
+      <div class="wrapping-card" v-for="user in users" :key="user.account">
+        <div class="user-img">
+          <img :src="user.image" alt="" class="user-img-picture" />
         </div>
-      </div>
-      <!--  -->
-      <div class="px-1 mt-2" v-for="user in users" :key="user.account">
-        <div class="card">
-          <div class="user-img">
-            <img :src="user.image" alt="" class="user-img-picture" />
-          </div>
-          <img
-            src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body text-center p-0 pt-5">
-            <h5 class="card-name">{{ user.name }}</h5>
-            <p class="card-account">@{{ user.account }}</p>
-            <p class="">
-              <span class="card-tweets bold">
-                <img src="./../../image/comment-alt.svg" alt="" />
-                {{ user.replyCount }}k
-              </span>
-              <span class="card-liked bold">
-                <img src="./../../image/heart.svg" alt="" />
-                {{ user.likeCount }}k
-              </span>
-            </p>
-            <p class="">
-              <span class="card-following"
-                ><span class="bold">{{ user.following }}個</span>
-                <span class="gray">跟隨中</span>
-              </span>
-              <span class="card-followed"
-                ><span class="bold">{{ user.followed }}位</span>
-                <span class="gray">跟隨者</span></span
-              >
-            </p>
-          </div>
+        <div class="user-title">
+          <img :src="user.titleImage" class="user-title-img" alt="" />
+        </div>
+        <div class="card-body text-center px-0 pt-5 pb-1">
+          <h5 class="card-name">{{ user.name }}</h5>
+          <p class="card-account">@{{ user.account }}</p>
+          <p class="m-2">
+            <span class="card-tweets bold">
+              <img src="./../assets/comment-alt.svg" alt="" />
+              {{ user.replyCount }}k
+            </span>
+            <span class="card-liked bold">
+              <img src="./../assets/heart.svg" alt="" />
+              {{ user.likeCount }}k
+            </span>
+          </p>
+          <p class="m-2">
+            <span class="card-following"
+              ><span class="bold">{{ user.following }}個</span>
+              <span class="gray">跟隨中</span>
+            </span>
+            <span class="card-followed"
+              ><span class="bold">{{ user.followed }}位</span>
+              <span class="gray">跟隨者</span></span
+            >
+          </p>
         </div>
       </div>
 
@@ -106,9 +58,14 @@
 .wrapping-users {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* grid-template-rows: repeat(auto-fit, minmax(360px, 1fr)); */
+  grid-gap: 15px;
+  height: 1144px;
+  overflow-y: auto;
 }
-.card {
+.wrapping-card {
   width: auto;
+  height: 370px;
   position: relative;
   border-radius: 20px;
 }
@@ -118,21 +75,33 @@
   width: 10rem;
   height: 10rem;
   border-radius: 50%;
-  top: 35%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
 }
 .user-img-picture {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
+.user-title {
+  width: auto;
+  height: 180px;
+  overflow: hidden;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
 .user-title-img {
-  height: 40%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 .card-body {
   background-color: #f6f7f8;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 .card-name {
   font-weight: 700;
@@ -150,13 +119,13 @@
 .bold {
   font-weight: 900;
 }
-@media screen and (max-width: 657px) {
+/* @media screen and (max-width: 657px) {
   .user-img {
     width: 12rem;
     height: 12rem;
     top: 40%;
   }
-}
+} */
 </style>
 
 <script>
@@ -177,6 +146,8 @@ export default {
           likeCount: 50,
           following: 82,
           followed: 10,
+          titleImage:
+            "https://images.pexels.com/photos/710743/pexels-photo-710743.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
         },
         {
           name: "Claire",
@@ -190,6 +161,8 @@ export default {
           likeCount: 54,
           following: 100,
           followed: 6,
+          titleImage:
+            "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
         },
         {
           name: "goater",
@@ -203,6 +176,8 @@ export default {
           likeCount: 44,
           following: 2,
           followed: 8,
+          titleImage:
+            "https://images.pexels.com/photos/4770760/pexels-photo-4770760.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         },
         {
           name: "stan_wang",
@@ -216,6 +191,8 @@ export default {
           likeCount: 4,
           following: 15,
           followed: 66,
+          titleImage:
+            "https://images.pexels.com/photos/6941079/pexels-photo-6941079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         },
         {
           name: "Darric",
@@ -229,6 +206,8 @@ export default {
           likeCount: 14,
           following: 105,
           followed: 0,
+          titleImage:
+            "https://images.pexels.com/photos/6231817/pexels-photo-6231817.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         },
         {
           name: "路人甲",
@@ -241,6 +220,50 @@ export default {
           likeCount: 0,
           following: 0,
           followed: 0,
+          titleImage:
+            "https://images.pexels.com/photos/6102564/pexels-photo-6102564.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        },
+        {
+          name: "路人甲",
+          image:
+            "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
+          account: "someone",
+          time: "5小時前",
+          content: "我也要來學習了。",
+          replyCount: 0,
+          likeCount: 0,
+          following: 0,
+          followed: 0,
+          titleImage:
+            "https://images.pexels.com/photos/6102564/pexels-photo-6102564.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        },
+        {
+          name: "路人甲",
+          image:
+            "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
+          account: "someone",
+          time: "5小時前",
+          content: "我也要來學習了。",
+          replyCount: 0,
+          likeCount: 0,
+          following: 0,
+          followed: 0,
+          titleImage:
+            "https://images.pexels.com/photos/6102564/pexels-photo-6102564.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        },
+        {
+          name: "路人甲",
+          image:
+            "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
+          account: "someone",
+          time: "5小時前",
+          content: "我也要來學習了。",
+          replyCount: 0,
+          likeCount: 0,
+          following: 0,
+          followed: 0,
+          titleImage:
+            "https://images.pexels.com/photos/6102564/pexels-photo-6102564.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         },
       ],
     };

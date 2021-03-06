@@ -1,26 +1,29 @@
 <template>
-  <div class="container">
+  <div class="container-xxl">
     <div class="row">
-      <div class="col-lg-2 left-col">
+      <div class="col-2">
         <!-- Sidebar -->
-        <Sidebar />
+        <Sidebar :active="active" />
       </div>
-      <div class="col-lg-6 mid-col">
-        <!-- UserNavbar -->
-        <UserNavbar :tweets="tweets"/>
-        <div class="user-profile">
-          <!-- Userprofile -->
-          <UserProfile />
+      <div class="row col-10 mid-col">
+        <div class="col-12 col-lg-8">
+          <!-- UserNavbar -->
+          <UserNavbar />
+          <div class="user-profile">
+            <!-- Userprofile -->
+            <UserProfile />
+          </div>
+          <!-- tab -->
+          <Tab />
+          <div class="mid-down">
+            <!-- twitterCardTable -->
+            <twitterCardTable :tweets="tweets" />
+          </div>
         </div>
-        <!-- tab -->
-        <Tab />
-        <div class="mid-down">
-          <!-- twitterCardTable -->
-          <twitterCardTable :tweets="tweets"/>
+        <div class="col-4 d-none d-lg-block right-col">
+          <!-- Recommendationtable -->
+          <RecommendationTable />
         </div>
-      </div>
-      <div class="col-lg-3 right-col">
-        <!-- Recommendationtable -->
       </div>
     </div>
   </div>
@@ -31,7 +34,8 @@ import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
-import Tab from "../components/Tab"
+import RecommendationTable from "../components/RecommendationTable";
+import Tab from "../components/Tab";
 
 // GET api/tweets
 const dummydata =  [
@@ -259,13 +263,13 @@ const dummydata =  [
 const dummyUser = {
   currentUser: {
     id: 1,
-    name: '管理者',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
+    name: "管理者",
+    email: "root@example.com",
+    image: "https://i.pravatar.cc/300",
+    isAdmin: true,
   },
-  isAuthenticated: true
-}
+  isAuthenticated: true,
+};
 
 export default {
   name: "Userself",
@@ -274,56 +278,54 @@ export default {
     twitterCardTable,
     UserNavbar,
     UserProfile,
-    Tab
+    Tab,
+    RecommendationTable,
   },
   data() {
     return {
       tweets: [],
       currentUserId: dummyUser.currentUser.id,
-      user: {}
-    }
+      active: {
+        home: "row",
+        self: "active",
+        setting: "row",
+      },
+    };
   },
   created() {
-    const currentUserId = this.currentUserId
-    this.fetchUserself(currentUserId)
+    const currentUserId = this.currentUserId;
+    this.fetchUserself(currentUserId);
   },
   methods: {
     fetchUserself(currentUserId) {
       // 用filter篩選currentUser的tweets
-      this.tweets = dummydata.filter((data) => data.UserId === currentUserId)
-    }
-  }
+      this.tweets = dummydata.filter((data) => data.UserId === currentUserId);
+    },
+  },
 };
 </script>
 
 <style scoped>
-.container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 15px;
-  padding-left: 15px;
-  width: 100%;
-}
-.row {
-  display: flex;
-  border: 1px solid crimson;
+.col-2 {
+  box-sizing: border-box;
+  height: 1196px;
 }
 .left-col {
   border: 1px solid blue;
-  /* width: 235px; */
+
   height: 1196px;
 }
 .mid-col {
-  display: flex;
-  flex-flow: column wrap;
+  /* display: flex; */
+  /* flex-flow: column wrap; */
   border: 1px solid blue;
-  margin-right: auto;
-  margin-left: auto;
+  /* margin-right: auto; */
+  /* margin-left: auto; */
   /* width: 600px; */
   height: auto;
 }
 .right-col {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   /* width: 350px; */
   height: 517px;
 }

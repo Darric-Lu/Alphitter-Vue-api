@@ -2,7 +2,7 @@
   <div class="container-xxl">
     <div class="row">
       <div class="col-2">
-        <AdminSideBar />
+        <AdminSideBar :active="active" />
       </div>
       <div class="col-10">
         <AdminTwitterCardTable />
@@ -30,6 +30,14 @@ export default {
   components: {
     AdminSideBar,
     AdminTwitterCardTable,
+  },
+  data() {
+    return {
+      active: {
+        twitterContent: "active",
+        userContent: "row",
+      },
+    };
   },
 };
 </script>

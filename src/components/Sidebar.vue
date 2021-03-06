@@ -1,39 +1,83 @@
 <template>
-  <div class="container">
-    <div>
-      <img
-        src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
-        alt=""
-      />
+  <div class="d-flex flex-column wrapping">
+    <!-- Alpha logo 連結至首頁 -->
+    <div class="twitter row mt-4 d-flex justify-content-center">
+      <div class="twitter-icon col-2 me-3 me-md-0 ms-md-3">
+        <img
+          class="logo-img"
+          src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+          alt="ALPHAcamp logo"
+        />
+      </div>
+      <div class="twitter-content col-8 d-none d-md-block"></div>
     </div>
-    <div class="nav">
-      <span>
-        <font-awesome-icon icon="home" />
-        <button type="button" class="btn btn-link">首頁</button>
-      </span>
-      <span>
-        <font-awesome-icon icon="user" />
-        <button type="button" class="btn btn-link">個人資料</button>
-      </span>
-      <span>
-        <font-awesome-icon icon="cog" />
-        <button type="button" class="btn btn-link">設定</button>
-      </span>
-      <button
-        class="btn btn-sm btn-block mt-3 tweetButton"
-        type="button"
-        data-bs-toggle="modal"
-        data-bs-target="#newTweet"
-        @click.prevent.stop="showModal"
+    <!-- 連結至首頁 -->
+    <router-link :to="{ name: 'main' }" class="nav-link">
+      <div
+        class="twitter row mt-4 d-flex justify-content-center"
+        :class="active.hmoce"
       >
-        推文
-      </button>
+        <div class="twitter-icon col-2">
+          <font-awesome-icon icon="home" />
+        </div>
+        <div class="nav-content col-8 d-none d-md-block">
+          <p>首頁</p>
+        </div>
+      </div>
+    </router-link>
+    <!-- 個人資料 -->
+    <router-link :to="{ name: 'user-self' }" class="nav-link">
+      <div
+        class="twitter row mt-4 d-flex justify-content-center"
+        :class="active.self"
+      >
+        <div class="twitter-icon col-2">
+          <font-awesome-icon icon="user" />
+        </div>
+        <div class="nav-content col-8 d-none d-md-block">
+          <p>個人資料</p>
+        </div>
+      </div>
+    </router-link>
+    <!-- 個人資料 -->
+    <router-link :to="{ name: '' }" class="nav-link">
+      <div
+        class="twitter row mt-4 d-flex justify-content-center"
+        :class="active.setting"
+      >
+        <div class="twitter-icon col-2">
+          <font-awesome-icon icon="cog" />
+        </div>
+        <div class="nav-content col-8 d-none d-md-block">
+          <p>設定</p>
+        </div>
+      </div>
+    </router-link>
+    <!-- 推文 -->
+    <button
+      class="btn mt-3 tweetButton p-0"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#newTweet"
+    >
+      推文
+    </button>
+
+    <!-- 登出 -->
+    <div class="mt-auto">
+      <router-link :to="{ name: 'admin-users' }" class="nav-link">
+        <div class="logout row mt-3 d-flex justify-content-center">
+          <div class="logout-icon col-2">
+            <font-awesome-icon icon="sign-in-alt" />
+          </div>
+          <div class="userCard-content col-8 d-none d-md-block">
+            <p>登出</p>
+          </div>
+        </div>
+      </router-link>
     </div>
-    <div class="logout">
-      <font-awesome-icon icon="sign-in-alt" />
-      <button type="button" class="btn btn-link">登出</button>
-    </div>
-    <!-- Modal -->
+
+    <!-- 推文  Modal -->
     <div
       class="modal fade"
       id="newTweet"
@@ -44,15 +88,14 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button
-              type="button"
-              class="btn btn-link"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click.prevent.stop="closeModal"
-            >
-              X
-            </button>
+            <div class="modal-title">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
           </div>
           <div class="modal-body">
             <span class="textarea">
@@ -73,7 +116,6 @@
               type="submit"
               class="btn btn-secondary tweetSubmit"
               data-bs-dismiss="modal"
-              @click.prevent.stop="closeModal"
             >
               推文
             </button>
@@ -85,47 +127,45 @@
 </template>
 
 <script>
-import $ from "jquery";
-
 export default {
-  methods: {
-    showModal() {
-      $("#newTweet").modal("show");
-    },
-    closeModal() {
-      $("#newTweet").modal("hide");
+  name: "Sidebar",
+  props: {
+    active: {
+      type: Object,
+      default: () => ({
+        home: "",
+        self: "",
+        setting: "",
+      }),
     },
   },
 };
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-flow: column wrap;
-  height: 1196px;
+.wrapping {
+  height: 1200px;
+  box-sizing: border-box;
 }
-img {
-  /* position: absolute; */
-  width: 50px;
-  height: 50px;
-  /* left: 48%;
-  top: 60px; */
+.row {
+  color: rgb(20, 20, 20);
 }
-.nav {
-  display: flex;
-  flex-flow: column wrap;
-  /* position: absolute; */
-  width: 100%;
-  height: 240px;
-  /* top: 78px; */
+.row:hover {
+  color: rgb(255, 102, 0, 1);
+}
+.logo-img {
+  width: 30px;
+  height: 100%;
+}
+.twitter-icon {
+  position: relative;
 }
 .tweetButton {
   background: #ff6600;
   border-radius: 50px;
   color: white;
   font-weight: bold;
-  width: 100%;
+  width: 80%;
   height: 45px;
 }
 .tweetSubmit {
@@ -134,13 +174,20 @@ img {
   color: white;
   font-weight: bold;
 }
-.textarea {
+/* .textarea {
   display: flex;
-}
-textarea {
+} */
+/* textarea {
   border-style: none;
-}
+} */
 .logout {
   justify-content: flex-end;
+}
+.nav-content {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.active {
+  color: #ff6600;
 }
 </style>
