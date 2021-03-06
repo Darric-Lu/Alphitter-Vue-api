@@ -13,15 +13,30 @@
       />
     </div>
     <div class="information">
-      <div class="edit">
-        <button type="button" 
-        class="btn btn-outline editButton" 
-        data-bs-toggle="modal"
-        data-bs-target="#editInformation"
-        @click.prevent.stop="showModal"
-        >
-          編輯個人資料
-        </button>
+      <div class="buttongroup">
+        <div class="editbutton">
+          <button
+            type="button"
+            class="btn btn-outline editButton"
+            data-bs-toggle="modal"
+            data-bs-target="#editInformation"
+            @click.prevent.stop="showModal"
+          >
+            編輯個人資料
+          </button>
+        </div>
+        <div class="followbuttongroup">
+          <button
+            type="button"
+            class="btn btn-outline followButton">
+            跟隨
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline followButton">
+            正在跟隨
+          </button>  
+        </div>
       </div>
       <div class="name-text">
         <span><strong>Name</strong></span>
@@ -59,12 +74,12 @@
           <div class="modal-body">
             <div class="editContainer">
               <div class="coverPhoto">
-              <img
-                src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
-                alt=""
-                class="coverPhoto"
-              />
-            </div>
+                <img
+                  src="https://images.unsplash.com/photo-1610865916711-1667294f44e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXw2MzkyMXwwfDF8c2VhcmNofDF8fG1vdXxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=200"
+                  alt=""
+                  class="coverPhoto"
+                />
+              </div>
               <span class="textarea">
                 <img
                   src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
@@ -132,18 +147,18 @@ export default {
   height: 175px;
   width: 100%;
 }
-.edit {
+.buttongroup {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
 }
-.editButton {
+button {
   background: white;
   border-radius: 50px;
   border: 1px solid #ff6600;
   color: #ff6600;
   font-weight: bold;
-  width: 25%;
+  width: 92px;
   height: 40px;
 }
 .name-text {
