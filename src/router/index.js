@@ -21,7 +21,8 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    redirect: '/main'
+    redirect: '/main',
+    meta: { requiresAuth: true}
   },
   {
     path: '/signin',
@@ -61,7 +62,8 @@ const routes = [
   {
     path: '/main',
     name: 'main',
-    component: TweetMain
+    component: TweetMain,
+    meta: { requiresAuth: true}
   },
   {
     path: '/reply_list',
