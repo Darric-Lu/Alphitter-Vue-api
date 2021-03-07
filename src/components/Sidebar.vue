@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex flex-column wrapping">
+  <div
+    class="d-flex flex-column wrapping align-items-start align-items-md-stretch"
+  >
     <!-- Alpha logo 連結至首頁 -->
     <div class="twitter row mt-4 d-flex justify-content-center">
       <div class="twitter-icon col-2 me-3 me-md-0 ms-md-3">
