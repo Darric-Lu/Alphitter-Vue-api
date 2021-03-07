@@ -40,10 +40,14 @@
         <p class="user-account">@{{ user.account }}</p>
       </div>
       <div class="user-following">
-        <a href="" v-if="user.isFollowing">
+        <a
+          href=""
+          v-if="user.isFollowing"
+          @click.stop.prevent="unFollow(user.id)"
+        >
           <div class="user-following-btn text-center">正在跟隨</div>
         </a>
-        <a href="" v-else>
+        <a href="" v-else @click.stop.prevent="Follow(user.id)">
           <div class="user-follow-btn text-center">跟隨</div>
         </a>
       </div>
@@ -150,7 +154,7 @@ export default {
   created() {
     this.sortFollowedCount();
     this.top5();
-    console.log(this.recommendUsers.length);
+    // console.log(this.recommendUsers.length);
   },
   methods: {
     sortFollowedCount() {
@@ -166,6 +170,30 @@ export default {
     moreRecommendUsers() {
       (this.recommendUsers = [...this.initialRecommendUsers]),
         this.sortFollowedCount();
+    },
+    unFollow(id) {
+      this.recommendUsers = this.recommendUsers.map((user) => {
+        if (user.id === id) {
+          return (user = {
+            ...user,
+            isFollowing: false,
+          });
+        } else {
+          return user;
+        }
+      });
+    },
+    Follow(id) {
+      this.recommendUsers = this.recommendUsers.map((user) => {
+        if (user.id === id) {
+          return (user = {
+            ...user,
+            isFollowing: true,
+          });
+        } else {
+          return user;
+        }
+      });
     },
   },
 };
