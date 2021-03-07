@@ -42,7 +42,7 @@
       </div>
     </router-link>
     <!-- 個人資料 -->
-    <router-link :to="{ name: '' }" class="nav-link">
+    <router-link :to="{ name: 'setting' }" class="nav-link">
       <div
         class="twitter row mt-4 d-flex justify-content-center"
         :class="active.setting"
