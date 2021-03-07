@@ -2,7 +2,7 @@
   <div class="container-xxl">
     <div class="row">
       <div class="col-2">
-        <!-- Sidebar -->
+        <!-- Sidebar 顯示全寬2/12-->
         <Sidebar :active="active" :cerruntUser="cerruntUser" />
       </div>
       <div class="row col-10 px-0">
@@ -455,30 +455,13 @@ export default {
   box-sizing: border-box;
   height: 1196px;
 }
-.left-col {
-  border: 1px solid blue;
-
-  height: 1196px;
-}
 .mid-col {
-  /* display: flex; */
-  /* flex-flow: column wrap; */
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
-  /* margin-right: auto; */
-  /* margin-left: auto; */
-  /* width: 600px; */
   height: auto;
 }
 .right-col {
-  /* border: 1px solid blue; */
-  /* width: 350px; */
   height: fit-content;
-}
-.user-profile {
-  /* border: 1px solid green; */
-  width: 100%;
-  height: 400px;
 }
 .mid-down {
   border: 1px solid black;

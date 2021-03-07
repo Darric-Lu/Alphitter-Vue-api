@@ -15,7 +15,7 @@
     <router-link :to="{ name: 'main' }" class="nav-link">
       <div
         class="twitter row mt-4 d-flex justify-content-center"
-        :class="active.hmoce"
+        :class="active.home"
       >
         <div class="twitter-icon col-2">
           <font-awesome-icon icon="home" />
