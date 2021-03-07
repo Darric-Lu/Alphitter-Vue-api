@@ -22,7 +22,7 @@
         </div>
         <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable -->
-          <RecommendationTable />
+          <RecommendationTable :initial-recommend-users="recommendUsers" />
         </div>
       </div>
     </div>
@@ -51,6 +51,99 @@ const dummyCerruntUser = {
     SelfIntroduction:
       " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
   },
+};
+
+const dummyRecommendUsers = {
+  recommendUsers: [
+    {
+      id: 1,
+      name: "ALPHAcamp",
+      account: "ac",
+      image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
+      isFollowing: true,
+      followedCount: 50,
+    },
+    {
+      id: 2,
+      name: "Darric",
+      account: "DL",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+      isFollowing: true,
+      followedCount: 10,
+    },
+    {
+      id: 3,
+      name: "Claire",
+      account: "ClaireLi",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+      isFollowing: true,
+      followedCount: 30,
+    },
+    {
+      id: 4,
+      name: "goater",
+      account: "goater",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
+      isFollowing: false,
+      followedCount: 40,
+    },
+    {
+      id: 5,
+      name: "stan_wang",
+      account: "stan",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
+      isFollowing: false,
+      followedCount: 46,
+    },
+    {
+      id: 6,
+      name: "ALPHAcamp",
+      account: "ac",
+      image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
+      isFollowing: true,
+      followedCount: 70,
+    },
+    {
+      id: 7,
+      name: "Darric",
+      account: "DL",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+      isFollowing: true,
+      followedCount: 12,
+    },
+    {
+      id: 8,
+      name: "Claire",
+      account: "ClaireLi",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+      isFollowing: true,
+      followedCount: 31,
+    },
+    {
+      id: 9,
+      name: "goater",
+      account: "goater",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
+      isFollowing: false,
+      followedCount: 2,
+    },
+    {
+      id: 10,
+      name: "stan_wang",
+      account: "stan",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
+      isFollowing: false,
+      followedCount: 60,
+    },
+  ],
 };
 
 const dummydata = [
@@ -314,12 +407,14 @@ export default {
         followingCount: "",
         SelfIntroduction: "",
       },
+      recommendUsers: {},
     };
   },
   created() {
     const currentUserId = this.currentUserId;
     this.fetchUserself(currentUserId);
     this.fetchCerruntUser();
+    this.fetchRecommendUsers();
   },
   methods: {
     fetchUserself(currentUserId) {
@@ -346,6 +441,10 @@ export default {
         followingCount,
         SelfIntroduction,
       };
+    },
+    fetchRecommendUsers() {
+      this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
+      // console.log("recommendUsers", this.recommendUsers);
     },
   },
 };
@@ -374,7 +473,7 @@ export default {
 .right-col {
   /* border: 1px solid blue; */
   /* width: 350px; */
-  height: 517px;
+  height: fit-content;
 }
 .user-profile {
   /* border: 1px solid green; */

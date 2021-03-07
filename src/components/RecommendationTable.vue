@@ -2,7 +2,7 @@
   <div class="wrapping mt-3">
     <div class="recommmendation-title ps-3">跟隨誰</div>
     <!-- 原始 -->
-    <div class="user">
+    <!-- <div class="user">
       <div class="user-image">
         <div class="user-image-cut">
           <img
@@ -21,9 +21,9 @@
           <div class="user-following-btn text-center">正在跟隨</div>
         </a>
       </div>
-    </div>
+    </div> -->
     <!--  -->
-    <div class="user" v-for="user in users" :key="user.id">
+    <div class="user" v-for="user in recommendUsers" :key="user.id">
       <div class="user-image">
         <div class="user-image-cut">
           <img
@@ -34,7 +34,9 @@
         </div>
       </div>
       <div class="user-info ms-2">
-        <p class="mt-2 mb-0 user-name">{{ user.name }}</p>
+        <p class="mt-2 mb-0 user-name" :title="user.followedCount">
+          {{ user.name }}
+        </p>
         <p class="user-account">@{{ user.account }}</p>
       </div>
       <div class="user-following">
@@ -46,7 +48,9 @@
         </a>
       </div>
     </div>
-    <div class="recommmendation-footer ps-3 pt-2">顯示更多</div>
+    <div class="recommmendation-footer ps-3" v-if="recommendUsers.length === 5">
+      <div class="displayMore" @click="moreRecommendUsers">顯示更多</div>
+    </div>
   </div>
 </template>
 
@@ -62,10 +66,11 @@ a {
 .recommmendation-title {
   height: 46px;
   line-height: 46px;
-  border-bottom: 1px #e6ecf0 solid;
   font-weight: 900;
 }
 .recommmendation-footer {
+  height: 46px;
+  line-height: 46px;
   color: #ff6600;
   font-weight: 700;
 }
@@ -73,7 +78,7 @@ a {
   display: grid;
   grid-template-columns: 70px 1fr auto;
   grid-template-rows: 70px;
-  border-bottom: 1px #e6ecf0 solid;
+  border-top: 1px #e6ecf0 solid;
 }
 .user-image {
   position: relative;
@@ -123,56 +128,45 @@ a {
   top: 20px;
   font-weight: 700;
 }
+.displayMore {
+  cursor: pointer;
+}
 </style>
 
 <script>
 export default {
   name: "RecommendationTable",
+  props: {
+    initialRecommendUsers: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      users: [
-        {
-          id: 1,
-          name: "ALPHAcamp",
-          account: "ac",
-          image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-          isFollowing: true,
-        },
-        {
-          id: 2,
-          name: "Darric",
-          account: "DL",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
-          isFollowing: true,
-        },
-        {
-          id: 3,
-          name: "Claire",
-          account: "ClaireLi",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-          isFollowing: true,
-        },
-        {
-          id: 4,
-          name: "goater",
-          account: "goater",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
-          isFollowing: false,
-        },
-        {
-          id: 5,
-          name: "stan_wang",
-          account: "stan",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
-          isFollowing: false,
-        },
-        // { name: "路人甲", account: "someone", image: "", isFollowing: false },
-      ],
+      recommendUsers: [...this.initialRecommendUsers],
     };
+  },
+  created() {
+    this.sortFollowedCount();
+    this.top5();
+    console.log(this.recommendUsers.length);
+  },
+  methods: {
+    sortFollowedCount() {
+      this.recommendUsers
+        .sort(function (a, b) {
+          return a.followedCount - b.followedCount;
+        })
+        .reverse();
+    },
+    top5() {
+      this.recommendUsers = [...this.recommendUsers.slice(0, 5)];
+    },
+    moreRecommendUsers() {
+      (this.recommendUsers = [...this.initialRecommendUsers]),
+        this.sortFollowedCount();
+    },
   },
 };
 </script>
