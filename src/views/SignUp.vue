@@ -88,7 +88,9 @@
       </div>
       <div class="text-center mb-3 otherOption">
         <span>
-          <router-link class="cancel-btn" to="/signup">取消</router-link>
+          <router-link class="cancel-btn" :to="{ name: 'sign-in' }"
+            >取消</router-link
+          >
         </span>
       </div>
     </form>
@@ -198,6 +200,9 @@ input {
 }
 input:focus {
   background-color: #f5f8fa;
+}
+label {
+  margin-left: 10px;
 }
 .cancel-btn {
   font-weight: 700;

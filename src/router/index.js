@@ -22,7 +22,7 @@ const routes = [
     path: '/',
     name: 'root',
     redirect: '/main',
-    meta: { requiresAuth: true}
+    meta: { requiresAuth: true }
   },
   {
     path: '/signin',
@@ -42,7 +42,7 @@ const routes = [
   {
     path: '/admin',
     exact: true,
-    redirect: '/admin/twitter'
+    redirect: '/admin/signin'
   },
   {
     path: '/admin/twitter',
@@ -63,7 +63,7 @@ const routes = [
     path: '/main',
     name: 'main',
     component: TweetMain,
-    meta: { requiresAuth: true}
+    meta: { requiresAuth: true }
   },
   {
     path: '/reply_list',

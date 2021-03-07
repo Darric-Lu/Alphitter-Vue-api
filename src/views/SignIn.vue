@@ -12,13 +12,13 @@
       </div>
 
       <div class="form-label-group mb-2">
+        <label for="accountNumber">帳號</label>
         <input
           id="accountNumber"
           v-model="accountNumber"
           name="accountNumber"
           type="accountNumber"
           class="form-control"
-          placeholder="帳號"
           autocomplete="username"
           required
           autofocus
@@ -26,13 +26,13 @@
       </div>
 
       <div class="form-label-group mb-3">
+        <label for="password">密碼</label>
         <input
           id="password"
           v-model="password"
           name="password"
           type="password"
           class="form-control"
-          placeholder="密碼"
           autocomplete="current-password"
           required
         />
@@ -52,7 +52,7 @@
         </span>
         <span class="mx-2"> • </span>
         <span>
-          <a href="/signup">後台登入</a>
+          <router-link to="/admin/signin">後台登入</router-link>
         </span>
       </div>
     </form>
@@ -153,7 +153,9 @@ input {
 input:focus {
   background-color: #f5f8fa;
 }
-
+label {
+  margin-left: 10px;
+}
 .otherOption {
   display: flex;
   justify-content: flex-end;
