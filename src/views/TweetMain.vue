@@ -53,6 +53,9 @@
 import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import RecommendationTable from "../components/RecommendationTable";
+import {v4 as uuidv4} from 'uuid'
+import { Toast } from '../utils/helpers';
+
 
 // GET api/tweets
 const dummydata = [
@@ -369,6 +372,7 @@ const dummyRecommendUsers = {
   ],
 };
 
+
 export default {
   name: "TweetMain",
   components: {
@@ -405,6 +409,97 @@ export default {
       this.tweets = dummydata;
     },
     handleSubmit() {
+      if(!this.description) {
+        Toast.fire({
+          icon: 'error',
+          title: '請填寫推文內容'
+        })
+      }
+      if(this.description.length >= 140) {
+        Toast.fire({
+          icon: 'error',
+          title: '字數限制140個'
+        })
+      }
+      // TODO: 向 API 發送 POST 請求
+      // 伺服器新增 Comment 成功後...
+      console.log("submit");
+      console.log(this.description.length);
+      this.tweets.push({
+        id: uuidv4(),
+        description: this.description,
+        UserId: 1,
+        createdAt: "2021-03-03T16:14:20.000Z",
+        updatedAt: "2021-03-03T16:14:20.000Z",
+        User: {
+          id: 1,
+          name: "root",
+          email: "root@example.com",
+          account: "root",
+          password:
+            "$2a$10$k/8PhvsPm3PqlNcc/OfmHO1o7Mo9LubVdbJzIvGRNWPF86QXrU6DS",
+          avatar: null,
+          cover: null,
+          introduction: null,
+          role: "admin",
+          createdAt: "2021-03-03T16:14:19.000Z",
+          updatedAt: "2021-03-03T16:14:19.000Z",
+        },
+        Replies: [
+          {
+            id: 3,
+            comment: "consequatur corporis aut",
+            UserId: 5,
+            TweetId: 1,
+            createdAt: "2021-03-02T11:47:05.000Z",
+            updatedAt: "2021-03-02T11:47:05.000Z",
+          },
+          {
+            id: 4,
+            comment:
+              "Aut labore quas corporis nihil nulla sint. Quo illum blanditiis minima corrupti consequatur quam consectetur culpa. Vel nobis consequatur cupiditate. Qui in nostrum incidunt voluptates velit.",
+            UserId: 4,
+            TweetId: 1,
+            createdAt: "2021-03-02T11:47:05.000Z",
+            updatedAt: "2021-03-02T11:47:05.000Z",
+          },
+          {
+            id: 5,
+            comment: "ipsum",
+            UserId: 1,
+            TweetId: 1,
+            createdAt: "2021-03-02T11:47:05.000Z",
+            updatedAt: "2021-03-02T11:47:05.000Z",
+          },
+          {
+            id: 153,
+            comment:
+              "Eos odio sint consequatur eos quasi. Qui amet at est in velit sit odio. Et officiis voluptatum. Repudiandae quasi quas magni. Earum molestiae officiis tempora doloremque ratione molestias et ipsa. Quas soluta perspiciatis dolor.",
+            UserId: 5,
+            TweetId: 1,
+            createdAt: "2021-03-03T16:14:20.000Z",
+            updatedAt: "2021-03-03T16:14:20.000Z",
+          },
+          {
+            id: 154,
+            comment: "laudantium",
+            UserId: 3,
+            TweetId: 1,
+            createdAt: "2021-03-03T16:14:20.000Z",
+            updatedAt: "2021-03-03T16:14:20.000Z",
+          },
+          {
+            id: 155,
+            comment: "distinctio quia libero",
+            UserId: 1,
+            TweetId: 1,
+            createdAt: "2021-03-03T16:14:20.000Z",
+            updatedAt: "2021-03-03T16:14:20.000Z",
+          },
+        ],
+        Likes: [],
+      });
+      this.description = ''
       console.log("submit");
     },
     fetchRecommendUsers() {

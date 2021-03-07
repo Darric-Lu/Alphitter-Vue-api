@@ -19,7 +19,7 @@
           <Tab />
           <div class="mid-down">
             <!-- twitterCardTable -->
-            <twitterCardTable :tweets="tweets" />
+            <twitterCardTable :tweets="tweets" :currentUser="currentUser"/>
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
