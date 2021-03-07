@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex flex-column wrapping">
+  <div
+    class="d-flex flex-column wrapping align-items-start align-items-md-stretch"
+  >
     <!-- Alpha logo 連結至首頁 -->
     <div class="twitter row mt-4 d-flex justify-content-center">
       <div class="twitter-icon col-2 me-3 me-md-0 ms-md-3">
@@ -15,7 +17,7 @@
     <router-link :to="{ name: 'main' }" class="nav-link">
       <div
         class="twitter row mt-4 d-flex justify-content-center"
-        :class="active.hmoce"
+        :class="active.home"
       >
         <div class="twitter-icon col-2">
           <font-awesome-icon icon="home" />
@@ -40,7 +42,7 @@
       </div>
     </router-link>
     <!-- 個人資料 -->
-    <router-link :to="{ name: '' }" class="nav-link">
+    <router-link :to="{ name: 'setting' }" class="nav-link">
       <div
         class="twitter row mt-4 d-flex justify-content-center"
         :class="active.setting"
@@ -98,24 +100,28 @@
             </div>
           </div>
           <div class="modal-body">
-            <span class="textarea">
+            <div class="modal-img-cut">
               <img
-                src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
+                class="cerrunt-user-img"
+                :src="cerruntUser.userImage"
                 alt=""
               />
+            </div>
+            <div class="modal-new-post">
               <textarea
-                class="form-control"
-                placeholder="有甚麼新鮮事?"
-                id="floatingTextarea2"
-                style="height: 100px"
+                class="modal-new-post"
+                rows="6"
+                cols="46"
+                placeholder="有甚麼新鮮事"
+                v-model="newTweet"
               ></textarea>
-            </span>
+            </div>
           </div>
           <div class="modal-footer">
             <button
               type="submit"
-              class="btn btn-secondary tweetSubmit"
-              data-bs-dismiss="modal"
+              class="btn tweet-submit"
+              @click="newTweetSubmit"
             >
               推文
             </button>
@@ -127,6 +133,8 @@
 </template>
 
 <script>
+import { PostToast } from "../utils/helpers";
+
 export default {
   name: "Sidebar",
   props: {
@@ -137,6 +145,44 @@ export default {
         self: "",
         setting: "",
       }),
+    },
+    cerruntUser: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      newTweet: "",
+    };
+  },
+  methods: {
+    newTweetSubmit() {
+      this.newTweet = this.newTweet.trim();
+      //錯誤提示:無內容
+      if (!this.newTweet.length) {
+        PostToast.fire({
+          icon: "error",
+          title: "請輸入正確內容",
+        });
+        return;
+      } else if (this.newTweet.length > 140) {
+        //錯誤提示:超出140字數
+        PostToast.fire({
+          icon: "error",
+          title: "請勿超過140字數，目前" + this.newTweet.length + "字",
+        });
+        console.log("請勿超過140字數");
+        return;
+      }
+      //成功提示
+      PostToast.fire({
+        icon: "success",
+        title: "發文成功，enjoy!!",
+      });
+      //已重新整理的方法關閉modal
+      setTimeout("location.reload()", 2200);
+      console.log("tweet", this.newTweet, "length", this.newTweet.length);
     },
   },
   methods: {
@@ -174,18 +220,7 @@ export default {
   width: 80%;
   height: 45px;
 }
-.tweetSubmit {
-  background: #ff6600;
-  border-radius: 50px;
-  color: white;
-  font-weight: bold;
-}
-/* .textarea {
-  display: flex;
-} */
-/* textarea {
-  border-style: none;
-} */
+
 .logout {
   justify-content: flex-end;
 }
@@ -195,5 +230,38 @@ export default {
 }
 .active {
   color: #ff6600;
+}
+/*  modal */
+.modal-body {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+}
+.modal-img-cut {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+}
+.cerrunt-user-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+textarea {
+  border-style: none;
+}
+.tweet-submit {
+  background: #ff6600;
+  border-radius: 50px;
+  color: white;
+  font-weight: 800;
+  width: 64px;
+  height: 40px;
+}
+.modal-dialog {
+  border-radius: 15px;
+}
+.modal-footer {
+  border-style: none;
 }
 </style>

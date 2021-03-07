@@ -7,8 +7,8 @@
     <div class="col-lg-11">
       <span class="name-text">
         <!-- 因為傳進來的都是同一個id的推文 -->
-        <span>{{ tweets[0].User.name }}</span>
-        <span>{{ tweets.length }} 推文</span>
+        <!-- <span>{{ tweets[0].User.name }}</span> -->
+        <!-- <span>{{ tweets.length }} 推文</span> -->
       </span>
     </div>
   </div>
@@ -19,10 +19,10 @@ export default {
   props: {
     tweets: {
       type: Array,
-      require: true
-    }
-  }
-}
+      require: true,
+    },
+  },
+};
 </script>
 
 <style scoped>
