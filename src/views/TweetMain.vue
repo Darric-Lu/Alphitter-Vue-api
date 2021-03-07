@@ -53,9 +53,8 @@
 import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import RecommendationTable from "../components/RecommendationTable";
-import {v4 as uuidv4} from 'uuid'
-import { Toast } from '../utils/helpers';
-
+import { v4 as uuidv4 } from "uuid";
+import { Toast } from "../utils/helpers";
 
 // GET api/tweets
 const dummydata = [
@@ -371,7 +370,20 @@ const dummyRecommendUsers = {
     },
   ],
 };
-
+const dummyCerruntUser = {
+  cerruntUser: {
+    account: "ClaireLi",
+    name: "Claire",
+    userImage:
+      "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+    titleImage:
+      "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
+    followersCount: "10",
+    followingCount: "20",
+    SelfIntroduction:
+      " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
+  },
+};
 
 export default {
   name: "TweetMain",
@@ -402,6 +414,7 @@ export default {
   },
   created() {
     this.fetchMain();
+    this.fetchCerruntUser();
     this.fetchRecommendUsers();
   },
   methods: {
@@ -409,17 +422,17 @@ export default {
       this.tweets = dummydata;
     },
     handleSubmit() {
-      if(!this.description) {
+      if (!this.description) {
         Toast.fire({
-          icon: 'error',
-          title: '請填寫推文內容'
-        })
+          icon: "error",
+          title: "請填寫推文內容",
+        });
       }
-      if(this.description.length >= 140) {
+      if (this.description.length >= 140) {
         Toast.fire({
-          icon: 'error',
-          title: '字數限制140個'
-        })
+          icon: "error",
+          title: "字數限制140個",
+        });
       }
       // TODO: 向 API 發送 POST 請求
       // 伺服器新增 Comment 成功後...
@@ -499,8 +512,29 @@ export default {
         ],
         Likes: [],
       });
-      this.description = ''
+      this.description = "";
       console.log("submit");
+    },
+    fetchCerruntUser() {
+      const {
+        account,
+        name,
+        userImage,
+        titleImage,
+        followersCount,
+        followingCount,
+        SelfIntroduction,
+      } = dummyCerruntUser.cerruntUser;
+      this.cerruntUser = {
+        ...this.cerruntUser,
+        account,
+        name,
+        userImage,
+        titleImage,
+        followersCount,
+        followingCount,
+        SelfIntroduction,
+      };
     },
     fetchRecommendUsers() {
       //拉取dummyRecommendUsers

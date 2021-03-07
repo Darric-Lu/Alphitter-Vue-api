@@ -57,13 +57,18 @@
             </div>
           </div>
           <div class="modal-body">
-            <div class="col-lg-10 tweetContent" v-for="tweet in tweets" :key="tweet.id">
+            <div
+              class="col-lg-10 tweetContent"
+              v-for="tweet in tweets"
+              :key="tweet.id"
+            >
               <p>
                 {{ tweet.User.name }} {{ tweet.User.account }} •
                 {{ tweet.createdAt }}
               </p>
               <p>{{ tweet.description }}</p>
             </div>
+            -->
             <div class="modal-img-cut">
               <img
                 class="cerrunt-user-img"
