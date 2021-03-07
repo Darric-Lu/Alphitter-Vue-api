@@ -1,26 +1,31 @@
 <template>
-  <div class="container">
+  <div class="container-xxl">
     <div class="row">
-      <div class="col-lg-2 left-col">
-        <!-- Sidebar -->
-        <Sidebar />
+      <div class="col-2 left-col">
+        <!-- Sidebar 顯示全寬2/12 -->
+        <Sidebar :currentUser="currentUser"/>
       </div>
-      <div class="col-lg-6 mid-col">
-        <!-- UserNavbar -->
-        <UserNavbar :tweets="tweets"/>
-        <div class="user-other">
-          <!-- Userprofile -->
-          <UserProfile />
-        </div>
-        <!-- Tab -->
-        <Tab />
-        <div class="mid-down">
-          <!-- twitterCardTable -->
-          <twitterCardTable :tweets="tweets" :currentUser="currentUser"/>
+      <div class="row col-10 px-0">
+        <!-- 中間包含Recommendationtable  顯示全寬10/12-->
+        <div class="col-12 col-lg-8 px-0 mid-col">
+          <!-- 中間在小於md時 顯示全寬10/12-->
+          <!-- UserNavbar -->
+          <UserNavbar :tweets="tweets" />
+          <div class="user-other">
+            <!-- Userprofile -->
+            <UserProfile />
+          </div>
+          <!-- Tab -->
+          <Tab />
+          <div class="mid-down">
+            <!-- twitterCardTable -->
+            <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
+          </div>
         </div>
       </div>
-      <div class="col-lg-3 right-col">
-        <!-- Recommendationtable -->
+      <div class="col-4 d-none d-lg-block right-col">
+        <!-- Recommendationtable 在小於md時消失-->
+        <RecommendationTable :initial-recommend-users="recommendUsers" />
       </div>
     </div>
   </div>
@@ -31,10 +36,11 @@ import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
-import Tab from "../components/Tab"
+import RecommendationTable from "../components/RecommendationTable";
+import Tab from "../components/Tab";
 
 // GET api/tweets/:id
-const dummydata =  [
+const dummydata = [
   {
     id: 1,
     description: "repudiandae",
@@ -256,6 +262,99 @@ const dummydata =  [
   },
 ];
 
+const dummyRecommendUsers = {
+  recommendUsers: [
+    {
+      id: 1,
+      name: "ALPHAcamp",
+      account: "ac",
+      image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
+      isFollowing: true,
+      followedCount: 50,
+    },
+    {
+      id: 2,
+      name: "Darric",
+      account: "DL",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+      isFollowing: true,
+      followedCount: 10,
+    },
+    {
+      id: 3,
+      name: "Claire",
+      account: "ClaireLi",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+      isFollowing: true,
+      followedCount: 30,
+    },
+    {
+      id: 4,
+      name: "goater",
+      account: "goater",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
+      isFollowing: false,
+      followedCount: 40,
+    },
+    {
+      id: 5,
+      name: "stan_wang",
+      account: "stan",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
+      isFollowing: false,
+      followedCount: 46,
+    },
+    {
+      id: 6,
+      name: "ALPHAcamp",
+      account: "ac",
+      image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
+      isFollowing: true,
+      followedCount: 70,
+    },
+    {
+      id: 7,
+      name: "Darric",
+      account: "DL",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+      isFollowing: true,
+      followedCount: 12,
+    },
+    {
+      id: 8,
+      name: "Claire",
+      account: "ClaireLi",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+      isFollowing: true,
+      followedCount: 31,
+    },
+    {
+      id: 9,
+      name: "goater",
+      account: "goater",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
+      isFollowing: false,
+      followedCount: 2,
+    },
+    {
+      id: 10,
+      name: "stan_wang",
+      account: "stan",
+      image:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
+      isFollowing: false,
+      followedCount: 60,
+    },
+  ],
+};
+
 export default {
   name: "UserOther",
   components: {
@@ -263,7 +362,8 @@ export default {
     twitterCardTable,
     UserNavbar,
     UserProfile,
-    Tab
+    Tab,
+    RecommendationTable,
   },
   data() {
     return {
@@ -277,17 +377,18 @@ export default {
         followingCount: "",
         SelfIntroduction: "",
       },
-    }
+      recommendUsers: {},
+    };
   },
   created() {
-    const { id: currentUserId } = this.$route.params
-    this.fetchUserOther(currentUserId)
-    console.log('created',typeof currentUserId, currentUserId)
+    const { id: currentUserId } = this.$route.params;
+    this.fetchUserOther(currentUserId);
+    console.log("created", typeof currentUserId, currentUserId);
   },
   methods: {
     fetchUserOther(currentUserId) {
-      console.log('fetchUserOther id:', currentUserId)
-      this.tweets = dummydata
+      console.log("fetchUserOther id:", currentUserId);
+      this.tweets = dummydata;
 
       // console.log('currentUserId',typeof currentUserId)
       // // 用filter篩選currentUser的tweets
@@ -299,8 +400,12 @@ export default {
       //   console.log('data.UserId',typeof data.UserId, data.UserId)
       //   console.log('currentUserId:',typeof currentUserId, currentUserId)
       // })
-    }
-  }
+    },
+    fetchRecommendUsers() {
+      this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
+      // console.log("recommendUsers", this.recommendUsers);
+    },
+  },
 };
 </script>
 

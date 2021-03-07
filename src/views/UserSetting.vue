@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :cerruntUser="cerruntUser" />
+        <Sidebar :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <div class="col-12 col-lg-8 px-0 mid-col">
@@ -92,8 +92,8 @@
 </template>
 
 <script>
-const dummyCerruntUser = {
-  cerruntUser: {
+const dummyCurrentUser = {
+  currentUser: {
     account: "ClaireLi",
     name: "Claire",
     userImage:
@@ -126,10 +126,10 @@ export default {
     };
   },
   created() {
-    this.fetchCerruntUser();
+    this.fetchCurrentUser();
   },
   methods: {
-    fetchCerruntUser() {
+    fetchCurrentUser() {
       const {
         account,
         name,
@@ -138,9 +138,9 @@ export default {
         followersCount,
         followingCount,
         SelfIntroduction,
-      } = dummyCerruntUser.cerruntUser;
-      this.cerruntUser = {
-        ...this.cerruntUser,
+      } = dummyCurrentUser.currentUser;
+      this.currentUser = {
+        ...this.currentUser,
         account,
         name,
         userImage,

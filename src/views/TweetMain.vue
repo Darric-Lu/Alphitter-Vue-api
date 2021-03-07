@@ -546,6 +546,7 @@ export default {
 }
 img {
   /* position: absolute; */
+  object-fit: cover;
   width: 50px;
   height: 50px;
   /* left: 48%;

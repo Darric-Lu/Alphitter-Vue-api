@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :cerruntUser="cerruntUser" />
+        <Sidebar :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <!-- 中間包含Recommendationtable  顯示全寬10/12-->
@@ -72,8 +72,8 @@
 import Sidebar from "../components/Sidebar";
 import RecommendationTable from "../components/RecommendationTable";
 // GET api/tweets/:id
-const dummyCerruntUser = {
-  cerruntUser: {
+const dummyCurrentUser = {
+  currentUser: {
     account: "ClaireLi",
     name: "Claire",
     userImage:
@@ -272,7 +272,7 @@ export default {
   },
   created() {
     this.fetchTweet();
-    this.fetchCerruntUser();
+    this.fetchCurrentUser();
     this.fetchRecommendUsers();
   },
   methods: {
@@ -280,7 +280,7 @@ export default {
       this.tweet = dummydata;
       this.replies = dummydata.Replies;
     },
-    fetchCerruntUser() {
+    fetchCurrentUser() {
       const {
         account,
         name,
@@ -289,9 +289,9 @@ export default {
         followersCount,
         followingCount,
         SelfIntroduction,
-      } = dummyCerruntUser.cerruntUser;
-      this.cerruntUser = {
-        ...this.cerruntUser,
+      } = dummyCurrentUser.currentUser;
+      this.currentUser = {
+        ...this.currentUser,
         account,
         name,
         userImage,
