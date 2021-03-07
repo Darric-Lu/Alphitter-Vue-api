@@ -57,12 +57,11 @@
             </div>
           </div>
           <div class="modal-body">
-            <div class="col-lg-10 tweetContent" v-for="tweet in tweets" :key="tweet.id">
+            <div class="col-lg-10 tweetContent" >
               <p>
-                {{ tweet.User.name }} {{ tweet.User.account }} •
-                {{ tweet.createdAt }}
+                Name @account • 2021-03-02T11:47:05.000Z
               </p>
-              <p>{{ tweet.description }}</p>
+              <p>consequatur corporis aut</p>
             </div>
             <div class="modal-img-cut">
               <img

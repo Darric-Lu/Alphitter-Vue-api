@@ -103,7 +103,7 @@
             <div class="modal-img-cut">
               <img
                 class="cerrunt-user-img"
-                :src="cerruntUser.userImage"
+                :src="currentUser.userImage"
                 alt=""
               />
             </div>
@@ -146,7 +146,7 @@ export default {
         setting: "",
       }),
     },
-    cerruntUser: {
+    currentUser: {
       type: Object,
       required: true,
     },
@@ -184,13 +184,11 @@ export default {
       setTimeout("location.reload()", 2200);
       console.log("tweet", this.newTweet, "length", this.newTweet.length);
     },
-  },
-  methods: {
     logout() {
       this.$store.commit('revokeAuthentication')
       this.$router.push('/signin')
     }
-  }
+  },
 };
 </script>
 

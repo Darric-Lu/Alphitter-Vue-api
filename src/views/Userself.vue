@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :cerruntUser="cerruntUser" />
+        <Sidebar :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <!-- 中間包含Recommendationtable  顯示全寬10/12-->
@@ -400,7 +400,7 @@ export default {
         self: "active",
         setting: "row",
       },
-      cerruntUser: {
+      currentUser: {
         account: "",
         name: "",
         userImage: "",
