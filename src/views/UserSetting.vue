@@ -5,85 +5,83 @@
         <!-- Sidebar 顯示全寬2/12-->
         <Sidebar :active="active" :cerruntUser="cerruntUser" />
       </div>
-      <div class="row col-10 px-0">
+      <div class="col-10 px-0">
+        <div class="title">帳戶設定</div>
         <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- 中間包含 Recommendationtable(不顯示)  顯示全寬10/12-->
-          <form action="">
-            <div>帳戶設定</div>
-            <div class="form-label-group mb-2">
+          <form action="" class="data-from">
+            <!-- 表單功能未嘗試寫功能 -->
+            <div class="form-group user-data">
+              <label for="accountNumber" class="ms-2 fw-bold">帳號</label>
               <input
+                v-model="cerruntUser.name"
                 id="accountNumber"
-                v-model="accountNumber"
-                name="accountNumber"
                 type="accountNumber"
                 class="form-control"
-                placeholder="帳號"
+                name="accountNumber"
                 autocomplete="username"
-                required
                 autofocus
+                required
               />
             </div>
 
-            <div class="form-label-group mb-2">
+            <div class="form-group user-data">
+              <label for="name" class="ms-2 fw-bold">名稱</label>
               <input
-                id="name"
-                v-model="name"
-                name="name"
+                v-model="cerruntUser.name"
+                id="accountNumber"
                 type="text"
                 class="form-control"
-                placeholder="名稱"
+                name="name"
                 autocomplete="username"
-                required
                 autofocus
+                required
               />
             </div>
 
-            <div class="form-label-group mb-2">
+            <div class="form-group user-data">
+              <label for="email" class="ms-2 fw-bold">Email</label>
               <input
+                v-model="cerruntUser.name"
                 id="email"
-                v-model="email"
-                name="email"
                 type="email"
                 class="form-control"
-                placeholder="email"
+                name="email"
                 autocomplete="email"
                 required
               />
             </div>
 
-            <div class="form-label-group mb-3">
+            <div class="form-group user-data">
+              <label for="password" class="ms-2 fw-bold">密碼</label>
               <input
+                v-model="cerruntUser.name"
                 id="password"
-                v-model="password"
+                type="password"
+                class="form-control"
                 name="password"
-                type="password"
-                class="form-control"
-                placeholder="密碼"
-                autocomplete="current-password"
-                required
-              />
-            </div>
-
-            <div class="form-label-group mb-3">
-              <input
-                id="password-check"
-                v-model="passwordCheck"
-                name="passwordCheck"
-                type="password"
-                class="form-control"
-                placeholder="密碼確認"
                 autocomplete="new-password"
                 required
               />
             </div>
 
-            <button
-              class="btn btn-lg btn-block mb-3"
-              type="submit"
-              :disabled="isProcessing"
-            >
-              儲存
-            </button>
+            <div class="form-group user-data">
+              <label for="password-check" class="ms-2 fw-bold">密碼確認</label>
+              <input
+                v-model="cerruntUser.name"
+                id="password-check"
+                type="password"
+                class="form-control"
+                name="password"
+                autocomplete="new-password-check"
+                required
+              />
+            </div>
+            <div class="data-footer d-flex flex-row-reverse">
+              <button class="btn mb-3" type="submit" :disabled="isProcessing">
+                儲存
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -92,6 +90,7 @@
 </template>
 
 <script>
+// dummyCerruntUser 未定義完整
 const dummyCerruntUser = {
   cerruntUser: {
     account: "ClaireLi",
@@ -155,10 +154,44 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  height: 55px;
+  line-height: 55px;
+  padding-left: 24px;
+  font-weight: 700;
+  font-size: 19px;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+}
+.mid-col {
+  padding: 5px;
+  height: 1200px;
+  border-left: 1px solid #e6ecf0;
+}
+.data-footer {
+  margin-top: 30px;
+}
 button {
   background: #ff6600;
   border-radius: 50px;
   color: white;
   font-weight: bold;
+  width: 122px;
+  height: 50px;
+  font-size: 18px;
+}
+
+.user-data {
+  background-color: #f5f8fa;
+  border-bottom: 2px #657786 solid;
+  margin: 32px 0 0 16px;
+  text-decoration: none;
+}
+input {
+  background-color: #f5f8fa;
+  border-style: none;
+}
+input:focus {
+  background-color: #f5f8fa;
 }
 </style>
