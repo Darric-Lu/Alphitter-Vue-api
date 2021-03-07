@@ -1,14 +1,14 @@
 <template>
-  <div class="container py-5">
+  <div class="container d-flex flex-column align-items-center">
     <div>
       <img
         src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4"
         alt=""
       />
     </div>
-    <form class="w-50" @submit.prevent.stop="handleSubmit">
+    <form class="signin-data" @submit.prevent.stop="handleSubmit">
       <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal">登入Alphitter</h1>
+        <h1 class="h3 mb-3 font-weight-normal data-title">登入Alphitter</h1>
       </div>
 
       <div class="form-label-group mb-2">
@@ -37,14 +37,20 @@
           required
         />
       </div>
-
-      <button class="btn btn-lg btn-block mb-3" :disabled="isprocessing" type="submit">登入</button>
-
+      <div class="btn-wrapping">
+        <button
+          class="btn mb-3 data-submit-btn"
+          :disabled="isprocessing"
+          type="submit"
+        >
+          登入
+        </button>
+      </div>
       <div class="text-center mb-3 otherOption">
         <span>
           <router-link to="/signup">註冊Alphitter</router-link>
         </span>
-        <span> • </span>
+        <span class="mx-2"> • </span>
         <span>
           <a href="/signup">後台登入</a>
         </span>
@@ -63,7 +69,7 @@ export default {
     return {
       accountNumber: "",
       password: "",
-      isprocessing: false
+      isprocessing: false,
     };
   },
   methods: {
@@ -77,7 +83,7 @@ export default {
           return;
         }
 
-        this.isprocessing = true
+        this.isprocessing = true;
 
         const response = await authorizationAPI.signIn({
           account: this.accountNumber,
@@ -90,13 +96,13 @@ export default {
           throw new Error(data.message);
         }
 
-        localStorage.setItem('token', data.token)
+        localStorage.setItem("token", data.token);
         // 將資料傳進去Vuex裡面
-        this.$store.commit('setCurrentUser', data.user)
+        this.$store.commit("setCurrentUser", data.user);
 
-        this.$router.push('/main')
+        this.$router.push("/main");
       } catch (error) {
-        this.isprocessing = false
+        this.isprocessing = false;
         this.password = "";
         Toast.fire({
           icon: "error",
@@ -110,32 +116,49 @@ export default {
 
 <style scoped>
 img {
-  position: absolute;
+  margin-top: 65px;
   width: 50px;
   height: 50px;
-  left: 48%;
-  top: 60px;
 }
 
 form {
-  position: absolute;
   width: 540px;
   height: 253px;
-  left: 25%;
-  top: 140px;
 }
 
-button {
+.data-submit-btn {
   background: #ff6600;
   border-radius: 50px;
   color: white;
   font-weight: bold;
+  width: 540px;
+  margin-top: 14px;
+}
+.data-title {
+  margin-top: 30px;
+  font-weight: 700;
+  font-size: 23px;
+}
+.form-label-group {
+  background-color: #f5f8fa;
+  border-bottom: 2px #657786 solid;
+  margin: 20px 0 0 0;
+  height: auto;
+  text-decoration: none;
+}
+input {
+  background-color: #f5f8fa;
+  border-style: none;
+}
+input:focus {
+  background-color: #f5f8fa;
 }
 
 .otherOption {
   display: flex;
   justify-content: flex-end;
-  font-weight: bold;
+  font-weight: 700;
+  color: rgb(0, 153, 255, 1);
 }
 
 span {
