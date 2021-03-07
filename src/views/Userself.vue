@@ -6,7 +6,9 @@
         <Sidebar :active="active" :cerruntUser="cerruntUser" />
       </div>
       <div class="row col-10 px-0">
+        <!-- 中間包含Recommendationtable  顯示全寬10/12-->
         <div class="col-12 col-lg-8 px-0 mid-col">
+          <!-- 中間在小於md時 顯示全寬10/12-->
           <!-- UserNavbar -->
           <UserNavbar />
           <div class="user-profile">
@@ -21,7 +23,7 @@
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
-          <!-- Recommendationtable -->
+          <!-- Recommendationtable 在小於md時消失 -->
           <RecommendationTable :initial-recommend-users="recommendUsers" />
         </div>
       </div>
