@@ -33,7 +33,7 @@
         </div>
         <div class="mid-down">
           <!-- twitterCardTable -->
-          <twitterCardTable :tweets="tweets" />
+          <twitterCardTable :tweets="tweets" :currentUser="currentUser"/>
         </div>
       </div>
       <div class="col-lg-3 right-col p-0">
@@ -276,6 +276,7 @@ const dummydata = [
   },
 ];
 
+
 export default {
   name: "TweetMain",
   components: {
@@ -287,6 +288,15 @@ export default {
     return {
       description: "",
       tweets: [],
+      currentUser: {
+        account: "",
+        name: "",
+        userImage: "",
+        titleImage: "",
+        followersCount: "",
+        followingCount: "",
+        SelfIntroduction: "",
+      },
     };
   },
   created() {

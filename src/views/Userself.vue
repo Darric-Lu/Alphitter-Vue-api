@@ -17,7 +17,7 @@
           <Tab />
           <div class="mid-down">
             <!-- twitterCardTable -->
-            <twitterCardTable :tweets="tweets" />
+            <twitterCardTable :tweets="tweets" :currentUser="currentUser"/>
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
@@ -289,6 +289,15 @@ export default {
         home: "row",
         self: "active",
         setting: "row",
+      },
+      currentUser: {
+        account: "",
+        name: "",
+        userImage: "",
+        titleImage: "",
+        followersCount: "",
+        followingCount: "",
+        SelfIntroduction: "",
       },
     };
   },
