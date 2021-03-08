@@ -106,7 +106,7 @@
             <div class="modal-img-cut">
               <img
                 class="cerrunt-user-img"
-                :src="cerruntUser.userImage"
+                :src="currentUser.userImage"
                 alt=""
               />
             </div>
@@ -149,7 +149,7 @@ export default {
         setting: "",
       }),
     },
-    cerruntUser: {
+    currentUser: {
       type: Object,
       required: true,
     },
