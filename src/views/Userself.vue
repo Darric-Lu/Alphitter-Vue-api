@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :cerruntUser="cerruntUser" />
+        <Sidebar :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <!-- 中間包含Recommendationtable  顯示全寬10/12-->
@@ -13,7 +13,7 @@
           <UserNavbar />
           <div class="user-profile">
             <!-- Userprofile -->
-            <UserProfile :cerruntUser="cerruntUser" />
+            <UserProfile :currentUser="currentUser" />
           </div>
           <!-- tab -->
           <Tab />
@@ -40,8 +40,8 @@ import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
 
 // GET api/tweets
-const dummyCerruntUser = {
-  cerruntUser: {
+const dummyCurrentUser = {
+  currentUser: {
     account: "ClaireLi",
     name: "Claire",
     userImage:
@@ -400,7 +400,7 @@ export default {
         self: "active",
         setting: "row",
       },
-      cerruntUser: {
+      currentUser: {
         account: "",
         name: "",
         userImage: "",
@@ -415,7 +415,7 @@ export default {
   created() {
     const currentUserId = this.currentUserId;
     this.fetchUserself(currentUserId);
-    this.fetchCerruntUser();
+    this.fetchCurrentUser();
     this.fetchRecommendUsers();
   },
   methods: {
@@ -423,7 +423,7 @@ export default {
       // 用filter篩選currentUser的tweets
       this.tweets = dummydata.filter((data) => data.UserId === currentUserId);
     },
-    fetchCerruntUser() {
+    fetchCurrentUser() {
       const {
         account,
         name,
@@ -432,9 +432,9 @@ export default {
         followersCount,
         followingCount,
         SelfIntroduction,
-      } = dummyCerruntUser.cerruntUser;
-      this.cerruntUser = {
-        ...this.cerruntUser,
+      } = dummyCurrentUser.currentUser;
+      this.currentUser = {
+        ...this.currentUser,
         account,
         name,
         userImage,

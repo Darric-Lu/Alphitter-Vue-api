@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :cerruntUser="cerruntUser" />
+        <Sidebar :active="active" :currentUser="currentUser" />
       </div>
       <div class="col-10 px-0">
         <div class="title">帳戶設定</div>
@@ -14,7 +14,7 @@
             <div class="form-group user-data">
               <label for="accountNumber" class="ms-2 fw-bold">帳號</label>
               <input
-                v-model="cerruntUser.name"
+                v-model="currentUser.name"
                 id="accountNumber"
                 type="accountNumber"
                 class="form-control"
@@ -28,7 +28,7 @@
             <div class="form-group user-data">
               <label for="name" class="ms-2 fw-bold">名稱</label>
               <input
-                v-model="cerruntUser.name"
+                v-model="currentUser.name"
                 id="accountNumber"
                 type="text"
                 class="form-control"
@@ -42,7 +42,7 @@
             <div class="form-group user-data">
               <label for="email" class="ms-2 fw-bold">Email</label>
               <input
-                v-model="cerruntUser.name"
+                v-model="currentUser.name"
                 id="email"
                 type="email"
                 class="form-control"
@@ -55,7 +55,7 @@
             <div class="form-group user-data">
               <label for="password" class="ms-2 fw-bold">密碼</label>
               <input
-                v-model="cerruntUser.name"
+                v-model="currentUser.name"
                 id="password"
                 type="password"
                 class="form-control"
@@ -68,7 +68,7 @@
             <div class="form-group user-data">
               <label for="password-check" class="ms-2 fw-bold">密碼確認</label>
               <input
-                v-model="cerruntUser.name"
+                v-model="currentUser.name"
                 id="password-check"
                 type="password"
                 class="form-control"
@@ -90,9 +90,9 @@
 </template>
 
 <script>
-// dummyCerruntUser 未定義完整
-const dummyCerruntUser = {
-  cerruntUser: {
+// dummyCurrentUser 未定義完整
+const dummyCurrentUser = {
+  currentUser: {
     account: "ClaireLi",
     name: "Claire",
     userImage:
@@ -125,10 +125,10 @@ export default {
     };
   },
   created() {
-    this.fetchCerruntUser();
+    this.fetchCurrentUser();
   },
   methods: {
-    fetchCerruntUser() {
+    fetchCurrentUser() {
       const {
         account,
         name,
@@ -137,9 +137,9 @@ export default {
         followersCount,
         followingCount,
         SelfIntroduction,
-      } = dummyCerruntUser.cerruntUser;
-      this.cerruntUser = {
-        ...this.cerruntUser,
+      } = dummyCurrentUser.currentUser;
+      this.currentUser = {
+        ...this.currentUser,
         account,
         name,
         userImage,
