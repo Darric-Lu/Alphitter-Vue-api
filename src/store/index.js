@@ -10,7 +10,7 @@ export default new Vuex.Store({
       email: '',
       id: -1,
       name: '',
-      role:''
+      role: ''
     },
     isAuthenticated: false
   },
@@ -24,7 +24,7 @@ export default new Vuex.Store({
       // 將使用者的登入狀態改為true
       state.isAuthenticated = true
     },
-    revokeAuthentication (state) {
+    revokeAuthentication(state) {
       state.currentUser = {}
       state.isAuthenticated = false
       localStorage.removeItem('token')

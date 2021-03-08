@@ -1,28 +1,6 @@
 <template>
   <div class="wrapping mt-3">
     <div class="recommmendation-title ps-3">跟隨誰</div>
-    <!-- 原始 -->
-    <!-- <div class="user">
-      <div class="user-image">
-        <div class="user-image-cut">
-          <img
-            class="user-image-picture"
-            src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg"
-            alt=""
-          />
-        </div>
-      </div>
-      <div class="user-info ms-2">
-        <p class="mt-2 mb-0 user-name">ALPHAcamp</p>
-        <p class="user-account">@ac</p>
-      </div>
-      <div class="user-following">
-        <a href="">
-          <div class="user-following-btn text-center">正在跟隨</div>
-        </a>
-      </div>
-    </div> -->
-    <!--  -->
     <div class="user" v-for="user in recommendUsers" :key="user.id">
       <div class="user-image">
         <div class="user-image-cut">

@@ -72,7 +72,10 @@
           <div class="logout-icon col-2">
             <font-awesome-icon icon="sign-in-alt" />
           </div>
-          <div class="userCard-content col-8 d-none d-md-block" @click.stop.prevent="logout">
+          <div
+            class="userCard-content col-8 d-none d-md-block"
+            @click.stop.prevent="logout"
+          >
             <p>登出</p>
           </div>
         </div>
@@ -185,9 +188,9 @@ export default {
       console.log("tweet", this.newTweet, "length", this.newTweet.length);
     },
     logout() {
-      this.$store.commit('revokeAuthentication')
-      this.$router.push('/signin')
-    }
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/signin");
+    },
   },
 };
 </script>

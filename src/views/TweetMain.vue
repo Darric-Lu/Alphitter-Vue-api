@@ -183,8 +183,9 @@ export default {
     };
   },
   created() {
-    this.fetchCurrentUser();
+    // this.fetchCurrentUser();
     this.fetchMain();
+    this.fetchCurrentUser();
     this.fetchRecommendUsers();
   },
   methods: {
@@ -309,6 +310,27 @@ export default {
       this.description = "";
       console.log("submit");
     },
+    // fetchCurrentUser() {
+    //   const {
+    //     account,
+    //     name,
+    //     userImage,
+    //     titleImage,
+    //     followersCount,
+    //     followingCount,
+    //     SelfIntroduction,
+    //   } = dummyCurrentUser.currentUser;
+    //   this.currentUser = {
+    //     ...this.currentUser,
+    //     account,
+    //     name,
+    //     userImage,
+    //     titleImage,
+    //     followersCount,
+    //     followingCount,
+    //     SelfIntroduction,
+    //   };
+    // },
     fetchRecommendUsers() {
       //拉取dummyRecommendUsers
       this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
