@@ -11,7 +11,7 @@
       </div>
       <div class="col-lg-10 tweetContent">
         <p>
-          {{ tweet.User.name }} {{ tweet.User.account }} • {{ tweet.createdAt }}
+          {{ tweet.User ? tweet.User.name : '未顯示'}} {{tweet.User ? tweet.User.account : '未顯示'}} • {{ tweet.createdAt }}
         </p>
         <p @click.prevent.stop="tweetReply">{{ tweet.description }}</p>
         <div class="responseIcon pt-2">
