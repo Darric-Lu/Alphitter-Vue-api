@@ -33,7 +33,6 @@
           name="password"
           type="password"
           class="form-control"
-          placeholder="密碼"
           autocomplete="current-password"
           required
         />
