@@ -32,14 +32,25 @@
       <!--  -->
       <div v-for="tweet in tweets" :key="tweet.id" class="tweet d-flex">
         <div class="tweet-img">
-          <img class="tweet-img-user" :src="tweet.User ? tweet.User.avatar : '未顯示'" :alt="tweet.User ? tweet.User.name : '未顯示'" />
+          <img
+            class="tweet-img-user"
+            :src="tweet.User ? tweet.User.avatar : '未顯示'"
+            :alt="tweet.User ? tweet.User.name : '未顯示'"
+          />
         </div>
         <div class="tweet-content">
           <div class="tweet-content-info">
             <span>
-              <span class="tweet-content-name">{{ tweet.User ? tweet.User.name : '未顯示' }}</span>
-              <span class="tweet-content-account">@{{ tweet.User ? tweet.User.account : '未顯示'}}</span> ‧
-              <span class="tweet-content-time">{{ tweet.User ? tweet.User.updatedAt : '未顯示' }}</span>
+              <span class="tweet-content-name">{{
+                tweet.User ? tweet.User.name : "未顯示"
+              }}</span>
+              <span class="tweet-content-account"
+                >@{{ tweet.User ? tweet.User.account : "未顯示" }}</span
+              >
+              ‧
+              <span class="tweet-content-time">{{
+                tweet.User ? tweet.User.updatedAt : "未顯示"
+              }}</span>
             </span>
           </div>
           <p>
@@ -48,7 +59,7 @@
         </div>
         <div
           class="delete-btn"
-          @click.stop.prevent="deleteTweet(tweet.tweetId)"
+          @click.stop.prevent="deleteTweet(tweet.id)"
         ></div>
       </div>
     </div>
@@ -56,34 +67,55 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+import { Toast } from "../utils/helpers";
+import adminAPI from "../apis/admin"
 
 export default {
   props: {
     tweets: {
       type: Array,
-      require: true
-    }
-  },
-  methods: {
-    deleteTweet(id) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
-          this.tweets = this.tweets.filter((tweet) => tweet.tweetId !== id);
-        }
-      });
+      require: true,
     },
   },
-}
+  // data() {
+  //   return {
+  //     tweets: this.initialTweets
+  //   }
+  // },
+  methods: {
+    async deleteTweet(tweetId) {
+      try {
+        const response = await adminAPI.deleteAdminTweet(tweetId)
+
+        if(response.data.status !== 'success') {
+          throw Error(response.data.message)
+        }
+
+        this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
+        // Swal.fire({
+        //   title: "Are you sure?",
+        //   text: "You won't be able to revert this!",
+        //   icon: "warning",
+        //   showCancelButton: true,
+        //   confirmButtonColor: "#3085d6",
+        //   cancelButtonColor: "#d33",
+        //   confirmButtonText: "Yes, delete it!",
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+        //     Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        //     this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
+        //   }
+        // });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "Oh sad, you can't delete the tweet. Try later!",
+        });
+      }
+    },
+  },
+};
 </script>
 
 
