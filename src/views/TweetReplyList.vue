@@ -11,10 +11,10 @@
           <div class="mid-header">首頁</div>
           <div class="twitterCard">
             <div class="name">
-              <img :src="tweet.User.avatar" alt="" class="avatar" />
+              <img :src="tweet.User ? tweet.User.avatar : ''" alt="使用者大頭貼" class="avatar" />
               <span class="name-text">
-                <span>{{ tweet.User.name }}</span>
-                <span>@{{ tweet.User.account }}</span>
+                <span>{{ tweet.User ? tweet.User.name : '未顯示'}}</span>
+                <span>@{{ tweet.User ? tweet.User.account : '未顯示'}}</span>
               </span>
             </div>
             <div class="text my-3">
@@ -25,8 +25,8 @@
             </div>
             <div class="divider"></div>
             <div class="response py-2">
-              {{ tweet.Replies.length }} 回覆次數
-              {{ tweet.Likes.length }} 喜歡次數
+              {{ tweet.Replies ? tweet.Replies.length : '未顯示'}} 回覆次數
+              {{ tweet.Likes ? tweet.Likes.length : '未顯示'}} 喜歡次數
             </div>
             <div class="divider"></div>
             <div class="responseIcon pt-2">
@@ -71,6 +71,9 @@
 <script>
 import Sidebar from "../components/Sidebar";
 import RecommendationTable from "../components/RecommendationTable";
+import tweetsAPI from "../apis/tweets"
+import { Toast } from '../utils/helpers';
+
 // GET api/tweets/:id
 const dummyCurrentUser = {
   currentUser: {
@@ -178,79 +181,7 @@ const dummyRecommendUsers = {
     },
   ],
 };
-const dummydata = {
-  id: 1,
-  description: "repudiandae",
-  UserId: 1,
-  createdAt: "2021-03-03T16:14:20.000Z",
-  updatedAt: "2021-03-03T16:14:20.000Z",
-  User: {
-    id: 1,
-    name: "root",
-    email: "root@example.com",
-    account: "root",
-    password: "$2a$10$k/8PhvsPm3PqlNcc/OfmHO1o7Mo9LubVdbJzIvGRNWPF86QXrU6DS",
-    avatar: null,
-    cover: null,
-    introduction: null,
-    role: "admin",
-    createdAt: "2021-03-03T16:14:19.000Z",
-    updatedAt: "2021-03-03T16:14:19.000Z",
-  },
-  Replies: [
-    {
-      id: 3,
-      comment: "consequatur corporis aut",
-      UserId: 5,
-      TweetId: 1,
-      createdAt: "2021-03-02T11:47:05.000Z",
-      updatedAt: "2021-03-02T11:47:05.000Z",
-    },
-    {
-      id: 4,
-      comment:
-        "Aut labore quas corporis nihil nulla sint. Quo illum blanditiis minima corrupti consequatur quam consectetur culpa. Vel nobis consequatur cupiditate. Qui in nostrum incidunt voluptates velit.",
-      UserId: 4,
-      TweetId: 1,
-      createdAt: "2021-03-02T11:47:05.000Z",
-      updatedAt: "2021-03-02T11:47:05.000Z",
-    },
-    {
-      id: 5,
-      comment: "ipsum",
-      UserId: 1,
-      TweetId: 1,
-      createdAt: "2021-03-02T11:47:05.000Z",
-      updatedAt: "2021-03-02T11:47:05.000Z",
-    },
-    {
-      id: 153,
-      comment:
-        "Eos odio sint consequatur eos quasi. Qui amet at est in velit sit odio. Et officiis voluptatum. Repudiandae quasi quas magni. Earum molestiae officiis tempora doloremque ratione molestias et ipsa. Quas soluta perspiciatis dolor.",
-      UserId: 5,
-      TweetId: 1,
-      createdAt: "2021-03-03T16:14:20.000Z",
-      updatedAt: "2021-03-03T16:14:20.000Z",
-    },
-    {
-      id: 154,
-      comment: "laudantium",
-      UserId: 3,
-      TweetId: 1,
-      createdAt: "2021-03-03T16:14:20.000Z",
-      updatedAt: "2021-03-03T16:14:20.000Z",
-    },
-    {
-      id: 155,
-      comment: "distinctio quia libero",
-      UserId: 1,
-      TweetId: 1,
-      createdAt: "2021-03-03T16:14:20.000Z",
-      updatedAt: "2021-03-03T16:14:20.000Z",
-    },
-  ],
-  Likes: [],
-};
+
 
 export default {
   name: "TweetReplyList",
@@ -271,14 +202,26 @@ export default {
     };
   },
   created() {
-    this.fetchTweet();
+    const { id: tweetId } = this.$route.params
+    console.log('tweets/id :',tweetId)
+    this.fetchTweet(tweetId);
     this.fetchCurrentUser();
     this.fetchRecommendUsers();
   },
   methods: {
-    fetchTweet() {
-      this.tweet = dummydata;
-      this.replies = dummydata.Replies;
+    async fetchTweet(tweetId) {
+      try {
+        console.log('fetchTweet', tweetId)
+        const response = await tweetsAPI.getSingleTweet(tweetId)
+        console.log(response)
+        this.tweet = response.data
+        this.replies = response.data.Replies
+      } catch(error) {
+        Toast.fire({
+          icon:'error',
+          title: '無法取得推文資料，請稍後再試'
+        })
+      }
     },
     fetchCurrentUser() {
       const {

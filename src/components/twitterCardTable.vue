@@ -13,7 +13,7 @@
         <p>
           {{ tweet.User ? tweet.User.name : '未顯示'}} {{tweet.User ? tweet.User.account : '未顯示'}} • {{ tweet.createdAt }}
         </p>
-        <p @click.prevent.stop="tweetReply">{{ tweet.description }}</p>
+        <p @click.prevent.stop="tweetReply(tweet.id)">{{ tweet.description }}</p>
         <div class="responseIcon pt-2">
           <span
             class="pe-5 comment"
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+
+
 export default {
   props: {
     tweets: {
@@ -119,8 +121,9 @@ export default {
     };
   },
   methods: {
-    tweetReply() {
-      this.$router.push("/reply_list");
+    tweetReply(tweetId) {
+      console.log("tweetId:", tweetId)
+      this.$router.push(`/tweets/${tweetId}`);
     },
     userOther(userId) {
       this.$router.push(`/user/:${userId}`);

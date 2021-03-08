@@ -66,7 +66,7 @@ const routes = [
     meta: { requiresAuth: true}
   },
   {
-    path: '/reply_list',
+    path: '/tweets/:id',
     name: 'reply-list',
     component: ReplyList
   },
