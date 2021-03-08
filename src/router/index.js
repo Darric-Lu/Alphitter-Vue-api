@@ -71,7 +71,7 @@ const routes = [
     component: ReplyList
   },
   {
-    path: '/user/self',
+    path: '/user/self/:id',
     name: 'user-self',
     component: Userself
   },

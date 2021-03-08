@@ -2,17 +2,17 @@
   <div class="container user-profile px-0">
     <div class="user-title-cut">
       <img
-        v-if="currentUser.titleImage"
+        v-if="currentUser.cover"
         class="user-title-pic"
-        :src="currentUser.titleImage"
+        :src="currentUser.cover"
         alt="使用者標題照片"
       />
     </div>
     <div class="avatar">
       <img
-        v-if="currentUser.userImage"
+        v-if="currentUser.avatar"
         class="avatar-img"
-        :src="currentUser.userImage"
+        :src="currentUser.avatar"
         alt="使用者大頭貼"
       />
     </div>
@@ -31,19 +31,19 @@
         <span class="name-content">{{ currentUser.name }}</span>
         <span class="name-account">@{{ currentUser.account }}</span>
         <div class="mt-3">
-          {{ currentUser.SelfIntroduction }}
+          {{ currentUser.introduction }}
         </div>
         <div class="follow mt-2">
           <router-link
             :to="{ name: 'user-self-following' }"
             class="followers-content"
-            ><span class="bold">{{ currentUser.followersCount }}個</span>
+            ><span class="bold">{{ currentUser.Followings.length }}個</span>
             <span class="gray">跟隨中</span>
           </router-link>
           <router-link
             :to="{ name: 'user-self-follower' }"
             class="following-content ms-2"
-            ><span class="bold">{{ currentUser.followingCount }}位</span>
+            ><span class="bold">{{ currentUser.Followings.length }}位</span>
             <span class="gray">跟隨者</span>
           </router-link>
         </div>
@@ -77,9 +77,9 @@
           <div class="modal-body p-0">
             <div class="user-title-cut">
               <img
-                v-if="currentUser.titleImage"
+                v-if="currentUser.cover"
                 class="user-title-pic"
-                :src="currentUser.titleImage"
+                :src="currentUser.cover"
                 alt="使用者標題照片"
               />
               <div class="add-photo-btn">
@@ -99,9 +99,9 @@
             </div>
             <div class="modal-avatar">
               <img
-                v-if="currentUser.userImage"
+                v-if="currentUser.avatar"
                 class="modal-avatar-img"
-                :src="currentUser.userImage"
+                :src="currentUser.avatar"
                 alt="使用者大頭貼"
               />
               <div class="chang-photo-btn">
@@ -129,7 +129,7 @@
             <div class="form-group input-data introduction-data">
               <label for="introduction" class="ms-3 fw-bold">自我介紹</label>
               <textarea
-                v-model="currentUser.SelfIntroduction"
+                v-model="currentUser.introduction"
                 id="introduction"
                 class="form-control"
                 rows="3"

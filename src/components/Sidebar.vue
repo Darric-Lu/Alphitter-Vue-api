@@ -28,7 +28,7 @@
       </div>
     </router-link>
     <!-- 個人資料 -->
-    <router-link :to="{ name: 'user-self' }" class="nav-link">
+    <router-link :to="{ path: `user/self/${currentUser.id}` }" class="nav-link">
       <div
         class="twitter row mt-4 d-flex justify-content-center"
         :class="active.self"
@@ -103,7 +103,7 @@
             <div class="modal-img-cut">
               <img
                 class="cerrunt-user-img"
-                :src="currentUser.userImage"
+                :src="currentUser.avatar"
                 alt=""
               />
             </div>

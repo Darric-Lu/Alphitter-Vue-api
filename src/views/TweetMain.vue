@@ -36,7 +36,7 @@
           </div>
           <div class="mid-down">
             <!-- twitterCardTable -->
-            <twitterCardTable :tweets="tweets" :currentUser="currentUser"/>
+            <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
@@ -53,10 +53,10 @@
 import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import RecommendationTable from "../components/RecommendationTable";
-import {v4 as uuidv4} from 'uuid'
-import tweetsAPI from "../apis/tweets"
-import { Toast } from '../utils/helpers';
-
+import { v4 as uuidv4 } from "uuid";
+import tweetsAPI from "../apis/tweets";
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 // GET api/tweets
 
@@ -153,7 +153,6 @@ const dummyRecommendUsers = {
   ],
 };
 
-
 export default {
   name: "TweetMain",
   components: {
@@ -171,45 +170,63 @@ export default {
         setting: "row",
       },
       currentUser: {
+        id: "",
         account: "",
         name: "",
-        userImage: "",
-        titleImage: "",
-        followersCount: "",
-        followingCount: "",
-        SelfIntroduction: "",
+        avatar: "",
+        cover: "",
+        email: "",
+        introduction: "",
+        Followers: [],
+        Followings: [],
       },
     };
   },
   created() {
+    this.fetchCurrentUser();
     this.fetchMain();
     this.fetchRecommendUsers();
   },
   methods: {
+    async fetchCurrentUser() {
+      try {
+        const response = await usersAPI.getCurrentUser();
+        console.log("currentUser:", response);
+        this.currentUser = {
+          ...this.currentUser,
+          ...response.data,
+        };
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料",
+        });
+      }
+    },
     async fetchMain() {
       try {
-        const response = await tweetsAPI.getTweets()
-        console.log('response', response)
+        const response = await tweetsAPI.getTweets();
+        console.log("response", response);
         this.tweets = response.data;
       } catch (error) {
         Toast.fire({
-          icon:'error',
-          title: '無法取得推文資料，請稍後再試'
-        })
+          icon: "error",
+          title: "無法取得推文資料，請稍後再試",
+        });
       }
     },
     handleSubmit() {
-      if(!this.description) {
+      if (!this.description) {
         Toast.fire({
-          icon: 'error',
-          title: '請填寫推文內容'
-        })
+          icon: "error",
+          title: "請填寫推文內容",
+        });
       }
-      if(this.description.length >= 140) {
+      if (this.description.length >= 140) {
         Toast.fire({
-          icon: 'error',
-          title: '字數限制140個'
-        })
+          icon: "error",
+          title: "字數限制140個",
+        });
       }
       // TODO: 向 API 發送 POST 請求
       // 伺服器新增 Comment 成功後...
@@ -289,7 +306,7 @@ export default {
         ],
         Likes: [],
       });
-      this.description = ''
+      this.description = "";
       console.log("submit");
     },
     fetchRecommendUsers() {
