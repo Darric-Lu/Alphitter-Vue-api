@@ -12,12 +12,12 @@
       </div>
 
       <div class="form-label-group mb-2">
-        <label for="accountNumber">帳號</label>
+        <label for="account">帳號</label>
         <input
-          id="accountNumber"
-          v-model="accountNumber"
-          name="accountNumber"
-          type="accountNumber"
+          id="account"
+          v-model="account"
+          name="account"
+          type="account"
           class="form-control"
           autocomplete="username"
           required
@@ -38,7 +38,13 @@
         />
       </div>
       <div class="btn-wrapping">
-        <button class="btn data-submit-btn mb-3" type="submit">登入</button>
+        <button
+          class="btn data-submit-btn mb-3"
+          type="submit"
+          :disabled="isprocessing"
+        >
+          登入
+        </button>
       </div>
       <div class="text-center mb-3 otherOption">
         <span>
@@ -50,23 +56,55 @@
 </template>
 
 <script>
+import authorizationAPI from "../apis/authorization";
+import { Toast } from "../utils/helpers";
+
 export default {
   name: "AdminSignIn",
   data() {
     return {
-      accountNumber: "",
+      account: "",
       password: "",
+      isprocessing: false,
     };
   },
   methods: {
-    handleSubmit() {
-      const data = JSON.stringify({
-        accountNumber: this.accountNumber,
-        password: this.password,
-      });
+    async handleSubmit() {
+      try {
+        if (!this.account || !this.password) {
+          Toast.fire({
+            icon: "warning",
+            title: "Oh，有空白～信箱和密碼都要寫唷>_<",
+          });
+          return;
+        }
 
-      // TODO: 向後端驗證使用者登入資訊是否合法
-      console.log("data", data);
+        this.isprocessing = true;
+
+        const response = await authorizationAPI.adminSignIn({
+          account: this.account,
+          password: this.password,
+        });
+        console.log(response);
+
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token", data.token);
+        // 將資料傳進去Vuex裡面
+        this.$store.commit("setCurrentAdminUser", data.user);
+
+        this.$router.push("/admin/twitter");
+      } catch (error) {
+        this.isprocessing = false;
+        this.password = "";
+        Toast.fire({
+          icon: "error",
+          title: "欸斗，現在無法登入，待會再試唄",
+        });
+      }
     },
   },
 };

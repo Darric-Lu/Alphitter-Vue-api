@@ -12,12 +12,12 @@
       </div>
 
       <div class="form-label-group mb-2">
-        <label for="accountNumber">帳號</label>
+        <label for="account">帳號</label>
         <input
-          id="accountNumber"
-          v-model="accountNumber"
-          name="accountNumber"
-          type="accountNumber"
+          id="account"
+          v-model="account"
+          name="account"
+          type="account"
           class="form-control"
           autocomplete="username"
           required
@@ -67,7 +67,7 @@ export default {
   name: "SignIn",
   data() {
     return {
-      accountNumber: "",
+      account: "",
       password: "",
       isprocessing: false,
     };
@@ -75,10 +75,10 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        if (!this.accountNumber || !this.password) {
+        if (!this.account || !this.password) {
           Toast.fire({
             icon: "warning",
-            title: "請填入 email 和 password",
+            title: "Oh，有空白～帳號和密碼都要寫唷>_<",
           });
           return;
         }
@@ -86,7 +86,7 @@ export default {
         this.isprocessing = true;
 
         const response = await authorizationAPI.signIn({
-          account: this.accountNumber,
+          account: this.account,
           password: this.password,
         });
         console.log(response);
@@ -106,7 +106,7 @@ export default {
         this.password = "";
         Toast.fire({
           icon: "error",
-          title: "無法登入，請稍後再試",
+          title: "欸斗，現在無法登入，待會再試唄",
         });
       }
     },

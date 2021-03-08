@@ -21,8 +21,7 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    redirect: '/main',
-    meta: { requiresAuth: true }
+    redirect: '/signin',
   },
   {
     path: '/signin',
@@ -63,17 +62,11 @@ const routes = [
     path: '/main',
     name: 'main',
     component: TweetMain,
-    meta: { requiresAuth: true }
   },
   {
     path: '/tweets/:id',
     name: 'reply-list',
     component: ReplyList
-  },
-  {
-    path: '/user/self/:id',
-    name: 'user-self',
-    component: Userself
   },
   {
     path: '/user/self/like',
@@ -94,6 +87,11 @@ const routes = [
     path: '/user/self/following',
     name: 'user-self-following',
     component: () => import('../views/UserselfFollowing.vue')
+  },
+  {
+    path: '/user/self/:id',
+    name: 'user-self',
+    component: Userself
   },
   {
     path: '/user/:id',
