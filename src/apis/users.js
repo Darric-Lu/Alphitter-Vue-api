@@ -16,5 +16,10 @@ export default {
     return apiHelper.get(`/users/${userId}/tweets`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  editUserProfile({ currentUserId, formData }) {
+    return apiHelper.put(`/users/${currentUserId}`, formData, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }
