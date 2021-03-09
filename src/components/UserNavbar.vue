@@ -7,8 +7,14 @@
     <div class="col-lg-11">
       <span class="name-text">
         <!-- 因為傳進來的都是同一個id的推文 -->
-        <span class="arrow-name">Who</span>
-        <span class="arrow-tweets-count">a lot of 推文</span>
+        <span class="arrow-name">{{ currentUser.name }}</span>
+        <span class="arrow-tweets-count"
+          >{{
+            currentUser.tweetCount
+              ? currentUser.tweetCount
+              : "未串接到，等heroku更新"
+          }}推文</span
+        >
       </span>
     </div>
   </div>
@@ -17,9 +23,9 @@
 <script>
 export default {
   props: {
-    tweets: {
-      type: Array,
-      require: true,
+    currentUser: {
+      type: Object,
+      required: true,
     },
   },
 };

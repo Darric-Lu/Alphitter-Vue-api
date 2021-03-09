@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- 中間在小於md時 顯示全寬10/12-->
           <!-- UserNavbar -->
-          <UserNavbar />
+          <UserNavbar :currentUser="currentUser" />
           <div class="user-profile">
             <!-- Userprofile -->
             <UserProfile :currentUser="currentUser" />
@@ -172,6 +172,8 @@ export default {
         introduction: "",
         Followers: [],
         Followings: [],
+        Likes: [],
+        tweetCount: "",
       },
       recommendUsers: {},
     };
@@ -205,6 +207,7 @@ export default {
         console.log("fetchUserself id:", currentUserId);
         console.log("response", response);
         this.tweets = response.data;
+        console.log(this.tweets);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -257,8 +260,7 @@ export default {
   height: fit-content;
 }
 .mid-down {
-  border: 1px solid black;
-  margin-top: 10px;
+  /* border: 1px solid black; */
   width: 100%;
   height: auto;
 }

@@ -36,7 +36,7 @@
               alt="討論icon"
               class="mx-2 icon"
             />
-            <span class="tweet-info me-5">{{ tweet.Replies.length }}</span>
+            <span class="tweet-info me-5">{{ tweets.length }}</span>
           </span>
           <span class="heart">
             <img
