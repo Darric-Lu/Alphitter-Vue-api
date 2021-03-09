@@ -5,7 +5,7 @@
         <AdminSideBar :active="active" />
       </div>
       <div class="col-10">
-        <AdminTwitterCardTable />
+        <AdminTwitterCardTable :tweets="tweets"/>
       </div>
     </div>
   </div>
@@ -24,6 +24,8 @@
 <script>
 import AdminSideBar from "../components/AdminSideBar";
 import AdminTwitterCardTable from "../components/AdminTwitterCardTable";
+import adminAPI from "../apis/admin"
+import { Toast } from "../utils/helpers"
 
 export default {
   name: "AdminTwitterPage",
@@ -33,11 +35,29 @@ export default {
   },
   data() {
     return {
+      tweets: [],
       active: {
         twitterContent: "active",
         userContent: "row",
       },
     };
   },
+  created() {
+    this.fetchAllTweets()
+  },
+  methods: {
+    async fetchAllTweets() {
+      try {
+        const response = await adminAPI.getAdminTweets()
+        console.log(response)
+        this.tweets = response.data      
+      } catch(error) {
+        Toast.fire({
+          icon:"error",
+          title: "無法拿到資料捏，請稍後再試～"
+        })
+      }
+    }
+  }
 };
 </script>

@@ -12,6 +12,13 @@ export default new Vuex.Store({
       name: '',
       role: ''
     },
+    currentAdminUser: {
+      id: -1,
+      name: "",
+      email: "",
+      account: "",
+      role: ""
+    },
     isAuthenticated: false
   },
   mutations: {
@@ -28,6 +35,13 @@ export default new Vuex.Store({
       state.currentUser = {}
       state.isAuthenticated = false
       localStorage.removeItem('token')
+    },
+    setCurrentAdminUser(state, currentAdminUser) {
+      state.currentAdminUser = {
+        ...state.currentAdminUser,
+        ...currentAdminUser
+      }
+      state.isAuthenticated = true
     }
   },
   actions: {
