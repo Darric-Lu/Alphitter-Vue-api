@@ -16,5 +16,10 @@ export default {
     return apiHelper.get(`/users/${userId}/tweets`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  getTopUsers() {
+    return apiHelper.get(`/users/top10Users`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }

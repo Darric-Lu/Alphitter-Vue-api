@@ -6,13 +6,13 @@
         <div class="user-image-cut">
           <img
             class="user-image-picture"
-            :src="user.image"
+            :src="user.avatar ? user.avatar : noneAvatar"
             alt="user-picture"
           />
         </div>
       </div>
       <div class="user-info ms-2">
-        <p class="mt-2 mb-0 user-name" :title="user.followedCount">
+        <p class="mt-2 mb-0 user-name" :title="user.FollowerCount">
           {{ user.name }}
         </p>
         <p class="user-account">@{{ user.account }}</p>
@@ -71,12 +71,15 @@ a {
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
-  top: 10px;
-  left: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .user-image-picture {
   width: 100%;
   object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 .user-name {
   font-weight: 800;
@@ -116,34 +119,35 @@ a {
 </style>
 
 <script>
+//指搞定首頁的串接 功能都還沒...
 export default {
   name: "RecommendationTable",
   props: {
     initialRecommendUsers: {
       type: Array,
-      required: true,
+      default: () => ({
+        id: "",
+        name: "",
+        account: "",
+        avatar: "",
+        FollowerCount: "",
+      }),
     },
   },
   data() {
     return {
       recommendUsers: [...this.initialRecommendUsers],
+      noneAvatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
     };
   },
   created() {
-    this.sortFollowedCount();
     this.top5();
-    // console.log(this.recommendUsers.length);
+    console.log("initialRecommendUsers", this.initialRecommendUsers);
   },
   methods: {
-    sortFollowedCount() {
-      this.recommendUsers
-        .sort(function (a, b) {
-          return a.followedCount - b.followedCount;
-        })
-        .reverse();
-    },
     top5() {
-      this.recommendUsers = [...this.recommendUsers.slice(0, 5)];
+      this.recommendUsers = this.recommendUsers.slice(0, 5);
+      console.log("x", this.recommendUsers);
     },
     moreRecommendUsers() {
       (this.recommendUsers = [...this.initialRecommendUsers]),
@@ -172,6 +176,12 @@ export default {
           return user;
         }
       });
+    },
+  },
+  watch: {
+    initialRecommendUsers(newValue) {
+      this.recommendUsers = [...newValue];
+      this.top5();
     },
   },
 };

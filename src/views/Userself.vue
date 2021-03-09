@@ -179,11 +179,11 @@ export default {
     };
   },
   created() {
+    this.fetchRecommendUsers();
     this.fetchCurrentUser();
     const { id: currentUserId } = this.$route.params;
     console.log("currentUserId", currentUserId);
     this.fetchUserself(currentUserId);
-    this.fetchRecommendUsers();
   },
   methods: {
     async fetchCurrentUser() {
