@@ -32,11 +32,11 @@
             data-bs-target="#replyTweet"
           >
             <img src="../assets/comment-alt.svg" alt="討論icon" class="mx-2" />
-            <span class="tweet-info me-5">{{ tweet.Replies.length }}</span>
+            <span class="tweet-info me-5">{{ tweet.Replies ? tweet.Replies.length : ''}}</span>
           </span>
           <span class="heart">
             <img src="../assets/heart.svg" alt="喜愛icon" class="mx-2" />
-            <span class="tweet-info">{{ tweet.Likes.length }}</span>
+            <span class="tweet-info">{{ tweet.Likes ? tweet.Likes.length : ''}}</span>
           </span>
         </div>
       </div>

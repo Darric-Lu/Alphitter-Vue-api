@@ -11,9 +11,9 @@ export default {
   signUp({ account, name, email, password, checkPassword }) {
     return apiHelper.post('/users', { account, name, email, password, checkPassword })
   },
-  adminSignIn({ account, password }) {
+  adminSignIn({ email, password }) {
     return apiHelper.post('/admin/signin', {
-      account,
+      email,
       password
     })
   }
