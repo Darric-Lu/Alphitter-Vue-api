@@ -16,7 +16,10 @@
             <UserProfile :currentUser="currentUser" />
           </div>
           <!-- tab -->
-          <Tab />
+          <Tab
+            :tab-active="tabActive"
+            @handle-change-active="afterHadleChangeActive"
+          />
           <div class="mid-down">
             <!-- twitterCardTable -->
             <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
@@ -38,11 +41,10 @@ import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
 import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
-import usersAPI from '../apis/users'
-import { Toast } from '../utils/helpers';
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 // userprofile GET /api/users/:id
-
 
 const dummyRecommendUsers = {
   recommendUsers: [
@@ -155,13 +157,18 @@ export default {
         self: "active",
         setting: "row",
       },
+      tabActive: {
+        tweetsArea: "active",
+        replyTweestArea: "",
+        liekdArea: "",
+      },
       currentUser: {
-        id:"",
+        id: "",
         account: "",
         name: "",
         avatar: "",
         cover: "",
-        email:"",
+        email: "",
         introduction: "",
         Followers: [],
         Followings: [],
@@ -171,8 +178,8 @@ export default {
   },
   created() {
     this.fetchCurrentUser();
-    const { id: currentUserId } = this.$route.params
-    console.log('currentUserId', currentUserId)
+    const { id: currentUserId } = this.$route.params;
+    console.log("currentUserId", currentUserId);
     this.fetchUserself(currentUserId);
     this.fetchRecommendUsers();
   },
@@ -193,21 +200,44 @@ export default {
       }
     },
     async fetchUserself(currentUserId) {
-      try{
-        const response = await usersAPI.getUserTweet(currentUserId)
-        console.log('fetchUserself id:', currentUserId)
-        console.log('response', response)
-        this.tweets = response.data
-      } catch(error) {
+      try {
+        const response = await usersAPI.getUserTweet(currentUserId);
+        console.log("fetchUserself id:", currentUserId);
+        console.log("response", response);
+        this.tweets = response.data;
+      } catch (error) {
         Toast.fire({
-          icon: 'error',
-          title: '無法拿到你的資料，請稍後再試唷'
-        })
+          icon: "error",
+          title: "無法拿到你的資料，請稍後再試唷",
+        });
       }
     },
     fetchRecommendUsers() {
       this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
       // console.log("recommendUsers", this.recommendUsers);
+    },
+    afterHadleChangeActive(e) {
+      //改變Tab的active，且串API時改變中下方資料讓畫面改變
+      console.log("change", e);
+      this.tabActive = {
+        tweetsArea: "",
+        replyTweestArea: "",
+        liekdArea: "",
+      };
+      switch (e) {
+        case "tweetsArea":
+          this.tabActive.tweetsArea = "active";
+          //接本頁面使用者的推文
+          break;
+        case "replyTweestArea":
+          //接本頁面使用者的推文與回覆
+          this.tabActive.replyTweestArea = "active";
+          break;
+        case "liekdArea":
+          //接本頁面使用者的喜歡的內容
+          this.tabActive.liekdArea = "active";
+          break;
+      }
     },
   },
 };

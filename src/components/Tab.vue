@@ -1,11 +1,25 @@
 <template>
   <div class="tab mt-5">
-    <div class="tab-link"><router-link to="/user/self">推文</router-link></div>
-    <div class="tab-link">
-      <router-link to="/user/self/tweetsandreplies">推文與回覆</router-link>
+    <div
+      class="tab-link"
+      :class="tabActive.tweetsArea"
+      @click="changActive('tweetsArea')"
+    >
+      推文
     </div>
-    <div class="tab-link">
-      <router-link to="/user/self/like">喜歡的內容</router-link>
+    <div
+      class="tab-link"
+      :class="tabActive.replyTweestArea"
+      @click="changActive('replyTweestArea')"
+    >
+      推文與回覆
+    </div>
+    <div
+      class="tab-link"
+      :class="tabActive.liekdArea"
+      @click="changActive('liekdArea')"
+    >
+      喜歡的內容
     </div>
   </div>
 </template>
@@ -24,14 +38,29 @@
   padding-bottom: 15px;
 }
 .tab-link:hover {
+  color: #ff6600;
+  border-bottom: 2px solid #ff6600;
+  cursor: pointer;
+}
+.active {
+  color: #ff6600;
   border-bottom: 2px solid #ff6600;
 }
-a {
-  color: #657786;
-  text-decoration: none;
-  font-weight: bold;
-}
-a:hover {
-  color: #ff6600;
-}
 </style>
+
+<script>
+export default {
+  name: "Tab",
+  props: {
+    tabActive: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    changActive(e) {
+      this.$emit("handle-change-active", e);
+    },
+  },
+};
+</script>
