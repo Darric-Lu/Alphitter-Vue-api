@@ -31,12 +31,32 @@
             data-bs-toggle="modal"
             data-bs-target="#replyTweet"
           >
-            <img src="../assets/comment-alt.svg" alt="討論icon" class="mx-2" />
+            <img
+              src="../assets/comment-alt.svg"
+              alt="討論icon"
+              class="mx-2 icon"
+            />
             <span class="tweet-info me-5">{{ tweet.Replies.length }}</span>
           </span>
           <span class="heart">
-            <img src="../assets/heart.svg" alt="喜愛icon" class="mx-2" />
-            <span class="tweet-info">{{ tweet.Likes.length }}</span>
+            <img
+              @click="unLiked(tweet.id)"
+              v-if="tweet.isLike"
+              src="../assets/heart-soild.svg"
+              alt="喜愛icon"
+              class="mx-2 icon"
+            />
+            <img
+              @click="beLiked(tweet.id)"
+              v-else
+              src="../assets/heart.svg"
+              alt="喜愛icon"
+              class="mx-2 icon"
+            />
+            <span class="tweet-info heart-color" v-if="tweet.isLike">{{
+              tweet.likeCount
+            }}</span>
+            <span class="tweet-info" v-else>{{ tweet.likeCount }}</span>
           </span>
         </div>
       </div>
@@ -139,6 +159,14 @@ export default {
       console.log(userId);
     },
     replyTweetSubmit() {},
+    beLiked(tweetId) {
+      console.log("beLiked-tweetId", tweetId);
+      this.$emit("handle-be-like", tweetId);
+    },
+    unLiked(tweetId) {
+      console.log("uniked-tweetId", tweetId);
+      this.$emit("handle-unlike", tweetId);
+    },
   },
 };
 </script>
@@ -177,6 +205,10 @@ export default {
 .comment .heart {
   width: 12px;
   height: 12px;
+  cursor: pointer;
+}
+.icon {
+  cursor: pointer;
 }
 .current-user-img {
   width: 50px;
@@ -206,5 +238,9 @@ export default {
   font-weight: 500;
   font-size: 15px;
   color: #657786;
+}
+.heart-color {
+  font-weight: 600;
+  color: #e0245e;
 }
 </style>

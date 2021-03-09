@@ -36,7 +36,12 @@
           </div>
           <div class="mid-down">
             <!-- twitterCardTable -->
-            <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
+            <twitterCardTable
+              :tweets="tweets"
+              :currentUser="currentUser"
+              @handle-be-like="afterHandleBeLike"
+              @handle-unlike="afterHandleUnlike"
+            />
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
@@ -189,6 +194,62 @@ export default {
     this.fetchRecommendUsers();
   },
   methods: {
+    async afterHandleBeLike(id) {
+      try {
+        const { data } = await tweetsAPI.postTweetsLike(id);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            const number = tweet.likeCount;
+            return (tweet = {
+              ...tweet,
+              isLike: true,
+              likeCount: number + 1,
+            });
+          } else {
+            return tweet;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法喜歡，請稍後再試",
+        });
+      }
+    },
+    async afterHandleUnlike(id) {
+      try {
+        const { data } = await tweetsAPI.postTweetsUnlike(id);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            const number = tweet.likeCount;
+            return (tweet = {
+              ...tweet,
+              isLike: false,
+              likeCount: number - 1,
+            });
+          } else {
+            return tweet;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法取消取消喜歡，請稍後再試",
+        });
+      }
+    },
+
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
@@ -335,6 +396,10 @@ export default {
       //拉取dummyRecommendUsers
       this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
     },
+    // afterHadleBeLike(id) {
+    // console.log("id", id);
+    // this.tweets = this.tweets.map();
+    // },
   },
 };
 </script>
