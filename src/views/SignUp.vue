@@ -15,9 +15,9 @@
         <label for="accountNumber">帳號</label>
         <input
           id="accountNumber"
-          v-model="accountNumber"
-          name="accountNumber"
-          type="accountNumber"
+          v-model="account"
+          name="account"
+          type="account"
           class="form-control"
           autocomplete="username"
           required
@@ -69,8 +69,8 @@
         <label for="password-check">密碼確認</label>
         <input
           id="password-check"
-          v-model="passwordCheck"
-          name="passwordCheck"
+          v-model="checkPassword"
+          name="checkPassword"
           type="password"
           class="form-control"
           autocomplete="new-password"
@@ -105,11 +105,11 @@ export default {
   name: "SignUp",
   data() {
     return {
-      accountNumber: "",
+      account: "",
       name: "",
       email: "",
       password: "",
-      passwordCheck: "",
+      checkPassword: "",
       isProcessing: false,
     };
   },
@@ -119,15 +119,15 @@ export default {
         // 如果有任何欄位為空，則使用Toast提示
         // 然後return不繼續往後執行
         if (
-          !this.accountNumber ||
+          !this.account ||
           !this.email ||
           !this.password ||
           !this.password ||
-          !this.passwordCheck
+          !this.checkPassword
         ) {
           Toast.fire({
             icon: "warning",
-            title: "請填寫完整",
+            title: "拜偷!!每一欄都要寫!!",
           });
           return;
         }
@@ -135,11 +135,11 @@ export default {
         this.isProcessing = true;
 
         const response = await authorizationAPI.signUp({
-          account: this.accountNumber,
+          account: this.account,
           name: this.name,
           email: this.email,
           password: this.password,
-          passwordCheck: this.passwordCheck,
+          checkPassword: this.checkPassword,
         });
         console.log(response);
 
@@ -149,12 +149,21 @@ export default {
           throw new Error(data.message);
         }
 
+        localStorage.setItem("token", data.token);
+        // 將資料傳進去Vuex裡面
+        this.$store.commit("setCurrentUser", data.user);
+
+        Toast.fire({
+          icon: "success",
+          title: "註冊成功!!歡迎歡迎～",
+        });
+
         this.$router.push("/main");
       } catch (error) {
         this.isProcessing = false;
         Toast.fire({
           icon: "error",
-          title: "無法註冊帳號，請稍候再試",
+          title: "拍謝，該帳號或email被註冊過啦，請換一個唄",
         });
       }
     },

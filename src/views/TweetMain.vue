@@ -22,7 +22,7 @@
                   placeholder="有甚麼新鮮事?"
                   id="floatingTextarea2"
                   style="height: 100px"
-                  v-model="text"
+                  v-model="description"
                 >
                 </textarea>
                 <span>
@@ -162,7 +162,7 @@ export default {
   },
   data() {
     return {
-      text: "",
+      description: "",
       tweets: [],
       active: {
         home: "active",

@@ -106,7 +106,7 @@ export default {
         this.password = "";
         Toast.fire({
           icon: "error",
-          title: "欸斗，現在無法登入，待會再試唄",
+          title: "欸斗，帳號密碼可能打錯囉，再想想看>_<",
         });
       }
     },
