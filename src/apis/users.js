@@ -17,13 +17,13 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
-<<<<<<< HEAD
   getTopUsers() {
     return apiHelper.get(`/users/top10Users`, {
-=======
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
   editUserProfile({ currentUserId, formData }) {
     return apiHelper.put(`/users/${currentUserId}`, formData, {
->>>>>>> master
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   }

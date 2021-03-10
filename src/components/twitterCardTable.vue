@@ -184,7 +184,7 @@ export default {
         });
       }
     },
-    replyTweetSubmit() {},
+    // replyTweetSubmit() {},
     beLiked(tweetId) {
       console.log("beLiked-tweetId", tweetId);
       this.$emit("handle-be-like", tweetId);
