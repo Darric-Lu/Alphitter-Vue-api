@@ -9,16 +9,16 @@
         <div class="title">帳戶設定</div>
         <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- 中間包含 Recommendationtable(不顯示)  顯示全寬10/12-->
-          <form action="" class="data-from">
+          <form action="" class="data-from" @submit.stop.prevent="handleSubmit">
             <!-- 表單功能未嘗試寫功能 -->
             <div class="form-group user-data">
-              <label for="accountNumber" class="ms-2 fw-bold">帳號</label>
+              <label for="account" class="ms-2 fw-bold">帳號</label>
               <input
-                v-model="currentUser.name"
-                id="accountNumber"
-                type="accountNumber"
+                v-model="currentUser.account"
+                id="account"
+                type="account"
                 class="form-control"
-                name="accountNumber"
+                name="account"
                 autocomplete="username"
                 autofocus
                 required
@@ -29,7 +29,7 @@
               <label for="name" class="ms-2 fw-bold">名稱</label>
               <input
                 v-model="currentUser.name"
-                id="accountNumber"
+                id="name"
                 type="text"
                 class="form-control"
                 name="name"
@@ -42,7 +42,7 @@
             <div class="form-group user-data">
               <label for="email" class="ms-2 fw-bold">Email</label>
               <input
-                v-model="currentUser.name"
+                v-model="currentUser.email"
                 id="email"
                 type="email"
                 class="form-control"
@@ -55,7 +55,7 @@
             <div class="form-group user-data">
               <label for="password" class="ms-2 fw-bold">密碼</label>
               <input
-                v-model="currentUser.name"
+                v-model="password"
                 id="password"
                 type="password"
                 class="form-control"
@@ -68,11 +68,11 @@
             <div class="form-group user-data">
               <label for="password-check" class="ms-2 fw-bold">密碼確認</label>
               <input
-                v-model="currentUser.name"
+                v-model="checkPassword"
                 id="password-check"
                 type="password"
                 class="form-control"
-                name="password"
+                name="checkPassword"
                 autocomplete="new-password-check"
                 required
               />
@@ -90,64 +90,89 @@
 </template>
 
 <script>
-// dummyCurrentUser 未定義完整
-const dummyCurrentUser = {
-  currentUser: {
-    account: "ClaireLi",
-    name: "Claire",
-    userImage:
-      "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-    titleImage:
-      "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
-    followersCount: "10",
-    followingCount: "20",
-    SelfIntroduction:
-      " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
-  },
-};
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 import Sidebar from "../components/Sidebar";
+
 export default {
   components: {
     Sidebar,
   },
   data() {
     return {
-      accountNumber: "",
-      name: "",
-      email: "",
+      currentUser: {
+        id: "",
+        account: "",
+        name: "",
+        avatar: "",
+        cover: "",
+        email: "",
+        introduction: "",
+        Followers: [],
+        Followings: [],
+      },
       password: "",
-      passwordCheck: "",
+      checkPassword: "",
       active: {
         home: "row",
         self: "row",
         setting: "active",
       },
+      isProcessing: false,
     };
   },
   created() {
     this.fetchCurrentUser();
   },
   methods: {
-    fetchCurrentUser() {
-      const {
-        account,
-        name,
-        userImage,
-        titleImage,
-        followersCount,
-        followingCount,
-        SelfIntroduction,
-      } = dummyCurrentUser.currentUser;
-      this.currentUser = {
-        ...this.currentUser,
-        account,
-        name,
-        userImage,
-        titleImage,
-        followersCount,
-        followingCount,
-        SelfIntroduction,
-      };
+    async fetchCurrentUser() {
+      try {
+        const response = await usersAPI.getCurrentUser();
+        console.log("currentUser:", response);
+        this.currentUser = {
+          ...this.currentUser,
+          ...response.data,
+        };
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料",
+        });
+      }
+    },
+    async handleSubmit(e) {
+      try {
+        // 避免重複點擊
+        this.isProcessing = true;
+        // 確認密碼一致
+        console.log(e.target);
+        if (this.password !== this.checkPassword) {
+          Toast.fire({
+            icon: "error",
+            title: "密碼要打一樣唷～",
+          });
+        }
+        // 建立FormData
+        const form = e.target; // <form></form>
+        const formData = new FormData(form);
+        
+        const currentUserId = this.currentUser.id;
+        console.log(currentUserId);
+        const response = await usersAPI.editUserProfile({
+          currentUserId,
+          formData,
+        });
+        console.log(response);
+        // 重新帶一次更新過後的currentuser資料
+        this.fetchCurrentUser();
+        // 開啟按鈕
+        this.isProcessing = false;
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "欸斗，現在不能修改資料，等一下嘿～",
+        });
+      }
     },
   },
 };

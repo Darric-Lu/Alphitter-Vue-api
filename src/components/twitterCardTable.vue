@@ -1,37 +1,42 @@
 <template>
   <div class="comtainer">
-    <div class="row tweetRow" v-for="tweet in tweets" :key="tweet.id">
-      <div class="col-lg-1">
+    <div class="row tweet-row m-0" v-for="tweet in tweets" :key="tweet.id">
+      <div class="col-6 tweet-user-image-wrapping justify-content-start">
         <img
-          :src="tweet.avatar"
+          :src="tweet.User.avatar"
           alt=""
-          class="tweetImage"
+          class="tweet-user-image"
           @click.prevent.stop="userOther(tweet.UserId)"
         />
       </div>
-      <div class="col-lg-10 tweetContent">
-        <p>
-          {{ tweet.User ? tweet.User.name : '未顯示'}} {{tweet.User ? tweet.User.account : '未顯示'}} • {{ tweet.createdAt }}
+      <div class="col-10 tweet-content">
+        <span>
+          <span class="tweet-user-name">
+            {{ tweet.User ? tweet.User.name : "未顯示" }}
+          </span>
+          <span class="tweet-info">
+            @ {{ tweet.User ? tweet.User.account : "未顯示" }} •
+            {{ tweet.createdAt | fromNow }}
+          </span>
+        </span>
+        <p
+          @click.prevent.stop="tweetReply(tweet.id)"
+          class="tweet-description m-0"
+        >
+          {{ tweet.description }}
         </p>
-        <p @click.prevent.stop="tweetReply(tweet.id)">{{ tweet.description }}</p>
-        <div class="responseIcon pt-2">
+        <div class="responseIcon my-2">
           <span
-            class="pe-5 comment"
+            class="comment"
             data-bs-toggle="modal"
             data-bs-target="#replyTweet"
           >
-            <img src="../assets/comment-alt.svg" alt="" />
+            <img src="../assets/comment-alt.svg" alt="討論icon" class="mx-2" />
+            <span class="tweet-info me-5">{{ tweet.Replies ? tweet.Replies.length : ''}}</span>
           </span>
-          <span class="ps-5 heart">
-            <!-- <button
-              class="btn mt-3 tweetButton p-0"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#newTweet"
-            >
-              推文
-            </button> -->
-            <img src="../assets/heart.svg" alt="" />
+          <span class="heart">
+            <img src="../assets/heart.svg" alt="喜愛icon" class="mx-2" />
+            <span class="tweet-info">{{ tweet.Likes ? tweet.Likes.length : ''}}</span>
           </span>
         </div>
       </div>
@@ -59,7 +64,11 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-lg-1">
-                <img src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg" alt="" class="tweetImage" />
+                <img
+                  src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg"
+                  alt=""
+                  class="tweetImage"
+                />
               </div>
               <div class="col-lg-10 replyContent">
                 <p>Name @account • 2021-03-02T11:47:05.000Z</p>
@@ -102,9 +111,9 @@
 </template>
 
 <script>
-
-
+import { fromNowFilter } from "./../utils/mixins";
 export default {
+  mixins: [fromNowFilter],
   props: {
     tweets: {
       type: Array,
@@ -122,7 +131,7 @@ export default {
   },
   methods: {
     tweetReply(tweetId) {
-      console.log("tweetId:", tweetId)
+      console.log("tweetId:", tweetId);
       this.$router.push(`/tweets/${tweetId}`);
     },
     userOther(userId) {
@@ -135,27 +144,39 @@ export default {
 </script>
 
 <style scoped>
-.tweetImage {
-  margin-right: 15px;
+.tweet-row {
+  padding: 15px 0 0 15px;
+  border-bottom: 1px #e6ecf0 solid;
+}
+.tweet-user-image-wrapping {
+  position: relative;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: #c4c4c4;
+  overflow: hidden;
+}
+.tweet-user-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+.tweet-description {
+  cursor: pointer;
 }
 .replyContent {
   margin-left: -3px;
   padding-left: 30px;
-  border-left: 2px solid #CCD6DD;
+  border-left: 2px solid #ccd6dd;
 }
 .comment .heart {
   width: 12px;
   height: 12px;
-}
-.tweetImage {
-  position: relative;
-  z-index: 999;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  /* margin-left: 10px; */
-  /* left: 48%;
-  top: 60px; */
 }
 .current-user-img {
   width: 50px;
@@ -172,5 +193,18 @@ export default {
   font-weight: 800;
   width: 64px;
   height: 40px;
+}
+
+/*  */
+
+.tweet-user-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1c1c1c;
+}
+.tweet-info {
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
 }
 </style>

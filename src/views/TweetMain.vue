@@ -355,23 +355,24 @@ export default {
 
 /* 中間 */
 .twitterEditCard {
-  border: 1px solid green;
+  /* border: 1px solid green; */
   width: 100%;
   height: auto;
 }
 .mid-down {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 100%;
   height: auto;
 }
 .mid-header {
   background: #ffffff;
-  border: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
   box-sizing: border-box;
-  padding: 2px;
+  height: 55px;
+  line-height: 55px;
+  padding: 0 0 0 15px;
   font-weight: bold;
   font-size: 18px;
-  line-height: 26px;
 }
 img {
   /* position: absolute; */

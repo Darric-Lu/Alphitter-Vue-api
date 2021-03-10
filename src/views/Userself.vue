@@ -180,7 +180,6 @@ export default {
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
-        console.log("currentUser:", response);
         this.currentUser = {
           ...this.currentUser,
           ...response.data,

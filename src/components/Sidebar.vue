@@ -104,11 +104,7 @@
           </div>
           <div class="modal-body">
             <div class="modal-img-cut">
-              <img
-                class="cerrunt-user-img"
-                :src="currentUser.avatar"
-                alt=""
-              />
+              <img class="cerrunt-user-img" :src="currentUser.avatar" alt="" />
             </div>
             <div class="modal-new-post">
               <textarea
