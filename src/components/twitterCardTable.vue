@@ -11,7 +11,10 @@
       </div>
       <div class="col-10 tweet-content">
         <span>
-          <span class="tweet-user-name">
+          <span 
+          class="tweet-user-name"
+          @click.prevent.stop="usersPage(tweet.UserId)"
+          >
             {{ tweet.User ? tweet.User.name : "未顯示" }}
           </span>
           <span class="tweet-info">
@@ -182,6 +185,9 @@ export default {
   object-fit: cover;
   cursor: pointer;
   transform: translate(-50%, -50%);
+}
+.tweet-user-name {
+  cursor: pointer;
 }
 .tweet-description {
   cursor: pointer;
