@@ -289,7 +289,7 @@ export default {
   left: 14px;
   /* z-index: 999; */
   overflow: hidden;
-  background: url("../assets/working-with-laptop.svg");
+  /* background: url("../assets/working-with-laptop.svg"); */
   background-color: #999999;
 }
 .avatar-img {

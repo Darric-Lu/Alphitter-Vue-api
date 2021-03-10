@@ -142,7 +142,7 @@ export default {
   },
   created() {
     this.top5();
-    console.log("initialRecommendUsers", this.initialRecommendUsers);
+    // console.log("initialRecommendUsers", this.initialRecommendUsers);
   },
   methods: {
     top5() {

@@ -26,5 +26,10 @@ export default {
     return apiHelper.put(`/users/${currentUserId}`, formData, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  getUserLikes(userId) {
+    return apiHelper.get(`/users/${userId}/likes`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }

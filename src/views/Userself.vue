@@ -95,7 +95,7 @@ export default {
     this.fetchRecommendUsers();
     this.fetchCurrentUser();
     const { id: currentUserId } = this.$route.params;
-    console.log("currentUserId", currentUserId);
+    // console.log("currentUserId", currentUserId);
     this.fetchUserself(currentUserId);
   },
   methods: {
@@ -171,8 +171,8 @@ export default {
     async fetchUserself(currentUserId) {
       try {
         const response = await usersAPI.getUserTweet(currentUserId);
-        console.log("fetchUserself id:", currentUserId);
-        console.log("response", response);
+        // console.log("fetchUserself id:", currentUserId);
+        // console.log("response", response);
         this.tweets = response.data;
       } catch (error) {
         Toast.fire({
@@ -181,13 +181,28 @@ export default {
         });
       }
     },
+    async fetchUserLike(currentUserId) {
+      try {
+        const response = await usersAPI.getUserLikes(currentUserId);
+        console.log("fetchUserLike id:", currentUserId);
+        console.log("response -like ", response);
+        this.tweets = response.data;
+        //在構築一次
+        this.afterGetLike();
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法拿到你的喜歡資料，請稍後再試唷",
+        });
+      }
+    },
     async fetchRecommendUsers() {
       try {
         const response = await usersAPI.getTopUsers();
-        console.log("fetchRecommendUsers", response);
+        // console.log("fetchRecommendUsers", response);
 
         this.recommendUsers = [...response.data];
-        console.log("RecommendUsers", this.recommendUsers);
+        // console.log("RecommendUsers", this.recommendUsers);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -207,16 +222,28 @@ export default {
         case "tweetsArea":
           this.tabActive.tweetsArea = "active";
           //接本頁面使用者的推文
+          this.fetchUserself(this.currentUser.id);
           break;
         case "replyTweestArea":
           //接本頁面使用者的推文與回覆
           this.tabActive.replyTweestArea = "active";
+
           break;
         case "liekdArea":
           //接本頁面使用者的喜歡的內容
           this.tabActive.liekdArea = "active";
+          this.fetchUserLike(this.currentUser.id);
           break;
       }
+    },
+    afterGetLike() {
+      const data = this.tweets.map((e) => {
+        e.Tweet.isLike = e.isLike;
+        e.Tweet.ReplyCount = e.ReplyCount;
+        e.Tweet.likeCount = e.likeCount;
+        return e.Tweet;
+      });
+      this.tweets = data;
     },
   },
 };
