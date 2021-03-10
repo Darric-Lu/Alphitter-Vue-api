@@ -10,13 +10,16 @@
         <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- 中間在小於md時 顯示全寬10/12-->
           <!-- UserNavbar -->
-          <UserNavbar />
+          <UserNavbar :currentUser="currentUser" />
           <div class="user-profile">
             <!-- Userprofile -->
             <UserProfile :initialCurrentUser="currentUser" />
           </div>
           <!-- tab -->
-          <Tab />
+          <Tab
+            :tab-active="tabActive"
+            @handle-change-active="afterHadleChangeActive"
+          />
           <div class="mid-down">
             <!-- twitterCardTable -->
             <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
@@ -154,6 +157,11 @@ export default {
         self: "active",
         setting: "row",
       },
+      tabActive: {
+        tweetsArea: "active",
+        replyTweestArea: "",
+        liekdArea: "",
+      },
       currentUser: {
         id: "",
         account: "",
@@ -164,16 +172,18 @@ export default {
         introduction: "",
         Followers: [],
         Followings: [],
+        Likes: [],
+        tweetCount: "",
       },
       recommendUsers: {},
     };
   },
   created() {
+    this.fetchRecommendUsers();
     this.fetchCurrentUser();
     const { id: currentUserId } = this.$route.params;
     console.log("currentUserId", currentUserId);
     this.fetchUserself(currentUserId);
-    this.fetchRecommendUsers();
   },
   methods: {
     async fetchCurrentUser() {
@@ -207,6 +217,29 @@ export default {
       this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
       // console.log("recommendUsers", this.recommendUsers);
     },
+    afterHadleChangeActive(e) {
+      //改變Tab的active，且串API時改變中下方資料讓畫面改變
+      console.log("change", e);
+      this.tabActive = {
+        tweetsArea: "",
+        replyTweestArea: "",
+        liekdArea: "",
+      };
+      switch (e) {
+        case "tweetsArea":
+          this.tabActive.tweetsArea = "active";
+          //接本頁面使用者的推文
+          break;
+        case "replyTweestArea":
+          //接本頁面使用者的推文與回覆
+          this.tabActive.replyTweestArea = "active";
+          break;
+        case "liekdArea":
+          //接本頁面使用者的喜歡的內容
+          this.tabActive.liekdArea = "active";
+          break;
+      }
+    },
   },
 };
 </script>
@@ -225,8 +258,7 @@ export default {
   height: fit-content;
 }
 .mid-down {
-  border: 1px solid black;
-  margin-top: 10px;
+  /* border: 1px solid black; */
   width: 100%;
   height: auto;
 }

@@ -34,37 +34,65 @@
             data-bs-toggle="modal"
             data-bs-target="#replyTweet"
           >
-            <img src="../assets/comment-alt.svg" alt="討論icon" class="mx-2" />
-            <span class="tweet-info me-5">{{
-              tweet.Replies ? tweet.Replies.length : ""
-            }}</span>
+            <img
+              src="../assets/comment-alt.svg"
+              alt="討論icon"
+              class="mx-2 icon"
+            />
+            <span class="tweet-info me-5">{{ tweets.length }}</span>
           </span>
           <span class="heart">
-            <img src="../assets/heart.svg" alt="喜愛icon" class="mx-2" />
-            <span class="tweet-info">{{
-              tweet.Likes ? tweet.Likes.length : ""
+            <img
+              @click="unLiked(tweet.id)"
+              v-if="tweet.isLike"
+              src="../assets/heart-soild.svg"
+              alt="喜愛icon"
+              class="mx-2 icon"
+            />
+            <img
+              @click="beLiked(tweet.id)"
+              v-else
+              src="../assets/heart.svg"
+              alt="喜愛icon"
+              class="mx-2 icon"
+            />
+            <span class="tweet-info heart-color" v-if="tweet.isLike">{{
+              tweet.likeCount
             }}</span>
+            <span class="tweet-info" v-else>{{ tweet.likeCount }}</span>
           </span>
         </div>
       </div>
-      <!-- modal -->
-      <div
-        class="modal fade"
-        id="replyTweet"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title">
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+    </div>
+    <!-- modal -->
+    <div
+      class="modal fade"
+      id="replyTweet"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div
+                type="button"
+                class="close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-1">
+                <img :src="currentUser.avatar" alt="" class="tweetImage" />
+              </div>
+              <div class="col-lg-10 replyContent">
+                <p>Name @account • 2021-03-02T11:47:05.000Z</p>
+                <p>consequatur corporis aut</p>
+                <p>回覆給 @apple</p>
               </div>
             </div>
             <div class="modal-body">
@@ -159,6 +187,15 @@ export default {
         });
       }
     },
+    // replyTweetSubmit() {},
+    beLiked(tweetId) {
+      console.log("beLiked-tweetId", tweetId);
+      this.$emit("handle-be-like", tweetId);
+    },
+    unLiked(tweetId) {
+      console.log("uniked-tweetId", tweetId);
+      this.$emit("handle-unlike", tweetId);
+    },
   },
 };
 </script>
@@ -207,6 +244,10 @@ export default {
 .comment .heart {
   width: 12px;
   height: 12px;
+  cursor: pointer;
+}
+.icon {
+  cursor: pointer;
 }
 .current-user-img {
   position: relative;
@@ -239,5 +280,41 @@ export default {
   font-weight: 500;
   font-size: 15px;
   color: #657786;
+}
+.heart-color {
+  font-weight: 600;
+  color: #e0245e;
+}
+
+/* modal */
+.modal-header {
+  height: 55px;
+}
+.close-btn {
+  position: absolute;
+  top: 19.5px;
+  left: 19.5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+.close-btn::before,
+.close-btn::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2px; /* cross thickness */
+  background-color: #ff6600;
+}
+
+.close-btn::before {
+  transform: rotate(45deg);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg);
 }
 </style>

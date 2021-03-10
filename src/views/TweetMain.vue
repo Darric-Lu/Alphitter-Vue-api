@@ -36,7 +36,12 @@
           </div>
           <div class="mid-down">
             <!-- twitterCardTable -->
-            <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
+            <twitterCardTable
+              :tweets="tweets"
+              :currentUser="currentUser"
+              @handle-be-like="afterHandleBeLike"
+              @handle-unlike="afterHandleUnlike"
+            />
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
@@ -59,99 +64,6 @@ import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 
 // GET api/tweets
-
-const dummyRecommendUsers = {
-  recommendUsers: [
-    {
-      id: 1,
-      name: "ALPHAcamp",
-      account: "ac",
-      image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-      isFollowing: true,
-      followedCount: 50,
-    },
-    {
-      id: 2,
-      name: "Darric",
-      account: "DL",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
-      isFollowing: true,
-      followedCount: 10,
-    },
-    {
-      id: 3,
-      name: "Claire",
-      account: "ClaireLi",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-      isFollowing: true,
-      followedCount: 30,
-    },
-    {
-      id: 4,
-      name: "goater",
-      account: "goater",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
-      isFollowing: false,
-      followedCount: 40,
-    },
-    {
-      id: 5,
-      name: "stan_wang",
-      account: "stan",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
-      isFollowing: false,
-      followedCount: 46,
-    },
-    {
-      id: 6,
-      name: "ALPHAcamp",
-      account: "ac",
-      image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-      isFollowing: true,
-      followedCount: 70,
-    },
-    {
-      id: 7,
-      name: "Darric",
-      account: "DL",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
-      isFollowing: true,
-      followedCount: 12,
-    },
-    {
-      id: 8,
-      name: "Claire",
-      account: "ClaireLi",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-      isFollowing: true,
-      followedCount: 31,
-    },
-    {
-      id: 9,
-      name: "goater",
-      account: "goater",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
-      isFollowing: false,
-      followedCount: 2,
-    },
-    {
-      id: 10,
-      name: "stan_wang",
-      account: "stan",
-      image:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
-      isFollowing: false,
-      followedCount: 60,
-    },
-  ],
-};
 
 export default {
   name: "TweetMain",
@@ -180,6 +92,7 @@ export default {
         Followers: [],
         Followings: [],
       },
+      recommendUsers: [],
     };
   },
   created() {
@@ -189,6 +102,62 @@ export default {
     this.fetchRecommendUsers();
   },
   methods: {
+    async afterHandleBeLike(id) {
+      try {
+        const { data } = await tweetsAPI.postTweetsLike(id);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            const number = tweet.likeCount;
+            return (tweet = {
+              ...tweet,
+              isLike: true,
+              likeCount: number + 1,
+            });
+          } else {
+            return tweet;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法喜歡，請稍後再試",
+        });
+      }
+    },
+    async afterHandleUnlike(id) {
+      try {
+        const { data } = await tweetsAPI.postTweetsUnlike(id);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            const number = tweet.likeCount;
+            return (tweet = {
+              ...tweet,
+              isLike: false,
+              likeCount: number - 1,
+            });
+          } else {
+            return tweet;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法取消取消喜歡，請稍後再試",
+        });
+      }
+    },
+
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
@@ -322,9 +291,19 @@ export default {
         });
       }
     },
-    fetchRecommendUsers() {
-      //拉取dummyRecommendUsers
-      this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
+    async fetchRecommendUsers() {
+      try {
+        const response = await usersAPI.getTopUsers();
+        console.log("fetchRecommendUsers", response);
+
+        this.recommendUsers = [...response.data];
+        console.log("RecommendUsers", this.recommendUsers);
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得推薦資料，請稍後再試",
+        });
+      }
     },
   },
 };
