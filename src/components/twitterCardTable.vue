@@ -73,22 +73,18 @@
         <div class="modal-content">
           <div class="modal-header">
             <div class="modal-title">
-              <button
+              <div
                 type="button"
-                class="btn-close"
+                class="close-btn"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              ></div>
             </div>
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-lg-1">
-                <img
-                  src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg"
-                  alt=""
-                  class="tweetImage"
-                />
+              <div class="col-1">
+                <img :src="currentUser.avatar" alt="" class="tweetImage" />
               </div>
               <div class="col-lg-10 replyContent">
                 <p>Name @account • 2021-03-02T11:47:05.000Z</p>
@@ -242,5 +238,37 @@ export default {
 .heart-color {
   font-weight: 600;
   color: #e0245e;
+}
+
+/* modal */
+.modal-header {
+  height: 55px;
+}
+.close-btn {
+  position: absolute;
+  top: 19.5px;
+  left: 19.5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+.close-btn::before,
+.close-btn::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2px; /* cross thickness */
+  background-color: #ff6600;
+}
+
+.close-btn::before {
+  transform: rotate(45deg);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg);
 }
 </style>
