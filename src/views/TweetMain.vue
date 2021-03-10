@@ -207,7 +207,7 @@ export default {
     async fetchMain() {
       try {
         const response = await tweetsAPI.getTweets();
-        console.log("response", response);
+        console.log("fetchMain", response);
         this.tweets = response.data;
       } catch (error) {
         Toast.fire({
@@ -308,29 +308,7 @@ export default {
         Likes: [],
       });
       this.description = "";
-      console.log("submit");
     },
-    // fetchCurrentUser() {
-    //   const {
-    //     account,
-    //     name,
-    //     userImage,
-    //     titleImage,
-    //     followersCount,
-    //     followingCount,
-    //     SelfIntroduction,
-    //   } = dummyCurrentUser.currentUser;
-    //   this.currentUser = {
-    //     ...this.currentUser,
-    //     account,
-    //     name,
-    //     userImage,
-    //     titleImage,
-    //     followersCount,
-    //     followingCount,
-    //     SelfIntroduction,
-    //   };
-    // },
     fetchRecommendUsers() {
       //拉取dummyRecommendUsers
       this.recommendUsers = [...dummyRecommendUsers.recommendUsers];
