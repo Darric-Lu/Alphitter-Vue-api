@@ -22,7 +22,12 @@
           />
           <div class="mid-down">
             <!-- twitterCardTable -->
-            <twitterCardTable :tweets="tweets" :currentUser="currentUser" />
+            <twitterCardTable
+              :tweets="tweets"
+              :currentUser="currentUser"
+              @handle-be-like="afterHandleBeLike"
+              @handle-unlike="afterHandleUnlike"
+            />
           </div>
         </div>
         <div class="col-4 d-none d-lg-block right-col">
@@ -42,6 +47,7 @@ import UserProfile from "../components/UserProfile";
 import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
 import usersAPI from "../apis/users";
+import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 
 // userprofile GET /api/users/:id
@@ -186,6 +192,61 @@ export default {
     this.fetchUserself(currentUserId);
   },
   methods: {
+    async afterHandleBeLike(id) {
+      try {
+        const { data } = await tweetsAPI.postTweetsLike(id);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            const number = tweet.likeCount;
+            return (tweet = {
+              ...tweet,
+              isLike: true,
+              likeCount: number + 1,
+            });
+          } else {
+            return tweet;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法喜歡，請稍後再試",
+        });
+      }
+    },
+    async afterHandleUnlike(id) {
+      try {
+        const { data } = await tweetsAPI.postTweetsUnlike(id);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            const number = tweet.likeCount;
+            return (tweet = {
+              ...tweet,
+              isLike: false,
+              likeCount: number - 1,
+            });
+          } else {
+            return tweet;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法取消取消喜歡，請稍後再試",
+        });
+      }
+    },
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
