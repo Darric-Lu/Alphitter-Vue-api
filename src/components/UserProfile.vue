@@ -90,7 +90,7 @@
                   <input
                     id="editCoverImage"
                     type="file"
-                    name="editCoverImage"
+                    name="cover"
                     accept="image/*"
                     class="form-control-file"
                     style="display: none"
@@ -121,7 +121,7 @@
                   <input
                     id="editAvatarImage"
                     type="file"
-                    name="editAvatarImage"
+                    name="avatar"
                     accept="image/*"
                     class="form-control-file"
                     style="display: none"
@@ -167,15 +167,29 @@
 </template>
 
 <script>
-import usersAPI from "../apis/users"
-import { Toast } from "../utils/helpers"
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 export default {
   name: "UserProfile",
   props: {
-    currentUser: {
+    initialCurrentUser: {
       type: Object,
       required: true,
+    },
+  },
+  data() {
+    return {
+      currentUser: this.initialCurrentUser,
+    };
+  },
+  // 用watch監聽因為請求API的時間差的新資料的寫入
+  watch: {
+    initialCurrentUser(newValue) {
+      this.currentUser = {
+        ...this.currentUser,
+        ...newValue,
+      };
     },
   },
   methods: {
@@ -223,22 +237,27 @@ export default {
         // 建立FormData
         const form = e.target; // <form></form>
         const formData = new FormData(form);
-
-        const currentUserId = this.currentUser.id
-        console.log(currentUserId)
-        const response = await usersAPI.editUserProfile({ currentUserId, formData})
-        console.log('handlesubmit:', response)
-        if(response.data.status !== 'success') {
-          throw new Error(response.data.message)
+        for (let [name, value] of formData.entries()) {
+          console.log(name + ":" + value);
+        }
+        const currentUserId = this.currentUser.id;
+        console.log(currentUserId);
+        const response = await usersAPI.editUserProfile({
+          currentUserId,
+          formData,
+        });
+        console.log("handlesubmit:", response);
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
         }
 
-        // 重新帶一次更新過後的currentuser資料
+        // 重新帶一次更新過後的currentuser資料;
         this.fetchCurrentUser();
-      } catch(error) {
+      } catch (error) {
         Toast.fire({
-          icon:'error',
-          title: '欸斗，修改失敗，請稍後再試～'
-        })
+          icon: "error",
+          title: "欸斗，修改失敗，請稍後再試～",
+        });
       }
     },
   },

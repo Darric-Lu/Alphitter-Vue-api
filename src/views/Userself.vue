@@ -13,7 +13,7 @@
           <UserNavbar />
           <div class="user-profile">
             <!-- Userprofile -->
-            <UserProfile :currentUser="currentUser" />
+            <UserProfile :initialCurrentUser="currentUser" />
           </div>
           <!-- tab -->
           <Tab />
@@ -38,11 +38,10 @@ import UserNavbar from "../components/UserNavbar";
 import UserProfile from "../components/UserProfile";
 import RecommendationTable from "../components/RecommendationTable";
 import Tab from "../components/Tab";
-import usersAPI from '../apis/users'
-import { Toast } from '../utils/helpers';
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 // userprofile GET /api/users/:id
-
 
 const dummyRecommendUsers = {
   recommendUsers: [
@@ -156,12 +155,12 @@ export default {
         setting: "row",
       },
       currentUser: {
-        id:"",
+        id: "",
         account: "",
         name: "",
         avatar: "",
         cover: "",
-        email:"",
+        email: "",
         introduction: "",
         Followers: [],
         Followings: [],
@@ -171,8 +170,8 @@ export default {
   },
   created() {
     this.fetchCurrentUser();
-    const { id: currentUserId } = this.$route.params
-    console.log('currentUserId', currentUserId)
+    const { id: currentUserId } = this.$route.params;
+    console.log("currentUserId", currentUserId);
     this.fetchUserself(currentUserId);
     this.fetchRecommendUsers();
   },
@@ -192,16 +191,16 @@ export default {
       }
     },
     async fetchUserself(currentUserId) {
-      try{
-        const response = await usersAPI.getUserTweet(currentUserId)
-        console.log('fetchUserself id:', currentUserId)
-        console.log('response', response)
-        this.tweets = response.data
-      } catch(error) {
+      try {
+        const response = await usersAPI.getUserTweet(currentUserId);
+        console.log("fetchUserself id:", currentUserId);
+        console.log("response", response);
+        this.tweets = response.data;
+      } catch (error) {
         Toast.fire({
-          icon: 'error',
-          title: '無法拿到你的資料，請稍後再試唷'
-        })
+          icon: "error",
+          title: "無法拿到你的資料，請稍後再試唷",
+        });
       }
     },
     fetchRecommendUsers() {
