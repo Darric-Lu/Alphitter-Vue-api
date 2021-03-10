@@ -2,17 +2,17 @@
   <div class="container user-profile px-0">
     <div class="user-title-cut">
       <img
-        v-if="otherUser.titleImage"
+        v-if="otherUser.cover"
         class="user-title-pic"
-        :src="otherUser.titleImage"
+        :src="otherUser.cover"
         alt="使用者標題照片"
       />
     </div>
     <div class="avatar">
       <img
-        v-if="otherUser.userImage"
+        v-if="otherUser.avatar"
         class="avatar-img"
-        :src="otherUser.userImage"
+        :src="otherUser.avatar"
         alt="使用者大頭貼"
       />
     </div>
@@ -71,19 +71,27 @@
         <span class="name-content">{{ otherUser.name }}</span>
         <span class="name-account">@{{ otherUser.account }}</span>
         <div class="mt-3">
-          {{ otherUser.SelfIntroduction }}
+          {{ otherUser.introduction }}
         </div>
         <div class="follow mt-2">
           <router-link
             :to="{ name: 'user-self-following' }"
-            class="followers-content"
-            ><span class="bold">{{ otherUser.followersCount }}個</span>
+            class="followings-content"
+            ><span class="bold"
+              >{{
+                otherUser.Followings ? otherUser.Followings.length : ""
+              }}個</span
+            >
             <span class="gray">跟隨中</span>
           </router-link>
           <router-link
             :to="{ name: 'user-self-follower' }"
-            class="following-content ms-2"
-            ><span class="bold">{{ otherUser.followingCount }}位</span>
+            class="followers-content ms-2"
+            ><span class="bold"
+              >{{
+                otherUser.Followers ? otherUser.Followers.length : ""
+              }}位</span
+            >
             <span class="gray">跟隨者</span>
           </router-link>
         </div>

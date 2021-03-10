@@ -12,6 +12,7 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
+<<<<<<< HEAD
   postTweetsLike(id) {
     return apiHelper.post(`/tweets/${id}/like`, "", {
       headers: { Authorization: `Bearer ${getToken()}` }
@@ -21,5 +22,9 @@ export default {
     return apiHelper.post(`/tweets/${id}/unlike`, "", {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+=======
+  replyTweet(tweetId) {
+    return apiHelper.post(`/tweets/${tweetId}/replies`)
+>>>>>>> master
   }
 }

@@ -13,7 +13,7 @@
           <UserNavbar :currentUser="currentUser" />
           <div class="user-profile">
             <!-- Userprofile -->
-            <UserProfile :currentUser="currentUser" />
+            <UserProfile :initialCurrentUser="currentUser" />
           </div>
           <!-- tab -->
           <Tab
@@ -189,7 +189,6 @@ export default {
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
-        console.log("currentUser:", response);
         this.currentUser = {
           ...this.currentUser,
           ...response.data,
@@ -207,7 +206,6 @@ export default {
         console.log("fetchUserself id:", currentUserId);
         console.log("response", response);
         this.tweets = response.data;
-        console.log(this.tweets);
       } catch (error) {
         Toast.fire({
           icon: "error",

@@ -157,8 +157,8 @@ export default {
           icon: "success",
           title: "註冊成功!!歡迎歡迎～",
         });
-
-        this.$router.push("/main");
+        // 註冊成功導入登入畫面
+        this.$router.push("/signin");
       } catch (error) {
         this.isProcessing = false;
         Toast.fire({

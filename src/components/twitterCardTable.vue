@@ -6,7 +6,7 @@
           :src="tweet.User.avatar"
           alt=""
           class="tweet-user-image"
-          @click.prevent.stop="userOther(tweet.UserId)"
+          @click.prevent.stop="usersPage(tweet.UserId)"
         />
       </div>
       <div class="col-10 tweet-content">
@@ -92,33 +92,48 @@
                 <p>回覆給 @apple</p>
               </div>
             </div>
-            <div class="row">
-              <div class="col-1 modal-img-cut">
-                <img
-                  class="current-user-img"
-                  :src="currentUser.userImage"
-                  alt=""
-                />
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-lg-1">
+                  <img :src="tweet.User.avatar" alt="" class="tweetImage" />
+                </div>
+                <div class="col-lg-10 replyContent">
+                  <p>
+                    {{ tweet.User.name }} {{ tweet.User.account }} •
+                    {{ tweet.createdAt | fromNow }}
+                  </p>
+                  <p>{{ tweet.description }}</p>
+                  <p>回覆給 @{{ tweet.User.account }}</p>
+                </div>
               </div>
-              <div class="col-11 modal-reply-post">
-                <textarea
-                  class="modal-reply-post"
-                  rows="6"
-                  cols="46"
-                  placeholder="推你的回覆"
-                  v-model="reply"
-                ></textarea>
+              <div class="row">
+                <div class="col-1 modal-img-cut">
+                  <img
+                    class="current-user-img"
+                    :src="currentUser.avatar"
+                    alt=""
+                  />
+                </div>
+                <div class="col-11 modal-reply-post">
+                  <textarea
+                    class="modal-reply-post"
+                    rows="6"
+                    cols="46"
+                    placeholder="推你的回覆"
+                    v-model="reply"
+                  ></textarea>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn tweet-reply"
-              @click="replyTweetSubmit"
-            >
-              回覆
-            </button>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn tweet-reply"
+                @click="replyTweetSubmit"
+              >
+                回覆
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -128,6 +143,8 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
+import { Toast } from "./../utils/helpers";
+
 export default {
   mixins: [fromNowFilter],
   props: {
@@ -150,9 +167,22 @@ export default {
       console.log("tweetId:", tweetId);
       this.$router.push(`/tweets/${tweetId}`);
     },
-    userOther(userId) {
-      this.$router.push(`/user/:${userId}`);
-      console.log(userId);
+    usersPage(userId) {
+      if (userId === this.currentUser.id) {
+        this.$router.push(`user/self/${userId}`);
+        console.log(userId);
+      } else {
+        this.$router.push(`/user/${userId}`);
+        console.log(userId);
+      }
+    },
+    replyTweetSubmit() {
+      if (!this.reply) {
+        Toast.fire({
+          icon: "error",
+          title: "請填寫回覆內容",
+        });
+      }
     },
     replyTweetSubmit() {},
     beLiked(tweetId) {
@@ -193,6 +223,13 @@ export default {
 .tweet-description {
   cursor: pointer;
 }
+.tweetImage {
+  position: relative;
+  z-index: 999;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
 .replyContent {
   margin-left: -3px;
   padding-left: 30px;
@@ -207,6 +244,9 @@ export default {
   cursor: pointer;
 }
 .current-user-img {
+  position: relative;
+  z-index: 999;
+  border-radius: 50%;
   width: 50px;
   height: 50px;
 }

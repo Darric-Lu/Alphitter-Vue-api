@@ -62,81 +62,104 @@
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-            <div
-              type="button"
-              class="close-btn"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></div>
-            <h5 class="modal-title" id="exampleModalLabel">
-              <span class="title-content">編輯個人資料</span>
-            </h5>
-            <button class="save-btn">儲存</button>
-          </div>
-          <div class="modal-body p-0">
-            <div class="user-title-cut">
-              <img
-                v-if="currentUser.cover"
-                class="user-title-pic"
-                :src="currentUser.cover"
-                alt="使用者標題照片"
-              />
-              <div class="add-photo-btn">
-                <img
-                  src="../assets/addPhoto.svg"
-                  alt="新增/修改照片"
-                  title="修改照片"
-                />
+          <form @submit.stop.prevent="handleSubmit">
+            <div class="modal-header">
+              <div
+                type="button"
+                class="close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></div>
+              <h5 class="modal-title" id="exampleModalLabel">
+                <span class="title-content">編輯個人資料</span>
+              </h5>
+              <div class="save-btn">
+                <button type="submit" class="save-btn">儲存</button>
               </div>
-              <div class="delete-photo-btn">
-                <img
-                  src="../assets/crossWhite.svg"
-                  alt="刪除照片"
-                  title="刪除照片"
-                />
-              </div>
-            </div>
-            <div class="modal-avatar">
-              <img
-                v-if="currentUser.avatar"
-                class="modal-avatar-img"
-                :src="currentUser.avatar"
-                alt="使用者大頭貼"
-              />
-              <div class="chang-photo-btn">
-                <img
-                  src="../assets/addPhoto.svg"
-                  alt="新增/修改使用者大頭貼"
-                  title="修改大頭貼"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="modal-body">
-            <div class="form-group input-data name-data">
-              <label for="name" class="ms-2 fw-bold">名稱</label>
-              <textarea
-                v-model="currentUser.name"
-                id="name"
-                class="form-control"
-                name="name"
-                rows="1"
-                required
-              />
             </div>
 
-            <div class="form-group input-data introduction-data">
-              <label for="introduction" class="ms-3 fw-bold">自我介紹</label>
-              <textarea
-                v-model="currentUser.introduction"
-                id="introduction"
-                class="form-control"
-                rows="3"
-                name="introduction"
-              />
+            <div class="modal-body p-0 form-group">
+              <div class="user-title-cut">
+                <img
+                  v-if="currentUser.cover"
+                  class="user-title-pic"
+                  :src="currentUser.cover"
+                  alt="使用者標題照片"
+                />
+                <label class="add-photo-btn">
+                  <input
+                    id="editCoverImage"
+                    type="file"
+                    name="cover"
+                    accept="image/*"
+                    class="form-control-file"
+                    style="display: none"
+                    @change="handleCoverChange"
+                  />
+                  <img
+                    src="../assets/addPhoto.svg"
+                    alt="新增/修改照片"
+                    title="修改照片"
+                  />
+                </label>
+                <div class="delete-photo-btn">
+                  <img
+                    src="../assets/crossWhite.svg"
+                    alt="刪除照片"
+                    title="刪除照片"
+                  />
+                </div>
+              </div>
+              <div class="modal-avatar">
+                <img
+                  v-if="currentUser.avatar"
+                  class="modal-avatar-img"
+                  :src="currentUser.avatar"
+                  alt="使用者大頭貼"
+                />
+                <label class="chang-photo-btn">
+                  <input
+                    id="editAvatarImage"
+                    type="file"
+                    name="avatar"
+                    accept="image/*"
+                    class="form-control-file"
+                    style="display: none"
+                    @change="handleAvatarChange"
+                  />
+                  <img
+                    src="../assets/addPhoto.svg"
+                    alt="新增/修改使用者大頭貼"
+                    title="修改大頭貼"
+                  />
+                </label>
+              </div>
             </div>
-          </div>
+            <div class="modal-body">
+              <div class="form-group input-data name-data">
+                <label for="name" class="ms-2 fw-bold">名稱</label>
+                <textarea
+                  v-model="currentUser.name"
+                  id="name"
+                  class="form-control"
+                  name="name"
+                  rows="1"
+                  required
+                />
+              </div>
+
+              <div class="form-group input-data introduction-data">
+                <label for="introduction" class="ms-3 fw-bold">自我介紹</label>
+                <textarea
+                  v-model="currentUser.introduction"
+                  id="introduction"
+                  class="form-control"
+                  rows="3"
+                  name="introduction"
+                />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -144,12 +167,98 @@
 </template>
 
 <script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+
 export default {
   name: "UserProfile",
   props: {
-    currentUser: {
+    initialCurrentUser: {
       type: Object,
       required: true,
+    },
+  },
+  data() {
+    return {
+      currentUser: this.initialCurrentUser,
+    };
+  },
+  // 用watch監聽因為請求API的時間差的新資料的寫入
+  watch: {
+    initialCurrentUser(newValue) {
+      this.currentUser = {
+        ...this.currentUser,
+        ...newValue,
+      };
+    },
+  },
+  methods: {
+    async fetchCurrentUser() {
+      try {
+        const response = await usersAPI.getCurrentUser();
+        console.log("currentUser:", response);
+        this.currentUser = {
+          ...this.currentUser,
+          ...response.data,
+        };
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料",
+        });
+      }
+    },
+    handleCoverChange(e) {
+      const { files } = e.target;
+      console.log("files", files);
+      if (files.length === 0) {
+        // 使用者沒有選擇上傳的檔案
+        this.currentUser.cover = "";
+      } else {
+        // 否則產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.currentUser.cover = imageURL;
+      }
+    },
+    handleAvatarChange(e) {
+      const { files } = e.target;
+      console.log("files", files);
+      if (files.length === 0) {
+        // 使用者沒有選擇上傳的檔案
+        this.currentUser.avatar = "";
+      } else {
+        // 否則產生預覽圖
+        const imageURL = window.URL.createObjectURL(files[0]);
+        this.currentUser.avatar = imageURL;
+      }
+    },
+    async handleSubmit(e) {
+      try {
+        // 建立FormData
+        const form = e.target; // <form></form>
+        const formData = new FormData(form);
+        for (let [name, value] of formData.entries()) {
+          console.log(name + ":" + value);
+        }
+        const currentUserId = this.currentUser.id;
+        console.log(currentUserId);
+        const response = await usersAPI.editUserProfile({
+          currentUserId,
+          formData,
+        });
+        console.log("handlesubmit:", response);
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
+        }
+
+        // 重新帶一次更新過後的currentuser資料;
+        this.fetchCurrentUser();
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "欸斗，修改失敗，請稍後再試～",
+        });
+      }
     },
   },
 };
