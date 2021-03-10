@@ -32,11 +32,12 @@
             data-bs-target="#replyTweet"
           >
             <img
+              @click="importReplyData(tweet.id)"
               src="../assets/comment-alt.svg"
               alt="討論icon"
               class="mx-2 icon"
             />
-            <span class="tweet-info me-5">{{ tweets.length }}</span>
+            <span class="tweet-info me-5">{{ tweet.ReplyCount }}</span>
           </span>
           <span class="heart">
             <img
@@ -82,47 +83,43 @@
             </div>
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row" v-for="reply in tweetReplies" :key="reply.id">
               <div class="col-1">
-                <img :src="currentUser.avatar" alt="" class="tweetImage" />
+                <img :src="reply.User.avatar" alt="" class="tweetImage" />
               </div>
-              <div class="col-lg-10 replyContent">
-                <p>Name @account • 2021-03-02T11:47:05.000Z</p>
-                <p>consequatur corporis aut</p>
-                <p>回覆給 @apple</p>
+              <div class="col-10 replyContent">
+                <span>
+                  <span class="tweet-user-name">
+                    {{ reply.User.name }}
+                  </span>
+                  <span class="tweet-info">
+                    @ {{ reply.User.account }} •
+                    {{ reply.createdAt | fromNow }}
+                  </span>
+                </span>
+                <p class="mt-1">{{ reply.comment }}</p>
+                <p>
+                  <span class="tweet-info">回覆給</span>
+                  <span class="owner-user">@apple{{ replyOnwer }}</span>
+                </p>
               </div>
             </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-lg-1">
-                  <img :src="tweet.User.avatar" alt="" class="tweetImage" />
-                </div>
-                <div class="col-lg-10 replyContent">
-                  <p>
-                    {{ tweet.User.name }} {{ tweet.User.account }} •
-                    {{ tweet.createdAt | fromNow }}
-                  </p>
-                  <p>{{ tweet.description }}</p>
-                  <p>回覆給 @{{ tweet.User.account }}</p>
-                </div>
+            <div class="row">
+              <div class="col-1">
+                <img
+                  class="tweetImage"
+                  :src="currentUser.avatar"
+                  alt="推文擁有者"
+                />
               </div>
-              <div class="row">
-                <div class="col-1 modal-img-cut">
-                  <img
-                    class="current-user-img"
-                    :src="currentUser.avatar"
-                    alt=""
-                  />
-                </div>
-                <div class="col-11 modal-reply-post">
-                  <textarea
-                    class="modal-reply-post"
-                    rows="6"
-                    cols="46"
-                    placeholder="推你的回覆"
-                    v-model="reply"
-                  ></textarea>
-                </div>
+              <div class="col-10">
+                <textarea
+                  class="modal-reply-post"
+                  rows="6"
+                  cols="46"
+                  placeholder="推你的回覆"
+                  v-model="currentReply"
+                ></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -143,7 +140,6 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
-import { Toast } from "./../utils/helpers";
 
 export default {
   mixins: [fromNowFilter],
@@ -159,7 +155,12 @@ export default {
   },
   data() {
     return {
-      reply: "",
+      tweetReplies: [],
+      replyOnwer: "",
+      // 回復推文
+      currentReply: "",
+      //
+      presetUserAvatat: "./../assets/addPhoto.svg",
     };
   },
   methods: {
@@ -177,14 +178,13 @@ export default {
       }
     },
     replyTweetSubmit() {
-      if (!this.reply) {
-        Toast.fire({
-          icon: "error",
-          title: "請填寫回覆內容",
-        });
-      }
+      //   if (!this.reply) {
+      //     Toast.fire({
+      //       icon: "error",
+      //       title: "請填寫回覆內容",
+      //     });
+      //   }
     },
-    // replyTweetSubmit() {},
     beLiked(tweetId) {
       console.log("beLiked-tweetId", tweetId);
       this.$emit("handle-be-like", tweetId);
@@ -192,6 +192,21 @@ export default {
     unLiked(tweetId) {
       console.log("uniked-tweetId", tweetId);
       this.$emit("handle-unlike", tweetId);
+    },
+    importReplyData(id) {
+      this.replyOnwer = "";
+      this.tweetReplies = [];
+      this.currentReply = "";
+      // console.log("import id", id);
+      this.tweets.map((tweet) => {
+        if (tweet.id === id) {
+          // console.log("有找到", tweet);
+          this.tweetReplies = [...tweet.Replies];
+          this.replyOnwer = tweet.User.name;
+          // console.log("放進去", this.tweetReplies);
+        }
+      });
+      // console.log("Replies", this.tweetReplies);
     },
   },
 };
@@ -229,6 +244,7 @@ export default {
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  outline: 5px #ffffff solid;
 }
 .replyContent {
   margin-left: -3px;
@@ -252,7 +268,8 @@ export default {
 }
 .modal-reply-post {
   border-style: none;
-  padding-left: 14px;
+  /* padding-left: 14px; */
+  margin-left: 20px;
 }
 .tweet-reply {
   background: #ff6600;
@@ -310,5 +327,8 @@ export default {
 
 .close-btn::after {
   transform: rotate(-45deg);
+}
+.owner-user {
+  color: #ff6600;
 }
 </style>

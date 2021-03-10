@@ -147,11 +147,11 @@ export default {
   methods: {
     top5() {
       this.recommendUsers = this.recommendUsers.slice(0, 5);
-      console.log("x", this.recommendUsers);
+      // console.log("x", this.recommendUsers);
     },
     moreRecommendUsers() {
-      (this.recommendUsers = [...this.initialRecommendUsers]),
-        this.sortFollowedCount();
+      this.recommendUsers = [...this.initialRecommendUsers];
+      // this.sortFollowedCount();
     },
     unFollow(id) {
       this.recommendUsers = this.recommendUsers.map((user) => {
