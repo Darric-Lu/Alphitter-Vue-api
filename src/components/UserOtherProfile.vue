@@ -76,7 +76,7 @@
         <div class="follow mt-2">
           <router-link
             :to="{ name: 'user-self-following' }"
-            class="followings-content"
+            class="followers-content"
             ><span class="bold"
               >{{
                 otherUser.Followings ? otherUser.Followings.length : ""
@@ -86,7 +86,7 @@
           </router-link>
           <router-link
             :to="{ name: 'user-self-follower' }"
-            class="followers-content ms-2"
+            class="following-content ms-2"
             ><span class="bold"
               >{{
                 otherUser.Followers ? otherUser.Followers.length : ""
@@ -111,16 +111,16 @@ export default {
   },
   methods: {
     handleFollow() {
-      // this.$emit("handle-follow");
+      this.$emit("handle-follow");
     },
     handleUnFollow() {
-      // this.$emit("handle-unfollow");
+      this.$emit("handle-unfollow");
     },
     handleSubscription() {
-      // this.$emit("handle-subscription");
+      this.$emit("handle-subscription");
     },
     handleUnSubscription() {
-      // this.$emit("handle-unsubscription");
+      this.$emit("handle-unsubscription");
     },
   },
 };
@@ -150,7 +150,7 @@ export default {
   top: 124px;
   left: 14px;
   overflow: hidden;
-  background: url("../assets/working-with-laptop.svg");
+  /* background: url("../assets/working-with-laptop.svg"); */
   background-color: #999999;
 }
 .avatar-img {
