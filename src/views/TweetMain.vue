@@ -161,7 +161,6 @@ export default {
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
-        console.log("currentUser:", response);
         this.currentUser = {
           ...this.currentUser,
           ...response.data,
@@ -176,7 +175,6 @@ export default {
     async fetchMain() {
       try {
         const response = await tweetsAPI.getTweets();
-        console.log("fetchMain", response);
         this.tweets = response.data;
       } catch (error) {
         Toast.fire({
@@ -196,7 +194,7 @@ export default {
         if (this.description.length >= 140) {
           Toast.fire({
             icon: "error",
-            title: "字數限制140個",
+            title: `字數限制140字，現已輸入了${description.length}字`,
           });
         }
 
@@ -206,8 +204,6 @@ export default {
         console.log("post tweet:", response);
         
         // 伺服器新增 Comment 成功後...
-        console.log("submit");
-        console.log(this.description.length);
         this.fetchMain()
         this.description = "";
       } catch (error) {

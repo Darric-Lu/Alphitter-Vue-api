@@ -11,9 +11,9 @@
       </div>
       <div class="col-10 tweet-content">
         <span>
-          <span 
-          class="tweet-user-name"
-          @click.prevent.stop="usersPage(tweet.UserId)"
+          <span
+            class="tweet-user-name"
+            @click.prevent.stop="usersPage(tweet.UserId)"
           >
             {{ tweet.User ? tweet.User.name : "未顯示" }}
           </span>
@@ -63,84 +63,74 @@
           </span>
         </div>
       </div>
-    </div>
-    <!-- modal -->
-    <div
-      class="modal fade"
-      id="replyTweet"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-title">
-              <div
-                type="button"
-                class="close-btn"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></div>
-            </div>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-1">
-                <img :src="currentUser.avatar" alt="" class="tweetImage" />
-              </div>
-              <div class="col-lg-10 replyContent">
-                <p>Name @account • 2021-03-02T11:47:05.000Z</p>
-                <p>consequatur corporis aut</p>
-                <p>回覆給 @apple</p>
+      <div
+        class="modal fade"
+        id="replyTweet"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title">
+                <div
+                  type="button"
+                  class="close-btn"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></div>
               </div>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <div class="col-lg-1">
-                  <img :src="tweet.User.avatar" alt="" class="tweetImage" />
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-lg-1">
+                    <img :src="tweet.User.avatar" alt="" class="tweetImage" />
+                  </div>
+                  <div class="col-lg-10 replyContent">
+                    <p>
+                      {{ tweet.User.name }} {{ tweet.User.account }} •
+                      {{ tweet.createdAt | fromNow }}
+                    </p>
+                    <p>{{ tweet.description }}</p>
+                    <p>回覆給 @{{ tweet.User.account }}</p>
+                  </div>
                 </div>
-                <div class="col-lg-10 replyContent">
-                  <p>
-                    {{ tweet.User.name }} {{ tweet.User.account }} •
-                    {{ tweet.createdAt | fromNow }}
-                  </p>
-                  <p>{{ tweet.description }}</p>
-                  <p>回覆給 @{{ tweet.User.account }}</p>
+                <div class="row">
+                  <div class="col-1 modal-img-cut">
+                    <img
+                      class="current-user-img"
+                      :src="currentUser.avatar"
+                      alt=""
+                    />
+                  </div>
+                  <div class="col-11 modal-reply-post">
+                    <textarea
+                      class="modal-reply-post"
+                      rows="6"
+                      cols="46"
+                      placeholder="推你的回覆"
+                      v-model="reply"
+                    ></textarea>
+                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-1 modal-img-cut">
-                  <img
-                    class="current-user-img"
-                    :src="currentUser.avatar"
-                    alt=""
-                  />
-                </div>
-                <div class="col-11 modal-reply-post">
-                  <textarea
-                    class="modal-reply-post"
-                    rows="6"
-                    cols="46"
-                    placeholder="推你的回覆"
-                    v-model="reply"
-                  ></textarea>
-                </div>
+              <div class="modal-footer">
+                <button
+                  type="submit"
+                  class="btn tweet-reply"
+                  @click="replyTweetSubmit"
+                >
+                  回覆
+                </button>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="submit"
-                class="btn tweet-reply"
-                @click="replyTweetSubmit"
-              >
-                回覆
-              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- modal -->
   </div>
 </template>
 
