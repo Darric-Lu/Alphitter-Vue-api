@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="following text-center">
-        <router-link :to="{ name: 'user-self-following' }">
+        <router-link :to="{ name: 'user-following' }">
           <div class="following">正在跟隨</div>
         </router-link>
       </div>
@@ -26,7 +26,7 @@
         </p>
         <div
           class="is-following-btn text-center following-active"
-          v-if="follower.isFollowing"
+          v-if="follower.isFollowed"
         >
           正在跟隨
         </div>

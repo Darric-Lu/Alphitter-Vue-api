@@ -46,5 +46,17 @@ export default {
     return apiHelper.get(`/users/${userId}/replied_tweets`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  createFollowship(userId) {
+    return apiHelper.post('/followships', userId, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json' }
+    })
+  },
+  deleteFollowship(userId) {
+    return apiHelper.delete(`/followships/${userId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }
