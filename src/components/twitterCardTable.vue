@@ -85,6 +85,31 @@
               ></div>
             </div>
           </div>
+          <div class="modal-body pb-0">
+            <div class="row">
+              <div class="col-1">
+                <div class="tweetImage-cut">
+                  <img :src="replyOnwerAvatar" alt="" class="tweetImage" />
+                </div>
+              </div>
+              <div class="col-10 replyContent">
+                <span>
+                  <span class="tweet-user-name">
+                    {{ replyOnwer }}
+                  </span>
+                  <span class="tweet-info">
+                    @ {{ replyOnwerAccount }} •
+                    {{ replyCreatedAt | fromNow }}
+                  </span>
+                </span>
+                <p class="mt-1">{{ replyDescription }}</p>
+                <!-- <p>
+                  <span class="tweet-info">回覆給</span>
+                  <span class="owner-user">@{{ replyOnwer }}</span>
+                </p> -->
+              </div>
+            </div>
+          </div>
           <div class="modal-body">
             <div class="row" v-for="reply in tweetReplies" :key="reply.id">
               <div class="col-1">
@@ -130,6 +155,15 @@
               </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn tweet-reply"
+              @click="replyTweetSubmit"
+            >
+              回覆
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -155,6 +189,10 @@ export default {
     return {
       tweetReplies: [],
       replyOnwer: "",
+      replyOnwerAvatar: "",
+      replyOnwerAccount: "",
+      replyCreatedAt: "",
+      replyDescription: "",
       // 回復推文
       currentReply: "",
       //
@@ -201,6 +239,10 @@ export default {
           // console.log("有找到", tweet);
           this.tweetReplies = [...tweet.Replies];
           this.replyOnwer = tweet.User.name;
+          this.replyOnwerAccount = tweet.User.account;
+          this.replyOnwerAvatar = tweet.User.avatar;
+          this.replyCreatedAt = tweet.updatedAt;
+          this.replyDescription = tweet.description;
           // console.log("放進去", this.tweetReplies);
         }
       });
