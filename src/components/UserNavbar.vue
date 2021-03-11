@@ -8,13 +8,7 @@
       <span class="name-text">
         <!-- 因為傳進來的都是同一個id的推文 -->
         <span class="arrow-name">{{ currentUser.name }}</span>
-        <span class="arrow-tweets-count"
-          >{{
-            currentUser.tweetCount
-              ? currentUser.tweetCount
-              : "未串接到，等heroku更新"
-          }}推文</span
-        >
+        <span class="arrow-tweets-count">{{ currentUser.tweetCount }}推文</span>
       </span>
     </div>
   </div>
