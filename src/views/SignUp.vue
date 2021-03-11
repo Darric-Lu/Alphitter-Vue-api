@@ -61,7 +61,6 @@
           type="password"
           class="form-control"
           autocomplete="current-password"
-          required
         />
       </div>
 
@@ -74,7 +73,6 @@
           type="password"
           class="form-control"
           autocomplete="new-password"
-          required
         />
       </div>
       <div class="btn-wrapping">
