@@ -100,7 +100,7 @@
                 <p class="mt-1">{{ reply.comment }}</p>
                 <p>
                   <span class="tweet-info">回覆給</span>
-                  <span class="owner-user">@apple{{ replyOnwer }}</span>
+                  <span class="owner-user">@{{ replyOnwer }}</span>
                 </p>
               </div>
             </div>

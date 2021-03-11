@@ -196,6 +196,21 @@ export default {
         });
       }
     },
+    async fetchUserRepliedTweets(currentUserId) {
+      try {
+        const response = await usersAPI.getUserRepliedTweets(currentUserId);
+        console.log("fetchreplied_tweets id:", currentUserId);
+        console.log("response -replied_tweets ", response);
+        this.tweets = response.data;
+        //在構築一次
+        // this.afterGetData();
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法拿到你的推文回復資料，請稍後再試唷",
+        });
+      }
+    },
     async fetchRecommendUsers() {
       try {
         const response = await usersAPI.getTopUsers();
@@ -227,7 +242,7 @@ export default {
         case "replyTweestArea":
           //接本頁面使用者的推文與回覆
           this.tabActive.replyTweestArea = "active";
-
+          this.fetchUserRepliedTweets(this.currentUser.id);
           break;
         case "liekdArea":
           //接本頁面使用者的喜歡的內容
