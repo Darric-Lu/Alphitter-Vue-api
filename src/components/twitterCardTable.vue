@@ -290,7 +290,7 @@ export default {
   height: 40px;
 }
 
-/*  */
+/* modal */
 
 .tweet-user-name {
   font-weight: 700;
@@ -307,7 +307,6 @@ export default {
   color: #e0245e;
 }
 
-/* modal */
 .modal-header {
   height: 55px;
 }

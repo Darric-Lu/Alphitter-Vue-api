@@ -52,7 +52,11 @@
             </div>
             <div class="divider"></div>
             <div class="responseIcon pt-2">
-              <span class="pe-5 comment">
+              <span
+                class="pe-5 comment"
+                data-bs-toggle="modal"
+                data-bs-target="#replyTweet"
+              >
                 <img src="../assets/comment-alt.svg" alt="" />
               </span>
               <span class="ps-5 heart">
@@ -85,7 +89,7 @@
                   <img :src="currentUser.avatar" alt="" />
                 </div>
               </div>
-              <div class="col-10">
+              <div class="col-10 ps-4">
                 <p>
                   <span class="reply-name"> Name</span>
                   <span class="reply-info"
@@ -109,6 +113,81 @@
       </div>
       <div class="col-lg-3 right-col">
         <!-- Recommendationtable -->
+      </div>
+    </div>
+    <!-- modal -->
+    <div
+      class="modal fade"
+      id="replyTweet"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div
+                type="button"
+                class="close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row" v-for="reply in replies" :key="reply.id">
+              <div class="col-1">
+                <div class="tweetImage-cut">
+                  <img :src="currentUser.avatar" alt="" class="tweetImage" />
+                </div>
+              </div>
+              <div class="col-10 replyContent">
+                <span>
+                  <span class="tweet-user-name"> Name </span>
+                  <span class="tweet-info">
+                    @ account •
+                    {{ reply.createdAt | fromNow }}
+                  </span>
+                </span>
+                <p class="mt-1">{{ reply.comment }}</p>
+                <p>
+                  <span class="tweet-info">回覆給</span>
+                  <span class="owner-user">@ALPHAcamp</span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-1">
+                <div class="tweetImage-cut">
+                  <img
+                    class="tweetImage"
+                    :src="currentUser.avatar"
+                    alt="推文擁有者"
+                  />
+                </div>
+              </div>
+              <div class="col-10">
+                <textarea
+                  class="modal-reply-post"
+                  rows="6"
+                  cols="46"
+                  placeholder="推你的回覆"
+                  v-model="currentReply"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn tweet-reply"
+                @click="replyTweetSubmit"
+              >
+                回覆
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -156,6 +235,7 @@ export default {
         tweetCount: "",
       },
       recommendUsers: [],
+      currentReply: "",
     };
   },
   created() {
@@ -242,6 +322,14 @@ export default {
           title: "無法取消喜歡這則推文，請稍後再試",
         });
       }
+    },
+    replyTweetSubmit() {
+      //   if (!this.reply) {
+      //     Toast.fire({
+      //       icon: "error",
+      //       title: "請填寫回覆內容",
+      //     });
+      //   }
     },
   },
 };
@@ -346,5 +434,50 @@ export default {
 }
 .icon {
   cursor: pointer;
+}
+/* modal */
+.tweet-user-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1c1c1c;
+}
+.tweet-info {
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
+}
+.replyContent {
+  margin-left: -3px;
+  padding-left: 30px;
+  border-left: 2px solid #ccd6dd;
+}
+.modal-reply-post {
+  border-style: none;
+  margin-left: 20px;
+}
+.tweet-reply {
+  background: #ff6600;
+  border-radius: 50px;
+  color: white;
+  font-weight: 800;
+  width: 64px;
+  height: 40px;
+}
+.tweetImage-cut {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  outline: 5px #ffffff solid;
+}
+.tweetImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.owner-user {
+  color: #ff6600;
 }
 </style>
