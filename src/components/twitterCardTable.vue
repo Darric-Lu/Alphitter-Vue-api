@@ -11,7 +11,10 @@
       </div>
       <div class="col-10 tweet-content">
         <span>
-          <span class="tweet-user-name">
+          <span
+            class="tweet-user-name"
+            @click.prevent.stop="usersPage(tweet.UserId)"
+          >
             {{ tweet.User ? tweet.User.name : "未顯示" }}
           </span>
           <span class="tweet-info">
@@ -126,19 +129,11 @@
                 ></textarea>
               </div>
             </div>
-            <div class="modal-footer">
-              <button
-                type="submit"
-                class="btn tweet-reply"
-                @click="replyTweetSubmit"
-              >
-                回覆
-              </button>
-            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- modal -->
   </div>
 </template>
 
@@ -238,6 +233,9 @@ export default {
   object-fit: cover;
   cursor: pointer;
   transform: translate(-50%, -50%);
+}
+.tweet-user-name {
+  cursor: pointer;
 }
 .tweet-description {
   cursor: pointer;

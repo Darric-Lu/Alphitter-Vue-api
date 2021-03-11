@@ -13,6 +13,7 @@ import Userselftweetsandreplies from '../views/UserselfTweetsandReplies'
 // import UserselfFollower from '../views/UserselfFollower.vue'
 // import UserselfFollowing from '../views/UserselfFollowing.vue'
 import UserOther from '../views/UserOther.vue'
+import store from '../store'
 // import { component } from 'vue/types/umd'
 
 Vue.use(VueRouter)
@@ -79,19 +80,19 @@ const routes = [
     component: Userselftweetsandreplies
   },
   {
-    path: '/user/self/follower',
-    name: 'user-self-follower',
-    component: () => import('../views/UserselfFollower.vue')
-  },
-  {
-    path: '/user/self/following',
-    name: 'user-self-following',
-    component: () => import('../views/UserselfFollowing.vue')
-  },
-  {
     path: '/user/self/:id',
     name: 'user-self',
     component: Userself
+  },
+  {
+    path: '/user/:id/followers',
+    name: 'user-follower',
+    component: () => import('../views/UserFollower.vue')
+  },
+  {
+    path: '/user/:id/followings',
+    name: 'user-self-following',
+    component: () => import('../views/UserFollowing.vue')
   },
   {
     path: '/user/:id',
@@ -108,5 +109,33 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+router.beforeEach(async (to, from, next) => {
+  // 從localStorage取出token
+  const token = localStorage.getItem('token')
+  // 預設是尚未驗證
+  let isAuthenticated = false
+
+  // 如果有token的話才驗證
+  if (token) {
+    // 取得驗證成功與否
+    isAuthenticated = await store.dispatch('fetchCurrentUser')
+  }
+  
+  // 如果token無效則轉址到登入頁
+  if (!isAuthenticated && to.name !== 'sign-in') {
+    next('/signin')
+    return
+  }
+
+  if(isAuthenticated && to.name === 'sign-in') {
+    next('/main')
+    return
+  }
+  // 如果token有效則轉址到餐廳首頁
+  next()
+})
+  // 使用dispatch呼叫vuex內的actions
+  
 
 export default router

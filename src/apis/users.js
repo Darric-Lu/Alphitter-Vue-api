@@ -27,6 +27,16 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
+  getUserFollowing(userId) {
+    return apiHelper.get(`users/${userId}/followings`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  getUserFollower(userId) {
+    return apiHelper.get(`users/${userId}/followers`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
   getUserLikes(userId) {
     return apiHelper.get(`/users/${userId}/likes`, {
       headers: { Authorization: `Bearer ${getToken()}` }
