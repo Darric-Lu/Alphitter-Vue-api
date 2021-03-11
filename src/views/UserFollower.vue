@@ -7,7 +7,7 @@
       </div>
       <div class="row col-10">
         <!-- 中間包含Recommendationtable  顯示全寬10/12-->
-        <div class="col-12 col-lg-8 mid-col">
+        <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- 中間在小於md時 顯示全寬10/12 -->
           <!-- UserNavbar -->
           <UserNavbar :currentUser="currentUser" />
@@ -16,7 +16,7 @@
             <FollowersTable :initial-followers="followers" />
           </div>
         </div>
-        <div class="col-3 d-none d-lg-block right-col">
+        <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable 在小於md時消失-->
           <Recommendationtable :initial-recommend-users="recommendUsers" />
         </div>
@@ -117,8 +117,17 @@ export default {
 
 <style scoped>
 .col-2 {
-  box-sizing: border-box;
-  height: 1196px;
+  height: 800px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  /* box-sizing: border-box; */
+  /*好像一定要有 */
+}
+.col-4 {
+  position: sticky;
+  top: 0;
+  right: 0;
 }
 .mid-col {
   border-left: 1px solid #e6ecf0;

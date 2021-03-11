@@ -155,7 +155,7 @@ export default {
         // 建立FormData
         const form = e.target; // <form></form>
         const formData = new FormData(form);
-        
+
         const currentUserId = this.currentUser.id;
         console.log(currentUserId);
         const response = await usersAPI.editUserProfile({
@@ -190,7 +190,7 @@ export default {
 }
 .mid-col {
   padding: 5px;
-  height: 1200px;
+  height: 600px;
   border-left: 1px solid #e6ecf0;
 }
 .data-footer {

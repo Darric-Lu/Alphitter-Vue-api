@@ -94,9 +94,10 @@ export default {
   created() {
     this.fetchRecommendUsers();
     this.fetchCurrentUser();
-    const { id: currentUserId } = this.$route.params;
+    console.log("crate-id", this.currentUser.id);
+    // const { id: currentUserId } = this.$route.params;
     // console.log("currentUserId", currentUserId);
-    this.fetchUserself(currentUserId);
+    // this.fetchUserself();
   },
   methods: {
     async afterHandleBeLike(id) {
@@ -161,6 +162,7 @@ export default {
           ...this.currentUser,
           ...response.data,
         };
+        this.fetchUserself(this.currentUser.id);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -168,9 +170,10 @@ export default {
         });
       }
     },
-    async fetchUserself(currentUserId) {
+    async fetchUserself(id) {
+      console.log("id", this.currentUser.id);
       try {
-        const response = await usersAPI.getUserTweet(currentUserId);
+        const response = await usersAPI.getUserTweet(id);
         // console.log("fetchUserself id:", currentUserId);
         // console.log("response", response);
         this.tweets = response.data;
@@ -268,18 +271,32 @@ export default {
       this.tweets = data;
     },
   },
+  // watch: {
+  //   tweets(newValue) {
+  //     this.tweets = [...newValue];
+  //   },
+  // },
 };
 </script>
 
 <style scoped>
 .col-2 {
-  box-sizing: border-box;
-  height: 1196px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  /* box-sizing: border-box; */
+  /*好像一定要有 */
+  height: 800px;
+}
+.col-4 {
+  position: sticky;
+  top: 0;
+  right: 0;
 }
 .mid-col {
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
-  height: auto;
+  /* height: auto; */
 }
 .right-col {
   height: fit-content;

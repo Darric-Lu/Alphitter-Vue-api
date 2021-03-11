@@ -85,6 +85,31 @@
               ></div>
             </div>
           </div>
+          <div class="modal-body pb-0">
+            <div class="row">
+              <div class="col-1">
+                <div class="tweetImage-cut">
+                  <img :src="replyOnwerAvatar" alt="" class="tweetImage" />
+                </div>
+              </div>
+              <div class="col-10 replyContent">
+                <span>
+                  <span class="tweet-user-name">
+                    {{ replyOnwer }}
+                  </span>
+                  <span class="tweet-info">
+                    @ {{ replyOnwerAccount }} •
+                    {{ replyCreatedAt | fromNow }}
+                  </span>
+                </span>
+                <p class="mt-1">{{ replyDescription }}</p>
+                <!-- <p>
+                  <span class="tweet-info">回覆給</span>
+                  <span class="owner-user">@{{ replyOnwer }}</span>
+                </p> -->
+              </div>
+            </div>
+          </div>
           <div class="modal-body">
             <div class="row" v-for="reply in tweetReplies" :key="reply.id">
               <div class="col-1">
@@ -130,6 +155,15 @@
               </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn tweet-reply"
+              @click="replyTweetSubmit"
+            >
+              回覆
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -139,7 +173,6 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
-
 export default {
   mixins: [fromNowFilter],
   props: {
@@ -156,6 +189,10 @@ export default {
     return {
       tweetReplies: [],
       replyOnwer: "",
+      replyOnwerAvatar: "",
+      replyOnwerAccount: "",
+      replyCreatedAt: "",
+      replyDescription: "",
       // 回復推文
       currentReply: "",
       //
@@ -169,7 +206,7 @@ export default {
     },
     usersPage(userId) {
       if (userId === this.currentUser.id) {
-        this.$router.push(`user/self/${userId}`);
+        this.$router.push({ name: "user-self" });
         console.log(userId);
       } else {
         this.$router.push(`/user/${userId}`);
@@ -202,6 +239,10 @@ export default {
           // console.log("有找到", tweet);
           this.tweetReplies = [...tweet.Replies];
           this.replyOnwer = tweet.User.name;
+          this.replyOnwerAccount = tweet.User.account;
+          this.replyOnwerAvatar = tweet.User.avatar;
+          this.replyCreatedAt = tweet.updatedAt;
+          this.replyDescription = tweet.description;
           // console.log("放進去", this.tweetReplies);
         }
       });
@@ -269,7 +310,7 @@ export default {
 }
 .current-user-img {
   position: relative;
-  z-index: 999;
+  /* z-index: 999; */
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -287,9 +328,7 @@ export default {
   width: 64px;
   height: 40px;
 }
-
 /* modal */
-
 .tweet-user-name {
   font-weight: 700;
   font-size: 16px;
@@ -304,7 +343,6 @@ export default {
   font-weight: 600;
   color: #e0245e;
 }
-
 .modal-header {
   height: 55px;
 }
@@ -327,11 +365,9 @@ export default {
   height: 2px; /* cross thickness */
   background-color: #ff6600;
 }
-
 .close-btn::before {
   transform: rotate(45deg);
 }
-
 .close-btn::after {
   transform: rotate(-45deg);
 }

@@ -11,27 +11,28 @@
           <!-- 中間在小於md時 顯示全寬10/12-->
           <div class="twitterEditCard">
             <div class="mid-header">首頁</div>
-            <form action="" @submit.stop.prevent="handleSubmit">
-              <div class="textarea">
-                <img
-                  :src="currentUser.avatar"
-                  alt=""
-                />
-                <textarea
-                  class="form-control"
-                  placeholder="有甚麼新鮮事?"
-                  id="floatingTextarea2"
-                  style="height: 100px"
-                  v-model="description"
-                >
-                </textarea>
-                <span>
-                  <button type="submit" class="btn btn-secondary tweet">
-                    推文
-                  </button>
-                </span>
+            <form action="" @submit.stop.prevent="handleSubmit" class="m-3">
+              <div class="d-flex justify-content-start">
+                <div class="avatar-wrapping p-0 mx-2 col-2">
+                  <img :src="currentUser.avatar" alt="" class="avatar-img" />
+                </div>
+                <div class="textarea col-10">
+                  <textarea
+                    class="form-control"
+                    placeholder="有甚麼新鮮事?"
+                    id="floatingTextarea2"
+                    rows="2"
+                    v-model="description"
+                  >
+                  </textarea>
+                </div>
               </div>
             </form>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-secondary tweet">
+                推文
+              </button>
+            </div>
             <div class="divider"></div>
           </div>
           <div class="mid-down">
@@ -202,9 +203,9 @@ export default {
         const description = this.description;
         const response = await tweetsAPI.postTweet({ description });
         console.log("post tweet:", response);
-        
+
         // 伺服器新增 Comment 成功後...
-        this.fetchMain()
+        this.fetchMain();
         this.description = "";
       } catch (error) {
         Toast.fire({
@@ -233,8 +234,16 @@ export default {
 
 <style scoped>
 .col-2 {
-  box-sizing: border-box;
-  height: 1196px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 800px;
+  z-index: 0;
+}
+.col-4 {
+  position: sticky;
+  top: 0;
+  right: 0;
 }
 .mid-col {
   border-left: 1px solid #e6ecf0;
@@ -266,23 +275,19 @@ export default {
   font-weight: bold;
   font-size: 18px;
 }
-img {
-  /* position: absolute; */
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  /* left: 48%;
+/* img { */
+/* position: absolute; */
+/* width: 50px; */
+/* height: 50px; */
+/* border-radius: 50%; */
+/* left: 48%;
   top: 60px; */
-}
+/* } */
 .textarea {
   display: flex;
 }
 textarea {
   border-style: none;
-}
-span {
-  display: flex;
-  align-items: flex-end;
 }
 .tweet {
   background: #ff6600;
@@ -291,10 +296,25 @@ span {
   font-weight: bold;
   width: 64px;
   height: 40px;
+  border-style: none;
 }
 .divider {
   width: 100%;
   height: 10px;
   background: #e6ecf0;
+}
+.avatar-wrapping {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btn-secondary {
+  margin: 0 16px 16px 0;
 }
 </style>

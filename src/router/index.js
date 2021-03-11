@@ -8,8 +8,6 @@ import AdminSignIn from '../views/AdminSignIn.vue'
 import TweetMain from '../views/TweetMain.vue'
 import ReplyList from '../views/TweetReplyList.vue'
 import Userself from '../views/Userself.vue'
-import UserselfLike from '../views/UserselfLike.vue'
-import Userselftweetsandreplies from '../views/UserselfTweetsandReplies'
 // import UserselfFollower from '../views/UserselfFollower.vue'
 // import UserselfFollowing from '../views/UserselfFollowing.vue'
 import UserOther from '../views/UserOther.vue'
@@ -70,17 +68,7 @@ const routes = [
     component: ReplyList
   },
   {
-    path: '/user/self/like',
-    name: 'user-self-like',
-    component: UserselfLike
-  },
-  {
-    path: '/user/self/tweetsandreplies',
-    name: 'user-self-tweetsandreplies',
-    component: Userselftweetsandreplies
-  },
-  {
-    path: '/user/self/:id',
+    path: '/user/self/',
     name: 'user-self',
     component: Userself
   },
@@ -138,7 +126,7 @@ router.beforeEach(async (to, from, next) => {
   // 如果token有效則轉址到餐廳首頁
   next()
 })
-  // 使用dispatch呼叫vuex內的actions
-  
+// 使用dispatch呼叫vuex內的actions
+
 
 export default router
