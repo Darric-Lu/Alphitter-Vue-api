@@ -75,7 +75,7 @@
         </div>
         <div class="follow mt-2">
           <router-link
-            :to="{ name: 'user-self-following' }"
+            :to="{ name: 'user-following' }"
             class="followings-content"
             ><span class="bold"
               >{{
@@ -85,7 +85,7 @@
             <span class="gray">跟隨中</span>
           </router-link>
           <router-link
-            :to="{ name: 'user-self-follower' }"
+            :to="{ name: 'user-follower' }"
             class="followers-content ms-2"
             ><span class="bold"
               >{{

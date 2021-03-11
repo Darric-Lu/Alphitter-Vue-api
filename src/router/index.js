@@ -91,7 +91,7 @@ const routes = [
   },
   {
     path: '/user/:id/followings',
-    name: 'user-self-following',
+    name: 'user-following',
     component: () => import('../views/UserFollowing.vue')
   },
   {
@@ -122,13 +122,16 @@ router.beforeEach(async (to, from, next) => {
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
   
+  // 對於不需要驗證 token 的頁面
+  const pathsWithoutAuthentication = ['sign-up', 'sign-in', 'admin-sign-in']
+
   // 如果token無效則轉址到登入頁
-  if (!isAuthenticated && to.name !== 'sign-in') {
+  if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
     next('/signin')
     return
   }
 
-  if(isAuthenticated && to.name === 'sign-in') {
+  if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
     next('/main')
     return
   }
