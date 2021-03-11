@@ -61,7 +61,6 @@
                 class="form-control"
                 name="password"
                 autocomplete="new-password"
-                required
               />
             </div>
 
@@ -74,7 +73,6 @@
                 class="form-control"
                 name="checkPassword"
                 autocomplete="new-password-check"
-                required
               />
             </div>
             <div class="data-footer d-flex flex-row-reverse">

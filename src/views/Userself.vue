@@ -230,7 +230,6 @@ export default {
     },
     afterClickFollow() {
       // 點了追蹤中之後再次fetch currentuser去更新畫面
-      // this.currentUser.Followings.push([])
       this.fetchCurrentUser()
       console.log('after click follow to get currentuser again')
       console.log('after follow someone', this.currentUser)
