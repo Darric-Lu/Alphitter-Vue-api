@@ -54,6 +54,7 @@
           v-if="otherUser.isFollowed"
           type="button"
           class="btn unfollowing-button"
+          @click.stop.prevent="unFollow(otherUser.id)"
         >
           正在跟隨
         </button>
@@ -62,6 +63,7 @@
           @click="handleFollow"
           type="button"
           class="btn following-button"
+          @click.stop.prevent="Follow(otherUser.id)"
         >
           跟隨
         </button>
@@ -101,6 +103,9 @@
 </template>
 
 <script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+
 export default {
   name: "UserOtherProfile",
   props: {
@@ -121,6 +126,36 @@ export default {
     },
     handleUnSubscription() {
       this.$emit("handle-unsubscription");
+    },
+    async unFollow(id) {
+      try {
+        const response = await usersAPI.deleteFollowship(id);
+        console.log("follow:", id);
+        console.log(response);
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "現在無法追蹤該使用者，請稍後再試～",
+        });
+      }
+    },
+    async Follow(id) {
+      try {
+        const response = await usersAPI.createFollowship({id:id});
+        console.log("follow:", id);
+        console.log('follow:', response);
+        console.log(typeof id)
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
+        }
+        // 通知userself/followings頁面更新追蹤中資料
+        this.$emit("after-click-follow");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "現在無法追蹤該使用者，請稍後再試～",
+        });
+      }
     },
   },
 };

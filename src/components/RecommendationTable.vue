@@ -203,7 +203,7 @@ export default {
             return user;
           }
         });
-        // 通知userself頁面更新追蹤中資料
+        // 通知userself/followings頁面更新追蹤中資料
         this.$emit("after-click-follow");
       } catch (error) {
         Toast.fire({

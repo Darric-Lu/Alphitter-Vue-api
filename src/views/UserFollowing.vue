@@ -17,7 +17,9 @@
         </div>
         <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable -->
-          <Recommendationtable :initial-recommend-users="recommendUsers" />
+          <Recommendationtable :initial-recommend-users="recommendUsers"
+          @after-click-follow="afterClickFollow"
+           />
         </div>
       </div>
     </div>
@@ -109,6 +111,12 @@ export default {
           title: "無法取得推薦資料，請稍後再試",
         });
       }
+    },
+    afterClickFollow() {
+      // 點了追蹤中之後再次fetch followings去更新畫面
+      const { id: userId } = this.$route.params;
+      this.fetchFollowing(userId);
+      console.log('after click follow to get followings again')
     },
   },
 };
