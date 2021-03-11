@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="following text-center">
-        <router-link :to="{ name: 'user-self-following' }">
+        <router-link :to="{ name: 'user-following' }">
           <div class="following active">正在跟隨</div>
         </router-link>
       </div>

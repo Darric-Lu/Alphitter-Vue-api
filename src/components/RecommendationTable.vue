@@ -20,7 +20,7 @@
       <div class="user-following">
         <a
           href=""
-          v-if="user.isFollowing"
+          v-if="user.isFollowed"
           @click.stop.prevent="unFollow(user.id)"
         >
           <div class="user-following-btn text-center">正在跟隨</div>
@@ -119,6 +119,10 @@ a {
 </style>
 
 <script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
+
 //指搞定首頁的串接 功能都還沒...
 export default {
   name: "RecommendationTable",
@@ -137,12 +141,16 @@ export default {
   data() {
     return {
       recommendUsers: [...this.initialRecommendUsers],
+      // followings: [],
       noneAvatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
     };
   },
   created() {
     this.top5();
     // console.log("initialRecommendUsers", this.initialRecommendUsers);
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
   methods: {
     top5() {
@@ -153,29 +161,56 @@ export default {
       this.recommendUsers = [...this.initialRecommendUsers];
       // this.sortFollowedCount();
     },
-    unFollow(id) {
-      this.recommendUsers = this.recommendUsers.map((user) => {
-        if (user.id === id) {
-          return (user = {
-            ...user,
-            isFollowing: false,
-          });
-        } else {
-          return user;
-        }
-      });
+    async unFollow(id) {
+      try {
+        const response = await usersAPI.deleteFollowship(id);
+        console.log("follow:", id);
+        console.log(response);
+        this.recommendUsers = this.recommendUsers.map((user) => {
+          if (user.id === id) {
+            return (user = {
+              ...user,
+              isFollowed: false,
+            });
+          } else {
+            return user;
+          }
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "現在無法追蹤該使用者，請稍後再試～",
+        });
+      }
     },
-    Follow(id) {
-      this.recommendUsers = this.recommendUsers.map((user) => {
-        if (user.id === id) {
-          return (user = {
-            ...user,
-            isFollowing: true,
-          });
-        } else {
-          return user;
+    async Follow(id) {
+      try {
+        const response = await usersAPI.createFollowship({id:id});
+        console.log("follow:", id);
+        console.log('follow:', response);
+        console.log(typeof id)
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
         }
-      });
+        // 改變按鈕狀態
+        this.recommendUsers = this.recommendUsers.map((user) => {
+          if (user.id === id) {
+            return (user = {
+              ...user,
+              isFollowed: true,
+            });
+          } else {
+            return user;
+          }
+        });
+        // 通知userself頁面更新追蹤中資料
+        this.$emit("after-click-follow");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "現在無法追蹤該使用者，請稍後再試～",
+        });
+      }
     },
   },
   watch: {

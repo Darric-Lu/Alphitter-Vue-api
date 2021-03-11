@@ -5,7 +5,7 @@
         <AdminSideBar :active="active" />
       </div>
       <div class="col-10">
-        <AdminUsersCardTable />
+        <AdminUsersCardTable :users="users"/>
       </div>
     </div>
   </div>
@@ -24,6 +24,8 @@
 <script>
 import AdminSideBar from "../components/AdminSideBar";
 import AdminUsersCardTable from "../components/AdminUsersCardTable";
+import adminAPI from "../apis/admin"
+import { Toast } from "../utils/helpers"
 
 export default {
   name: "AdminUserPage",
@@ -37,7 +39,25 @@ export default {
         twitterContent: "row",
         userContent: "active",
       },
+      users:[]
     };
   },
+  created() {
+    this.fetchAdminUsers()
+  },
+  methods: {
+    async fetchAdminUsers() {
+      try {
+        const response = await adminAPI.getAdminUsers()
+        console.log(response)
+        this.users = response.data
+      } catch(error) {
+        Toast.fire({
+          icon: 'error',
+          title: '現在無法取得使用者資料，請稍後再試喔～'
+        })
+      }
+    }
+  }
 };
 </script>

@@ -32,7 +32,7 @@
         </div>
         <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable 在小於md時消失 -->
-          <RecommendationTable :initial-recommend-users="recommendUsers" />
+          <RecommendationTable :initial-recommend-users="recommendUsers" @after-click-follow="afterClickFollow"/>
         </div>
       </div>
     </div>
@@ -227,6 +227,13 @@ export default {
           title: "無法取得推薦資料，請稍後再試",
         });
       }
+    },
+    afterClickFollow() {
+      // 點了追蹤中之後再次fetch currentuser去更新畫面
+      // this.currentUser.Followings.push([])
+      this.fetchCurrentUser()
+      console.log('after click follow to get currentuser again')
+      console.log('after follow someone', this.currentUser)
     },
     afterHadleChangeActive(e) {
       //改變Tab的active，且串API時改變中下方資料讓畫面改變

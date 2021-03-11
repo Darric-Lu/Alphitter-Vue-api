@@ -56,6 +56,7 @@
                 class="pe-5 comment"
                 data-bs-toggle="modal"
                 data-bs-target="#replyTweet"
+                @click.prevent.stop="sendTweetId(tweet.id)"
               >
                 <img src="../assets/comment-alt.svg" alt="" />
               </span>
@@ -91,9 +92,9 @@
               </div>
               <div class="col-10 ps-4">
                 <p>
-                  <span class="reply-name"> Name</span>
+                  <span class="reply-name"> {{ currentUser.name }}</span>
                   <span class="reply-info"
-                    >@ account • {{ reply.createdAt | fromNow }}</span
+                    >@ {{ currentUser.account }} • {{ reply.createdAt | fromNow }}</span
                   >
                 </p>
                 <p class="reply-info">
@@ -141,9 +142,9 @@
               </div>
               <div class="col-10 replyContent">
                 <span>
-                  <span class="tweet-user-name"> Name </span>
+                  <span class="tweet-user-name"> {{ currentUser.name }} </span>
                   <span class="tweet-info">
-                    @ account •
+                    @ {{ currentUser.account }} •
                     {{ reply.createdAt | fromNow }}
                   </span>
                 </span>
@@ -178,7 +179,7 @@
               <button
                 type="submit"
                 class="btn tweet-reply"
-                @click="replyTweetSubmit"
+                @click="replyTweetSubmit({ tweetId, currentReply })"
               >
                 回覆
               </button>
@@ -210,6 +211,7 @@ export default {
   data() {
     return {
       tweet: {},
+      tweetId: '',
       likeCount: "",
       repliesLength: "",
       replies: [],
@@ -320,13 +322,37 @@ export default {
         });
       }
     },
-    replyTweetSubmit() {
-      //   if (!this.reply) {
-      //     Toast.fire({
-      //       icon: "error",
-      //       title: "請填寫回覆內容",
-      //     });
-      //   }
+    sendTweetId(tweetId){
+      this.tweetId = tweetId
+      console.log('sendTweetId:', this.tweetId)
+    },
+    async replyTweetSubmit({ tweetId, currentReply }) {
+      try {
+        if (!this.currentReply) {
+          Toast.fire({
+            icon: "error",
+            title: "請填寫推文內容",
+          });
+        }
+        console.log(123);
+        const response = await tweetsAPI.replyTweet({
+          tweetId: tweetId,
+          comment: currentReply,
+        });
+
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
+        }
+        console.log(response)
+        //以重新整理的方法關閉modal
+        setTimeout("location.reload()", 2200);
+        // document.querySelector("#replyTweet").modal("hide");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "請填寫回覆內容",
+        });
+      }
     },
   },
 };

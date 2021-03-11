@@ -12,12 +12,12 @@
       </div>
 
       <div class="form-label-group mb-2">
-        <label for="account">帳號</label>
+        <label for="email">帳號</label>
         <input
-          id="account"
-          v-model="account"
-          name="account"
-          type="account"
+          id="email"
+          v-model="email"
+          name="email"
+          type="email"
           class="form-control"
           autocomplete="username"
           required
@@ -63,7 +63,7 @@ export default {
   name: "AdminSignIn",
   data() {
     return {
-      account: "",
+      email: "",
       password: "",
       isprocessing: false,
     };
@@ -71,7 +71,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        if (!this.account || !this.password) {
+        if (!this.email || !this.password) {
           Toast.fire({
             icon: "warning",
             title: "Oh，有空白～信箱和密碼都要寫唷>_<",
@@ -82,7 +82,7 @@ export default {
         this.isprocessing = true;
 
         const response = await authorizationAPI.adminSignIn({
-          account: this.account,
+          email: this.email,
           password: this.password,
         });
         console.log(response);

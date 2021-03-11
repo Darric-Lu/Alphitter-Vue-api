@@ -43,7 +43,7 @@
           <router-link
             :to="{ path: `/user/${currentUser.id}/followers` }"
             class="following-content ms-2"
-            ><span class="bold">{{ currentUser.Followings.length }}位</span>
+            ><span class="bold">{{ currentUser.Followers.length }}位</span>
             <span class="gray">跟隨者</span>
           </router-link>
         </div>

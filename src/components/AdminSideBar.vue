@@ -42,7 +42,8 @@
           <div class="logout-icon col-2">
             <font-awesome-icon icon="sign-in-alt" />
           </div>
-          <div class="userCard-content col-8 d-none d-md-block">
+          <div class="userCard-content col-8 d-none d-md-block" 
+          @click.stop.prevent="logout">
             <p>登出</p>
           </div>
         </div>
@@ -95,5 +96,11 @@ export default {
       }),
     },
   },
+  methods: {
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/admin/signin");
+    },
+  }
 };
 </script>
