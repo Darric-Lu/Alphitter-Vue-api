@@ -74,7 +74,15 @@
                 <span class="title-content">編輯個人資料</span>
               </h5>
               <div class="save-btn">
-                <button type="submit" class="save-btn">儲存</button>
+                <button
+                  v-if="isProcess"
+                  type="submit"
+                  class="save-btn"
+                  disabled="disabled"
+                >
+                  更新中...
+                </button>
+                <button v-else class="save-btn">儲存</button>
               </div>
             </div>
 
@@ -169,6 +177,7 @@
 <script>
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { PostToastCenter } from "../utils/helpers";
 
 export default {
   name: "UserProfile",
@@ -181,6 +190,7 @@ export default {
   data() {
     return {
       currentUser: this.initialCurrentUser,
+      isProcess: false,
     };
   },
   // 用watch監聽因為請求API的時間差的新資料的寫入
@@ -233,6 +243,7 @@ export default {
       }
     },
     async handleSubmit(e) {
+      this.isProcess = true;
       try {
         // 建立FormData
         const form = e.target; // <form></form>
@@ -250,6 +261,13 @@ export default {
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
+        PostToastCenter.fire({
+          icon: "success",
+          title: "更新完成",
+        });
+        window.setTimeout(function () {
+          location.reload();
+        }, 2000);
 
         // 重新帶一次更新過後的currentuser資料;
         this.fetchCurrentUser();
@@ -383,7 +401,7 @@ export default {
   border: 1px solid #ff6600;
   color: #ffffff;
   font-weight: bold;
-  width: 64px;
+  width: 90px;
   height: 30px;
   /* margin: 10px 15px 0 0; */
 }

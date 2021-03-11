@@ -20,3 +20,10 @@ export const PostToast = Swal.mixin({
   showConfirmButton: false,
   timer: 2000
 })
+
+export const PostToastCenter = Swal.mixin({
+  toast: true,
+  position: 'center',
+  showConfirmButton: false,
+  timer: 2000
+})

@@ -284,21 +284,25 @@ export default {
 
 <style scoped>
 .col-2 {
-  position: sticky;
-  top: 0;
-  left: 0;
+  /* position: sticky; */
+  /* top: 0; */
+  /* left: 0; */
   height: 800px;
-  z-index: 0;
+  /* z-index: 0; */
 }
-.col-4 {
+/* .col-4 {
   position: sticky;
   top: 0;
   right: 0;
-}
+} */
 .mid-col {
+  overflow-y: scroll;
+  height: 100vh;
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
-  height: auto;
+}
+.mid-col::-webkit-scrollbar {
+  display: none;
 }
 .right-col {
   height: fit-content;
