@@ -134,6 +134,7 @@
 <script>
 import tweetsAPI from "../apis/tweets";
 import { PostToast } from "../utils/helpers";
+import { mapState } from "vuex"
 
 export default {
   name: "Sidebar",
@@ -146,15 +147,14 @@ export default {
         setting: "",
       }),
     },
-    currentUser: {
-      type: Object,
-      required: true,
-    },
   },
   data() {
     return {
       description: "",
     };
+  },
+  computed: {
+    ...mapState(['currentUser'])
   },
   methods: {
     async newTweetSubmit() {
