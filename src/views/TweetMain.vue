@@ -29,7 +29,11 @@
               </div>
             </form>
             <div class="d-flex justify-content-end">
-              <button type="submit" class="btn btn-secondary tweet">
+              <button
+                type="submit"
+                class="btn btn-secondary tweet"
+                @click="newTweetSubmit"
+              >
                 推文
               </button>
             </div>
@@ -63,6 +67,7 @@ import RecommendationTable from "../components/RecommendationTable";
 import tweetsAPI from "../apis/tweets";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { PostToast } from "../utils/helpers";
 
 // GET api/tweets
 
@@ -103,6 +108,52 @@ export default {
     this.fetchRecommendUsers();
   },
   methods: {
+    async newTweetSubmit() {
+      try {
+        this.description = this.description.trim();
+        //錯誤提示:無內容
+        if (!this.description.length) {
+          PostToast.fire({
+            icon: "error",
+            title: "請輸入正確內容",
+          });
+          return;
+        } else if (this.description.length > 140) {
+          //錯誤提示:超出140字數
+          PostToast.fire({
+            icon: "error",
+            title: "請勿超過140字數，目前" + this.description.length + "字",
+          });
+          console.log("請勿超過140字數");
+          return;
+        }
+
+        // 向 API 發送 POST 請求
+        const description = this.description;
+        const response = await tweetsAPI.postTweet({ description });
+        console.log("post tweet:", response);
+
+        //成功提示
+        PostToast.fire({
+          icon: "success",
+          title: "發文成功，enjoy!!",
+        });
+
+        //以重新整理的方法關閉modal
+        setTimeout("location.reload()", 2200);
+        console.log(
+          "tweet",
+          this.description,
+          "length",
+          this.description.length
+        );
+      } catch (error) {
+        PostToast.fire({
+          icon: "error",
+          title: "目前無法新增推文，請稍後再試～",
+        });
+      }
+    },
     async afterHandleBeLike(id) {
       try {
         const { data } = await tweetsAPI.postTweetsLike(id);
@@ -158,7 +209,6 @@ export default {
         });
       }
     },
-
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
