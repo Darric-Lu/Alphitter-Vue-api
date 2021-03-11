@@ -11,12 +11,9 @@
           <!-- 中間在小於md時 顯示全寬10/12-->
           <div class="twitterEditCard">
             <div class="mid-header">首頁</div>
-            <form action="" @submit.stop.prevent="handleSubmit">
+            <form action="" @submit.stop.prevent="handleSubmit" class="m-3">
               <div class="textarea">
-                <img
-                  :src="currentUser.avatar"
-                  alt=""
-                />
+                <img :src="currentUser.avatar" alt="" />
                 <textarea
                   class="form-control"
                   placeholder="有甚麼新鮮事?"
@@ -202,9 +199,9 @@ export default {
         const description = this.description;
         const response = await tweetsAPI.postTweet({ description });
         console.log("post tweet:", response);
-        
+
         // 伺服器新增 Comment 成功後...
-        this.fetchMain()
+        this.fetchMain();
         this.description = "";
       } catch (error) {
         Toast.fire({

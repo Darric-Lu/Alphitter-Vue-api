@@ -7,7 +7,7 @@
       </div>
       <div class="row col-10">
         <!-- 中間包含Recommendationtable  顯示全寬10/12-->
-        <div class="col-12 col-lg-8 mid-col">
+        <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- UserNavbar -->
           <UserNavbar :currentUser="currentUser" />
           <div class="following-table">
@@ -15,7 +15,7 @@
             <FollowingsTable :initial-followings="followings" />
           </div>
         </div>
-        <div class="col-3 d-none d-lg-block right-col">
+        <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable -->
           <Recommendationtable :initial-recommend-users="recommendUsers" />
         </div>
