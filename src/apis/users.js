@@ -47,11 +47,10 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
-  createFollowship(userId) {
-    return apiHelper.post('/followships', userId, {
+  createFollowship({ id: id }) {
+    return apiHelper.post('/followships', { id: id }, {
       headers: {
-        Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json' }
+        Authorization: `Bearer ${getToken()}`}
     })
   },
   deleteFollowship(userId) {

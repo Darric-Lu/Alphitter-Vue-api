@@ -185,7 +185,7 @@ export default {
     },
     async Follow(id) {
       try {
-        const response = await usersAPI.createFollowship(id);
+        const response = await usersAPI.createFollowship({id:id});
         console.log("follow:", id);
         console.log('follow:', response);
         console.log(typeof id)
