@@ -230,10 +230,9 @@ export default {
 
 <style scoped>
 .col-2 {
-  /* position: sticky;
+  position: sticky;
   top: 0;
-  left: 0; */
-
+  left: 0;
   height: 800px;
 }
 .col-4 {
