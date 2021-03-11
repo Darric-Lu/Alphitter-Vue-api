@@ -85,7 +85,9 @@
           <div class="modal-body">
             <div class="row" v-for="reply in tweetReplies" :key="reply.id">
               <div class="col-1">
-                <img :src="reply.User.avatar" alt="" class="tweetImage" />
+                <div class="tweetImage-cut">
+                  <img :src="reply.User.avatar" alt="" class="tweetImage" />
+                </div>
               </div>
               <div class="col-10 replyContent">
                 <span>
@@ -106,11 +108,13 @@
             </div>
             <div class="row">
               <div class="col-1">
-                <img
-                  class="tweetImage"
-                  :src="currentUser.avatar"
-                  alt="推文擁有者"
-                />
+                <div class="tweetImage-cut">
+                  <img
+                    class="tweetImage"
+                    :src="currentUser.avatar"
+                    alt="推文擁有者"
+                  />
+                </div>
               </div>
               <div class="col-10">
                 <textarea
@@ -238,13 +242,19 @@ export default {
 .tweet-description {
   cursor: pointer;
 }
-.tweetImage {
+.tweetImage-cut {
   position: relative;
-  z-index: 999;
-  border-radius: 50%;
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
   outline: 5px #ffffff solid;
+}
+.tweetImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .replyContent {
   margin-left: -3px;

@@ -44,10 +44,10 @@
             <div class="divider"></div>
             <div class="response py-2">
               <span class="response-comment">
-                {{ repliesLength ? repliesLength : "未顯示" }}</span
+                {{ repliesLength ? repliesLength : "0" }}</span
               >回覆
               <span class="response-be-like">
-                {{ likeCount ? likeCount : "未顯示" }} </span
+                {{ likeCount ? likeCount : "0" }} </span
               >喜歡次數
             </div>
             <div class="divider"></div>
