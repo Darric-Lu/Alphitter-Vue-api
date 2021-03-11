@@ -15,11 +15,11 @@
           <p class="m-2">
             <span class="card-tweets bold">
               <img src="./../assets/comment-alt.svg" alt="" />
-              {{ user.TweetCount }}k
+              {{ user.TweetCount }}
             </span>
             <span class="card-liked bold">
               <img src="./../assets/heart.svg" alt="" />
-              {{ user.isLikedCount }}k
+              {{ user.isLikedCount }}
             </span>
           </p>
           <p class="m-2">
