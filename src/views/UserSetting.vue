@@ -61,7 +61,6 @@
                 class="form-control"
                 name="password"
                 autocomplete="new-password"
-                required
               />
             </div>
 
@@ -74,7 +73,6 @@
                 class="form-control"
                 name="checkPassword"
                 autocomplete="new-password-check"
-                required
               />
             </div>
             <div class="data-footer d-flex flex-row-reverse">
@@ -93,6 +91,7 @@
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 import Sidebar from "../components/Sidebar";
+import { PostToast } from "../utils/helpers";
 
 export default {
   components: {
@@ -151,6 +150,7 @@ export default {
             icon: "error",
             title: "密碼要打一樣唷～",
           });
+          return;
         }
         // 建立FormData
         const form = e.target; // <form></form>
@@ -163,6 +163,10 @@ export default {
           formData,
         });
         console.log(response);
+        PostToast.fire({
+          icon: "success",
+          title: "更新完成",
+        });
         // 重新帶一次更新過後的currentuser資料
         this.fetchCurrentUser();
         // 開啟按鈕
