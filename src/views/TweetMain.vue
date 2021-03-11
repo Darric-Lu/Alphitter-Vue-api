@@ -284,17 +284,8 @@ export default {
 
 <style scoped>
 .col-2 {
-  /* position: sticky; */
-  /* top: 0; */
-  /* left: 0; */
   height: 800px;
-  /* z-index: 0; */
 }
-/* .col-4 {
-  position: sticky;
-  top: 0;
-  right: 0;
-} */
 .mid-col {
   overflow-y: scroll;
   height: 100vh;
