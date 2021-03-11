@@ -219,6 +219,12 @@ export default {
     },
     async replyTweetSubmit({ tweetId, currentReply }) {
       try {
+        if (!this.currentReply) {
+          Toast.fire({
+            icon: "error",
+            title: "請填寫推文內容",
+          });
+        }
         console.log(123);
         const response = await tweetsAPI.replyTweet({
           tweetId: tweetId,
@@ -228,6 +234,9 @@ export default {
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
+        console.log(response)
+        //以重新整理的方法關閉modal
+        setTimeout("location.reload()", 2200);
         // document.querySelector("#replyTweet").modal("hide");
       } catch (error) {
         Toast.fire({
