@@ -1,3 +1,4 @@
+//  GET api/tweets/:tweet_id 拿到 Replies的陣列須修改
 <template>
   <div class="container-xxl">
     <div class="row">
@@ -8,29 +9,46 @@
       <div class="row col-10 px-0">
         <!-- 中間包含Recommendationtable  顯示全寬10/12-->
         <div class="col-12 col-lg-8 px-0 mid-col">
-          <div class="mid-header">首頁</div>
+          <div class="mid-header row arrow">
+            <div class="col-1">
+              <font-awesome-icon icon="arrow-left" @click="$router.back()" />
+            </div>
+            <div class="col-10">
+              <span>推文</span>
+            </div>
+          </div>
           <div class="twitterCard">
             <div class="name">
-              <img
-                :src="tweet.User ? tweet.User.avatar : ''"
-                alt="使用者大頭貼"
-                class="avatar"
-              />
+              <div class="avatar-cut">
+                <img
+                  :src="tweet.User ? tweet.User.avatar : ''"
+                  alt="使用者大頭貼"
+                  class="avatar"
+                />
+              </div>
               <span class="name-text">
-                <span>{{ tweet.User ? tweet.User.name : "未顯示" }}</span>
-                <span>@{{ tweet.User ? tweet.User.account : "未顯示" }}</span>
+                <span class="tweet-name">{{
+                  tweet.User ? tweet.User.name : "未顯示"
+                }}</span>
+                <span class="tweet-accoun"
+                  >@{{ tweet.User ? tweet.User.account : "未顯示" }}</span
+                >
               </span>
             </div>
             <div class="text my-3">
               <div>
                 {{ tweet.description }}
               </div>
-              <div class="pt-2">{{ tweet.createdAt }}</div>
+              <div class="pt-3 post-time">{{ tweet.createdAt | postTime }}</div>
             </div>
             <div class="divider"></div>
             <div class="response py-2">
-              {{ tweet.Replies ? tweet.Replies.length : "未顯示" }} 回覆次數
-              {{ tweet.Likes ? tweet.Likes.length : "未顯示" }} 喜歡次數
+              <span class="response-comment">
+                {{ repliesLength ? repliesLength : "未顯示" }}</span
+              >回覆
+              <span class="response-be-like">
+                {{ likeCount ? likeCount : "未顯示" }} </span
+              >喜歡次數
             </div>
             <div class="divider"></div>
             <div class="responseIcon pt-2">
@@ -38,7 +56,20 @@
                 <img src="../assets/comment-alt.svg" alt="" />
               </span>
               <span class="ps-5 heart">
-                <img src="../assets/heart.svg" alt="" />
+                <img
+                  @click="unLiked(tweet.id)"
+                  v-if="tweet.isLike"
+                  src="../assets/heart-soild.svg"
+                  alt="喜愛icon"
+                  class="mx-2 icon"
+                />
+                <img
+                  @click="beLiked(tweet.id)"
+                  v-else
+                  src="../assets/heart.svg"
+                  alt="喜愛icon"
+                  class="mx-2 icon"
+                />
               </span>
             </div>
           </div>
@@ -49,12 +80,23 @@
               v-for="reply in replies"
               :key="reply.id"
             >
-              <div class="col-lg-1">
-                <img src="../assets/heart.svg" alt="" />
+              <div class="col-1">
+                <div class="avatar-cut">
+                  <img :src="currentUser.avatar" alt="" />
+                </div>
               </div>
-              <div class="col-lg-10">
-                <p>Name @account • {{ reply.createdAt }}</p>
-                <p>回覆 @{{ tweet.User.name }}</p>
+              <div class="col-10">
+                <p>
+                  <span class="reply-name"> Name</span>
+                  <span class="reply-info"
+                    >@ account • {{ reply.createdAt | fromNow }}</span
+                  >
+                </p>
+                <p class="reply-info">
+                  回覆<span class="user-reply-anme"
+                    >@{{ tweet.User.name }}</span
+                  >
+                </p>
                 <p>{{ reply.comment }}</p>
               </div>
             </div>
@@ -74,29 +116,17 @@
 
 <script>
 import Sidebar from "../components/Sidebar";
+import { fromNowFilter } from "./../utils/mixins";
 import RecommendationTable from "../components/RecommendationTable";
 import usersAPI from "../apis/users";
 import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 
 // GET api/tweets/:id
-const dummyCurrentUser = {
-  currentUser: {
-    account: "ClaireLi",
-    name: "Claire",
-    userImage:
-      "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-    titleImage:
-      "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg",
-    followersCount: "10",
-    followingCount: "20",
-    SelfIntroduction:
-      " Amet minim mollit non deserunt ullamco est sit aliqua dolor do ametsint.",
-  },
-};
 
 export default {
   name: "TweetReplyList",
+  mixins: [fromNowFilter],
   components: {
     Sidebar,
     RecommendationTable,
@@ -104,11 +134,26 @@ export default {
   data() {
     return {
       tweet: {},
+      likeCount: "",
+      repliesLength: "",
       replies: [],
       active: {
         home: "row",
         self: "row",
         setting: "row",
+      },
+      currentUser: {
+        id: "",
+        account: "",
+        name: "",
+        avatar: "",
+        cover: "",
+        email: "",
+        introduction: "",
+        Followers: [],
+        Followings: [],
+        Likes: [],
+        tweetCount: "",
       },
       recommendUsers: [],
     };
@@ -128,6 +173,8 @@ export default {
         console.log(response);
         this.tweet = response.data;
         this.replies = response.data.Replies;
+        this.likeCount = this.tweet.Likes.length;
+        this.repliesLength = this.tweet.Replies.length;
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -135,26 +182,19 @@ export default {
         });
       }
     },
-    fetchCurrentUser() {
-      const {
-        account,
-        name,
-        userImage,
-        titleImage,
-        followersCount,
-        followingCount,
-        SelfIntroduction,
-      } = dummyCurrentUser.currentUser;
-      this.currentUser = {
-        ...this.currentUser,
-        account,
-        name,
-        userImage,
-        titleImage,
-        followersCount,
-        followingCount,
-        SelfIntroduction,
-      };
+    async fetchCurrentUser() {
+      try {
+        const response = await usersAPI.getCurrentUser();
+        this.currentUser = {
+          ...this.currentUser,
+          ...response.data,
+        };
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料",
+        });
+      }
     },
     async fetchRecommendUsers() {
       try {
@@ -170,53 +210,62 @@ export default {
         });
       }
     },
+    async beLiked(tweetId) {
+      // console.log("beLiked-tweetId", tweetId);
+      try {
+        const { data } = await tweetsAPI.postTweetsLike(tweetId);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.tweet.isLike = true;
+        this.likeCount += 1;
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法喜歡這則推文，請稍後再試",
+        });
+      }
+    },
+    async unLiked(tweetId) {
+      console.log("uniked-tweetId", tweetId);
+      try {
+        const { data } = await tweetsAPI.postTweetsUnlike(tweetId);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.tweet.isLike = false;
+        this.likeCount -= 1;
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取消喜歡這則推文，請稍後再試",
+        });
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-/* .container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 15px;
-  padding-left: 15px;
-  width: 100%;
-} */
-/* .row {
-  display: flex;
-  border: 1px solid crimson;
-} */
-/* .left-col {
-  border: 1px solid blue;
-  width: 235px;
-  height: 1196px;
-} */
 .mid-col {
-  /* display: flex; */
-  /* flex-flow: column wrap; */
-  /* border: 1px solid blue; */
-  /* margin-right: auto; */
-  /* margin-left: auto; */
-  /* width: 600px; */
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
   height: auto;
 }
 .right-col {
-  /* border: 1px solid blue; */
-  /* width: 350px; */
-  /* height: 517px; */
   height: fit-content;
 }
-
+.arrow {
+  margin-left: 15px;
+}
 .mid-header {
-  background: #ffffff;
-  border: 1px solid #e6ecf0;
   box-sizing: border-box;
   padding: 2px;
   font-weight: bold;
   font-size: 18px;
-  line-height: 26px;
+  height: 55px;
+  line-height: 55px;
 }
 .twitterCard {
   border: 1px solid #e6ecf0;
@@ -227,13 +276,19 @@ export default {
 .name {
   display: flex;
 }
-.avatar {
-  /* position: absolute; */
+.avatar-cut {
+  position: relative;
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15px;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   margin-right: 5px;
-  /* left: 48%;
-  top: 60px; */
 }
 .name-text {
   display: flex;
@@ -252,5 +307,44 @@ export default {
   margin-top: 10px;
   width: 100%;
   height: 600px;
+}
+.tweetReply {
+  padding: 10px;
+  border-bottom: 1px solid #e6ecf0;
+}
+.tweet-name,
+.reply-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+.tweet-account,
+.reply-info {
+  font-size: 15px;
+  font-weight: 500;
+  color: #657786;
+}
+.user-reply-anme {
+  color: #ff6600;
+}
+.text {
+  font-size: 24px;
+}
+.post-time {
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
+}
+.response {
+  font-size: 16px;
+  color: #657786;
+  font-weight: 500;
+}
+.response-comment,
+.response-be-like {
+  font-weight: 700;
+  color: black;
+}
+.icon {
+  cursor: pointer;
 }
 </style>
