@@ -68,7 +68,7 @@ const routes = [
     component: ReplyList
   },
   {
-    path: '/user/self/:id',
+    path: '/user/self/',
     name: 'user-self',
     component: Userself
   },

@@ -139,7 +139,6 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
-
 export default {
   mixins: [fromNowFilter],
   props: {
@@ -169,7 +168,7 @@ export default {
     },
     usersPage(userId) {
       if (userId === this.currentUser.id) {
-        this.$router.push(`user/self/${userId}`);
+        this.$router.push({ name: "user-self" });
         console.log(userId);
       } else {
         this.$router.push(`/user/${userId}`);
@@ -212,10 +211,6 @@ export default {
 </script>
 
 <style scoped>
-/* 因為Position做的暴力修改 */
-.fade {
-  z-index: 999;
-}
 .tweet-row {
   padding: 15px 0 0 15px;
   border-bottom: 1px #e6ecf0 solid;
@@ -291,9 +286,7 @@ export default {
   width: 64px;
   height: 40px;
 }
-
 /* modal */
-
 .tweet-user-name {
   font-weight: 700;
   font-size: 16px;
@@ -308,7 +301,6 @@ export default {
   font-weight: 600;
   color: #e0245e;
 }
-
 .modal-header {
   height: 55px;
 }
@@ -331,11 +323,9 @@ export default {
   height: 2px; /* cross thickness */
   background-color: #ff6600;
 }
-
 .close-btn::before {
   transform: rotate(45deg);
 }
-
 .close-btn::after {
   transform: rotate(-45deg);
 }
