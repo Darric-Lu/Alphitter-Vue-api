@@ -1,20 +1,14 @@
 <template>
   <!-- 從有用到usernavbar的父元件把user的資料傳進來，再取要的name跟tweetscount -->
   <div class="row user-nav">
-    <div class="col-lg-1 arrow">
+    <div class="col-1 arrow">
       <font-awesome-icon icon="arrow-left" @click="$router.back()" />
     </div>
-    <div class="col-lg-11">
+    <div class="col-10">
       <span class="name-text">
         <!-- 因為傳進來的都是同一個id的推文 -->
         <span class="arrow-name">{{ currentUser.name }}</span>
-        <span class="arrow-tweets-count"
-          >{{
-            currentUser.tweetCount
-              ? currentUser.tweetCount
-              : "未串接到，等heroku更新"
-          }}推文</span
-        >
+        <span class="arrow-tweets-count">{{ currentUser.tweetCount }}推文</span>
       </span>
     </div>
   </div>

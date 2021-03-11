@@ -142,16 +142,16 @@ export default {
   },
   created() {
     this.top5();
-    console.log("initialRecommendUsers", this.initialRecommendUsers);
+    // console.log("initialRecommendUsers", this.initialRecommendUsers);
   },
   methods: {
     top5() {
       this.recommendUsers = this.recommendUsers.slice(0, 5);
-      console.log("x", this.recommendUsers);
+      // console.log("x", this.recommendUsers);
     },
     moreRecommendUsers() {
-      (this.recommendUsers = [...this.initialRecommendUsers]),
-        this.sortFollowedCount();
+      this.recommendUsers = [...this.initialRecommendUsers];
+      // this.sortFollowedCount();
     },
     unFollow(id) {
       this.recommendUsers = this.recommendUsers.map((user) => {

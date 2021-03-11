@@ -45,6 +45,7 @@
 .active {
   color: #ff6600;
   border-bottom: 2px solid #ff6600;
+  pointer-events: none;
 }
 </style>
 
