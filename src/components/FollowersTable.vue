@@ -2,7 +2,7 @@
   <div class="wrapping">
     <div class="status-table d-flex">
       <div class="text-center">
-        <router-link :to="{ name: 'user-self-follower' }">
+        <router-link :to="{ name: 'user-follower' }">
           <div class="followers active">跟隨者</div>
         </router-link>
       </div>
@@ -12,46 +12,21 @@
         </router-link>
       </div>
     </div>
-    <!-- 原始 -->
-    <div class="followers-item">
+    <div class="followers-item" v-for="follower in followers" :key="follower.account">
       <div class="account-image">
         <div class="account-image-cut">
-          <img
-            class="user-img"
-            src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg"
-            alt=""
-          />
+          <img class="user-img" :src="follower.avatar" alt="" />
         </div>
       </div>
       <div class="account-info">
-        <h5 class="user-name">Darric</h5>
-        <p class="user-account">@darric</p>
+        <h5 class="user-name">{{ follower.name }}</h5>
+        <p class="user-account">@{{ follower.account }}</p>
         <p class="user-tweets">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit.
-        </p>
-        <!-- <div class="is-following-btn text-center following-active">
-          正在跟隨
-        </div> -->
-        <div class="is-following-btn text-center following-none">跟隨</div>
-      </div>
-    </div>
-    <!--  -->
-    <div class="followers-item" v-for="tweet in tweets" :key="tweet.account">
-      <div class="account-image">
-        <div class="account-image-cut">
-          <img class="user-img" :src="tweet.image" alt="" />
-        </div>
-      </div>
-      <div class="account-info">
-        <h5 class="user-name">{{ tweet.name }}</h5>
-        <p class="user-account">@{{ tweet.account }}</p>
-        <p class="user-tweets">
-          {{ tweet.article }}
+          {{ follower.introduction }}
         </p>
         <div
           class="is-following-btn text-center following-active"
-          v-if="tweet.isFollowing"
+          v-if="follower.isFollowing"
         >
           正在跟隨
         </div>
@@ -62,6 +37,31 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "FollowersTable",
+  props: {
+    initialFollowers: {
+      type: Array,
+      require: true
+    }
+  },
+  data() {
+    return {
+      followers: this.initialFollowers
+    };
+  },
+  watch: {
+    initialFollowers(newValue) {
+      this.followers = {
+        ...this.followers,
+        ...newValue
+      }
+    }
+  }
+};
+</script>
 
 <style scoped>
 a {
@@ -85,7 +85,7 @@ a {
 .followers-item {
   display: grid;
   grid-template-columns: 80px 1fr;
-  height: 105px;
+  height: auto;
   border-bottom: 1px solid #e6ecf0;
 }
 .account-image {
@@ -142,74 +142,3 @@ a {
   color: #ff6600;
 }
 </style>
-
-
-<script>
-export default {
-  name: "FollowersTable",
-  data() {
-    return {
-      tweets: [
-        {
-          id: 1,
-          name: "ALPHAcamp",
-          account: "ac",
-          image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: true,
-        },
-        {
-          id: 2,
-          name: "Darric",
-          account: "DL",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: true,
-        },
-        {
-          id: 3,
-          name: "Claire",
-          account: "ClaireLi",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: true,
-        },
-        {
-          id: 4,
-          name: "goater",
-          account: "goater",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3729/medium_IMG_20200503_160121.jpg",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: false,
-        },
-        {
-          id: 5,
-          name: "stan_wang",
-          account: "stan",
-          image:
-            "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3164/medium_89927027_201089344497966_4789468931150577664_n.jpg",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: false,
-        },
-        {
-          id: 6,
-          name: "路人甲",
-          account: "someone",
-          image: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-          article:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.",
-          isFollowing: false,
-        },
-      ],
-    };
-  },
-};
-</script>
