@@ -174,6 +174,7 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import { Toast } from "../utils/helpers";
+import { PostToast } from "../utils/helpers";
 import tweetsAPI from "../apis/tweets";
 
 export default {
@@ -220,12 +221,19 @@ export default {
     async replyTweetSubmit({ tweetId, currentReply }) {
       try {
         if (!this.currentReply) {
-          Toast.fire({
+          PostToast.fire({
             icon: "error",
             title: "請填寫推文內容",
           });
+          return;
+        } else if (this.currentReply.length > 140) {
+          //錯誤提示:超出140字數
+          PostToast.fire({
+            icon: "error",
+            title: "請勿超過140字數，目前" + this.currentReply.length + "字",
+          });
+          return;
         }
-        console.log(123);
         const response = await tweetsAPI.replyTweet({
           tweetId: tweetId,
           comment: currentReply,
@@ -234,7 +242,13 @@ export default {
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
-        console.log(response)
+        //成功提示
+        PostToast.fire({
+          icon: "success",
+          title: "回復成功，enjoy!!",
+        });
+
+        console.log(response);
         //以重新整理的方法關閉modal
         setTimeout("location.reload()", 2200);
         // document.querySelector("#replyTweet").modal("hide");
