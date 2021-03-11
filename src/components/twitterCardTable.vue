@@ -159,7 +159,7 @@
             <button
               type="submit"
               class="btn tweet-reply"
-              @click="replyTweetSubmit"
+              @click="replyTweetSubmit({ tweetId, currentReply })"
             >
               回覆
             </button>
@@ -173,6 +173,9 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
+import { Toast } from "../utils/helpers";
+import tweetsAPI from "../apis/tweets";
+
 export default {
   mixins: [fromNowFilter],
   props: {
@@ -187,6 +190,7 @@ export default {
   },
   data() {
     return {
+      tweetId: "",
       tweetReplies: [],
       replyOnwer: "",
       replyOnwerAvatar: "",
@@ -213,13 +217,24 @@ export default {
         console.log(userId);
       }
     },
-    replyTweetSubmit() {
-      //   if (!this.reply) {
-      //     Toast.fire({
-      //       icon: "error",
-      //       title: "請填寫回覆內容",
-      //     });
-      //   }
+    async replyTweetSubmit({ tweetId, currentReply }) {
+      try {
+        console.log(123);
+        const response = await tweetsAPI.replyTweet({
+          tweetId: tweetId,
+          comment: currentReply,
+        });
+
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
+        }
+        // document.querySelector("#replyTweet").modal("hide");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "請填寫回覆內容",
+        });
+      }
     },
     beLiked(tweetId) {
       console.log("beLiked-tweetId", tweetId);
@@ -243,6 +258,7 @@ export default {
           this.replyOnwerAvatar = tweet.User.avatar;
           this.replyCreatedAt = tweet.updatedAt;
           this.replyDescription = tweet.description;
+          this.tweetId = tweet.id;
           // console.log("放進去", this.tweetReplies);
         }
       });

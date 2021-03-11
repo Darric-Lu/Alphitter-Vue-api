@@ -15,7 +15,8 @@ export default {
   postTweet({ description }) {
     return apiHelper.post('/tweets', { description }, {
       headers: { Authorization: `Bearer ${getToken()}` }
-    })},
+    })
+  },
   postTweetsLike(id) {
     return apiHelper.post(`/tweets/${id}/like`, "", {
       headers: { Authorization: `Bearer ${getToken()}` }
@@ -26,7 +27,10 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
-  replyTweet(tweetId) {
-    return apiHelper.post(`/tweets/${tweetId}/replies`)
+  replyTweet({ tweetId: tweetId, comment: comment }) {
+    console.log("api", tweetId, comment)
+    return apiHelper.post(`/tweets/${tweetId}/replies`, { comment: comment }, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }
