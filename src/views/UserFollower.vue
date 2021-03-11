@@ -117,8 +117,17 @@ export default {
 
 <style scoped>
 .col-2 {
-  box-sizing: border-box;
-  height: 1196px;
+  height: 800px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  /* box-sizing: border-box; */
+  /*好像一定要有 */
+}
+.col-4 {
+  position: sticky;
+  top: 0;
+  right: 0;
 }
 .mid-col {
   border-left: 1px solid #e6ecf0;

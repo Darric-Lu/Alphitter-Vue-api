@@ -8,8 +8,6 @@ import AdminSignIn from '../views/AdminSignIn.vue'
 import TweetMain from '../views/TweetMain.vue'
 import ReplyList from '../views/TweetReplyList.vue'
 import Userself from '../views/Userself.vue'
-import UserselfLike from '../views/UserselfLike.vue'
-import Userselftweetsandreplies from '../views/UserselfTweetsandReplies'
 // import UserselfFollower from '../views/UserselfFollower.vue'
 // import UserselfFollowing from '../views/UserselfFollowing.vue'
 import UserOther from '../views/UserOther.vue'
@@ -70,16 +68,6 @@ const routes = [
     component: ReplyList
   },
   {
-    path: '/user/self/like',
-    name: 'user-self-like',
-    component: UserselfLike
-  },
-  {
-    path: '/user/self/tweetsandreplies',
-    name: 'user-self-tweetsandreplies',
-    component: Userselftweetsandreplies
-  },
-  {
     path: '/user/self/:id',
     name: 'user-self',
     component: Userself
@@ -121,21 +109,21 @@ router.beforeEach(async (to, from, next) => {
     // 取得驗證成功與否
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
-  
+
   // 如果token無效則轉址到登入頁
   if (!isAuthenticated && to.name !== 'sign-in') {
     next('/signin')
     return
   }
 
-  if(isAuthenticated && to.name === 'sign-in') {
+  if (isAuthenticated && to.name === 'sign-in') {
     next('/main')
     return
   }
   // 如果token有效則轉址到餐廳首頁
   next()
 })
-  // 使用dispatch呼叫vuex內的actions
-  
+// 使用dispatch呼叫vuex內的actions
+
 
 export default router

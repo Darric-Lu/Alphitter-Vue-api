@@ -66,7 +66,7 @@
     </button>
 
     <!-- 登出 -->
-    <div class="mt-auto">
+    <div class="mt-auto sign-out">
       <router-link :to="{ name: 'admin-users' }" class="nav-link">
         <div class="logout row mt-3 d-flex justify-content-center">
           <div class="logout-icon col-2">
@@ -134,7 +134,7 @@
 <script>
 import tweetsAPI from "../apis/tweets";
 import { PostToast } from "../utils/helpers";
-import { mapState } from "vuex"
+import { mapState } from "vuex";
 
 export default {
   name: "Sidebar",
@@ -154,7 +154,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(["currentUser"]),
   },
   methods: {
     async newTweetSubmit() {
@@ -187,7 +187,7 @@ export default {
           icon: "success",
           title: "發文成功，enjoy!!",
         });
-        
+
         //以重新整理的方法關閉modal
         setTimeout("location.reload()", 2200);
         console.log(
@@ -213,7 +213,7 @@ export default {
 
 <style scoped>
 .wrapping {
-  height: 1200px;
+  height: 600px;
   box-sizing: border-box;
 }
 .row {
@@ -240,6 +240,10 @@ export default {
 
 .logout {
   justify-content: flex-end;
+}
+.sign-out {
+  position: fixed;
+  bottom: 20px;
 }
 .nav-content {
   font-size: 1rem;

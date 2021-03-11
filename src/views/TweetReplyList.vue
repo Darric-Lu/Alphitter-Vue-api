@@ -111,9 +111,6 @@
           <RecommendationTable :initial-recommend-users="recommendUsers" />
         </div>
       </div>
-      <div class="col-lg-3 right-col">
-        <!-- Recommendationtable -->
-      </div>
     </div>
     <!-- modal -->
     <div
@@ -153,7 +150,7 @@
                 <p class="mt-1">{{ reply.comment }}</p>
                 <p>
                   <span class="tweet-info">回覆給</span>
-                  <span class="owner-user">@ALPHAcamp</span>
+                  <span class="owner-user">@{{ tweet.User.name }}</span>
                 </p>
               </div>
             </div>
@@ -336,6 +333,18 @@ export default {
 </script>
 
 <style scoped>
+.col-2 {
+  position: sticky;
+  top: 0;
+  left: 0;
+  /*好像一定要有 */
+  height: 800px;
+}
+.col-4 {
+  position: sticky;
+  top: 0;
+  right: 0;
+}
 .mid-col {
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
