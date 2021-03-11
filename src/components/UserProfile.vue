@@ -35,13 +35,13 @@
         </div>
         <div class="follow mt-2">
           <router-link
-            :to="{ name: 'user-self-following' }"
+            :to="{ path: `/user/${currentUser.id}/followings` }"
             class="followers-content"
             ><span class="bold">{{ currentUser.Followings.length }}個</span>
             <span class="gray">跟隨中</span>
           </router-link>
           <router-link
-            :to="{ name: 'user-self-follower' }"
+            :to="{ path: `/user/${currentUser.id}/followers` }"
             class="following-content ms-2"
             ><span class="bold">{{ currentUser.Followings.length }}位</span>
             <span class="gray">跟隨者</span>
