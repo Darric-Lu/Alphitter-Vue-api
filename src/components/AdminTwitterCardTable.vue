@@ -31,7 +31,6 @@
         </div>
         <div
           class="delete-btn"
-          :title="tweet.id"
           @click.stop.prevent="deleteTweet(tweet.id)"
         ></div>
       </div>
