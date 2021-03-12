@@ -42,7 +42,10 @@
         </div>
         <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable 在小於md時消失 -->
-          <RecommendationTable :initial-recommend-users="recommendUsers" />
+          <RecommendationTable 
+          :initial-recommend-users="recommendUsers" 
+          @after-click-follow="afterClickFollow"
+          />
         </div>
       </div>
     </div>
@@ -263,8 +266,10 @@ export default {
       }
     },
     afterClickFollow() {
-      // 點了追蹤中之後再次fetch RecommendUsers去更新畫面
+      // 點了追蹤中之後再次fetch RecommendUsers跟otheruser去更新畫面
       this.fetchRecommendUsers();
+      const { id: userId } = this.$route.params;
+      this.fetchOtherUser(userId);
       // console.log("after click follow to get recommendUsers again");
       // console.log("after follow someone", this.recommendUsers);
     },
