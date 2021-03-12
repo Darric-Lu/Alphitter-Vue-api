@@ -132,6 +132,8 @@ export default {
         const response = await usersAPI.deleteFollowship(id);
         console.log("follow:", id);
         console.log(response);
+        // 通知userother頁面更新旁邊的推薦名單資料
+        this.$emit("after-click-follow");
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -141,14 +143,13 @@ export default {
     },
     async Follow(id) {
       try {
-        const response = await usersAPI.createFollowship({id:id});
+        const response = await usersAPI.createFollowship({ id: id });
         console.log("follow:", id);
-        console.log('follow:', response);
-        console.log(typeof id)
+        console.log("follow:", response);
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
-        // 通知userself/followings頁面更新追蹤中資料
+        // 通知userother頁面更新旁邊的推薦名單資料
         this.$emit("after-click-follow");
       } catch (error) {
         Toast.fire({

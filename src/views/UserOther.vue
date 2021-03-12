@@ -21,6 +21,7 @@
               @handle-unfollow="afterHandleUnfollow"
               @handle-subscription="afterhandleSubscription"
               @handle-unsubscription="afterhandleUnSubscription"
+              @after-click-follow="afterClickFollow"
               :otherUser="otherUser"
             />
           </div>
@@ -262,6 +263,12 @@ export default {
           title: "無法取得推薦資料，請稍後再試",
         });
       }
+    },
+    afterClickFollow() {
+      // 點了追蹤中之後再次fetch RecommendUsers去更新畫面
+      this.fetchRecommendUsers();
+      console.log("after click follow to get recommendUsers again");
+      console.log("after follow someone", this.recommendUsers);
     },
     afterHadleChangeActive(e) {
       //改變Tab的active，且串API時改變中下方資料讓畫面改變
