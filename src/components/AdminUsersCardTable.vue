@@ -59,6 +59,9 @@
   height: 1144px;
   overflow-y: auto;
 }
+.wrapping-users::-webkit-scrollbar {
+  display: none;
+}
 .wrapping-card {
   width: auto;
   height: 370px;
@@ -77,6 +80,7 @@
   overflow: hidden;
 }
 .user-img-picture {
+  background-color: #c4c4c4;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -90,6 +94,7 @@
 }
 
 .user-title-img {
+  background-color: #c4c4c4;
   width: 100%;
   height: 100%;
   object-fit: cover;

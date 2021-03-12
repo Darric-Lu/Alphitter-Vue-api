@@ -12,10 +12,12 @@
 </template>
 
 <style scoped>
-.col-3,
-.col-9 {
+.col-2 {
+  height: 800px;
+}
+.col-10 {
   box-sizing: border-box;
-  height: 1196px;
+  height: 100vh;
 }
 </style>
 
