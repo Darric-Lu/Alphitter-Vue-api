@@ -58,10 +58,10 @@ export default {
   },
   watch: {
     initialTweets(newValue) {
-      this.tweets = {
+      this.tweets = [
         ...this.tweets,
         ...newValue,
-      };
+      ];
     },
   },
   created() {
