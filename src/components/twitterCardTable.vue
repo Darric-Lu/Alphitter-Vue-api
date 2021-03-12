@@ -103,10 +103,6 @@
                   </span>
                 </span>
                 <p class="mt-1">{{ replyDescription }}</p>
-                <!-- <p>
-                  <span class="tweet-info">回覆給</span>
-                  <span class="owner-user">@{{ replyOnwer }}</span>
-                </p> -->
               </div>
             </div>
           </div>
@@ -198,7 +194,7 @@ export default {
       replyOnwerAccount: "",
       replyCreatedAt: "",
       replyDescription: "",
-      // 回復推文
+      // 回覆推文
       currentReply: "",
       //
       presetUserAvatat: "./../assets/addPhoto.svg",
@@ -206,16 +202,16 @@ export default {
   },
   methods: {
     tweetReply(tweetId) {
-      console.log("tweetId:", tweetId);
+      // console.log("tweetId:", tweetId);
       this.$router.push(`/tweets/${tweetId}`);
     },
     usersPage(userId) {
       if (userId === this.currentUser.id) {
         this.$router.push({ name: "user-self" });
-        console.log(userId);
+        // console.log(userId);
       } else {
         this.$router.push(`/user/${userId}`);
-        console.log(userId);
+        // console.log(userId);
       }
     },
     async replyTweetSubmit({ tweetId, currentReply }) {
@@ -245,13 +241,12 @@ export default {
         //成功提示
         PostToast.fire({
           icon: "success",
-          title: "回復成功，enjoy!!",
+          title: "回覆成功，enjoy!!",
         });
 
         console.log(response);
         //以重新整理的方法關閉modal
         setTimeout("location.reload()", 2200);
-        // document.querySelector("#replyTweet").modal("hide");
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -349,14 +344,12 @@ export default {
 }
 .current-user-img {
   position: relative;
-  /* z-index: 999; */
   border-radius: 50%;
   width: 50px;
   height: 50px;
 }
 .modal-reply-post {
   border-style: none;
-  /* padding-left: 14px; */
   margin-left: 20px;
 }
 .tweet-reply {
@@ -401,7 +394,7 @@ export default {
   position: absolute;
   content: "";
   width: 100%;
-  height: 2px; /* cross thickness */
+  height: 2px;
   background-color: #ff6600;
 }
 .close-btn::before {

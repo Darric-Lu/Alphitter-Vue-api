@@ -206,7 +206,7 @@ export default {
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
-        console.log("currentUser:", response);
+        // console.log("currentUser:", response);
         this.currentUser = {
           ...this.currentUser,
           ...response.data,
@@ -220,7 +220,7 @@ export default {
     },
     handleCoverChange(e) {
       const { files } = e.target;
-      console.log("files", files);
+      // console.log("files", files);
       if (files.length === 0) {
         // 使用者沒有選擇上傳的檔案
         this.currentUser.cover = "";
@@ -232,7 +232,7 @@ export default {
     },
     handleAvatarChange(e) {
       const { files } = e.target;
-      console.log("files", files);
+      // console.log("files", files);
       if (files.length === 0) {
         // 使用者沒有選擇上傳的檔案
         this.currentUser.avatar = "";
@@ -257,7 +257,7 @@ export default {
           currentUserId,
           formData,
         });
-        console.log("handlesubmit:", response);
+        // console.log("handlesubmit:", response);
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
@@ -305,9 +305,7 @@ export default {
   width: 140px;
   top: 124px;
   left: 14px;
-  /* z-index: 999; */
   overflow: hidden;
-  /* background: url("../assets/working-with-laptop.svg"); */
   background-color: #999999;
 }
 .avatar-img {
@@ -319,11 +317,6 @@ export default {
   height: auto;
   width: 100%;
 }
-/* .buttongroup {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-} */
 .edit-button {
   background: white;
   border-radius: 50px;
@@ -380,7 +373,7 @@ export default {
   position: absolute;
   content: "";
   width: 100%;
-  height: 2px; /* cross thickness */
+  height: 2px;
   background-color: #ff6600;
 }
 
@@ -403,7 +396,6 @@ export default {
   font-weight: bold;
   width: 90px;
   height: 30px;
-  /* margin: 10px 15px 0 0; */
 }
 .modal-avatar {
   position: absolute;
@@ -413,7 +405,6 @@ export default {
   width: 180px;
   top: 100px;
   left: 20px;
-  /* z-index: 999; */
   overflow: hidden;
   background: url("../assets/working-with-laptop.svg");
   background-color: #999999;

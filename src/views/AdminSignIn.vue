@@ -85,7 +85,7 @@ export default {
           email: this.email,
           password: this.password,
         });
-        console.log(response);
+        // console.log(response);
 
         const { data } = response;
         if (data.status !== "success") {

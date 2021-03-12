@@ -63,7 +63,6 @@
 import Sidebar from "../components/Sidebar";
 import twitterCardTable from "../components/twitterCardTable";
 import RecommendationTable from "../components/RecommendationTable";
-// import { v4 as uuidv4 } from "uuid";
 import tweetsAPI from "../apis/tweets";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
@@ -102,7 +101,6 @@ export default {
     };
   },
   created() {
-    // this.fetchCurrentUser();
     this.fetchMain();
     this.fetchCurrentUser();
     this.fetchRecommendUsers();
@@ -124,7 +122,7 @@ export default {
             icon: "error",
             title: "請勿超過140字數，目前" + this.description.length + "字",
           });
-          console.log("請勿超過140字數");
+          // console.log("請勿超過140字數");
           return;
         }
 
@@ -141,12 +139,12 @@ export default {
 
         //以重新整理的方法關閉modal
         setTimeout("location.reload()", 2200);
-        console.log(
-          "tweet",
-          this.description,
-          "length",
-          this.description.length
-        );
+        // console.log(
+        //   "tweet",
+        //   this.description,
+        //   "length",
+        //   this.description.length
+        // );
       } catch (error) {
         PostToast.fire({
           icon: "error",
@@ -270,7 +268,7 @@ export default {
         console.log("fetchRecommendUsers", response);
 
         this.recommendUsers = [...response.data];
-        console.log("RecommendUsers", this.recommendUsers);
+        // console.log("RecommendUsers", this.recommendUsers);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -301,12 +299,10 @@ export default {
 
 /* 中間 */
 .twitterEditCard {
-  /* border: 1px solid green; */
   width: 100%;
   height: auto;
 }
 .mid-down {
-  /* border: 1px solid black; */
   width: 100%;
   height: auto;
 }
@@ -320,14 +316,6 @@ export default {
   font-weight: bold;
   font-size: 18px;
 }
-/* img { */
-/* position: absolute; */
-/* width: 50px; */
-/* height: 50px; */
-/* border-radius: 50%; */
-/* left: 48%;
-  top: 60px; */
-/* } */
 .textarea {
   display: flex;
 }

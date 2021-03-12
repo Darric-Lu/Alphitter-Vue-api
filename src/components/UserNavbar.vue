@@ -30,9 +30,6 @@ export default {
   width: 100%;
   padding-left: 15px;
   margin-right: 15px;
-  /* border-bottom: 1px solid #e6ecf0; */
-  /* height: 55px;
-  line-height: 55px; */
 }
 .arrow {
   display: flex;

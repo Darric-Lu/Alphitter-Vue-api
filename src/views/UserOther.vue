@@ -60,8 +60,6 @@ import usersAPI from "../apis/users";
 import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 
-// GET api/tweets
-
 export default {
   name: "UserOther",
   components: {
@@ -186,7 +184,7 @@ export default {
           ...this.currentUser,
           ...response.data,
         };
-        console.log("this.currentUser", this.currentUser);
+        // console.log("this.currentUser", this.currentUser);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -197,7 +195,7 @@ export default {
     async fetchOtherUser(userId) {
       try {
         const response = await usersAPI.getUser(userId);
-        console.log(response);
+        // console.log(response);
         this.otherUser = response.data;
         console.log("this.otherUser", this.otherUser);
       } catch (error) {
@@ -210,8 +208,8 @@ export default {
     async fetchOtherUserTweets(userId) {
       try {
         const response = await usersAPI.getUserTweet(userId);
-        console.log("fetchUserself id:", userId);
-        console.log("response", response);
+        // console.log("fetchUserself id:", userId);
+        // console.log("response", response);
         this.tweets = response.data;
       } catch (error) {
         Toast.fire({
@@ -223,8 +221,8 @@ export default {
     async fetchUserLike(userId) {
       try {
         const response = await usersAPI.getUserLikes(userId);
-        console.log("fetchUserLike id:", userId);
-        console.log("response -like ", response);
+        // console.log("fetchUserLike id:", userId);
+        // console.log("response -like ", response);
         this.tweets = response.data;
         //在構築一次
         this.afterGetLike();
@@ -238,8 +236,8 @@ export default {
     async fetchUserRepliedTweets(userId) {
       try {
         const response = await usersAPI.getUserRepliedTweets(userId);
-        console.log("fetchreplied_tweets id:", userId);
-        console.log("response -replied_tweets ", response);
+        // console.log("fetchreplied_tweets id:", userId);
+        // console.log("response -replied_tweets ", response);
         this.tweets = response.data;
         //在構築一次
         // this.afterGetData();
@@ -267,12 +265,12 @@ export default {
     afterClickFollow() {
       // 點了追蹤中之後再次fetch RecommendUsers去更新畫面
       this.fetchRecommendUsers();
-      console.log("after click follow to get recommendUsers again");
-      console.log("after follow someone", this.recommendUsers);
+      // console.log("after click follow to get recommendUsers again");
+      // console.log("after follow someone", this.recommendUsers);
     },
     afterHadleChangeActive(e) {
       //改變Tab的active，且串API時改變中下方資料讓畫面改變
-      console.log("change", e);
+      // console.log("change", e);
       this.tabActive = {
         tweetsArea: "",
         replyTweestArea: "",

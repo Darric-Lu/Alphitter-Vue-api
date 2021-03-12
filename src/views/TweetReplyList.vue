@@ -94,7 +94,8 @@
                 <p>
                   <span class="reply-name"> {{ currentUser.name }}</span>
                   <span class="reply-info"
-                    >@ {{ currentUser.account }} • {{ reply.createdAt | fromNow }}</span
+                    >@ {{ currentUser.account }} •
+                    {{ reply.createdAt | fromNow }}</span
                   >
                 </p>
                 <p class="reply-info">
@@ -199,8 +200,6 @@ import usersAPI from "../apis/users";
 import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 
-// GET api/tweets/:id
-
 export default {
   name: "TweetReplyList",
   mixins: [fromNowFilter],
@@ -211,7 +210,7 @@ export default {
   data() {
     return {
       tweet: {},
-      tweetId: '',
+      tweetId: "",
       likeCount: "",
       repliesLength: "",
       replies: [],
@@ -239,7 +238,7 @@ export default {
   },
   created() {
     const { id: tweetId } = this.$route.params;
-    console.log("tweets/id :", tweetId);
+    // console.log("tweets/id :", tweetId);
     this.fetchTweet(tweetId);
     this.fetchCurrentUser();
     this.fetchRecommendUsers();
@@ -247,9 +246,9 @@ export default {
   methods: {
     async fetchTweet(tweetId) {
       try {
-        console.log("fetchTweet", tweetId);
+        // console.log("fetchTweet", tweetId);
         const response = await tweetsAPI.getSingleTweet(tweetId);
-        console.log(response);
+        // console.log(response);
         this.tweet = response.data;
         this.replies = response.data.Replies;
         this.likeCount = this.tweet.Likes.length;
@@ -322,9 +321,9 @@ export default {
         });
       }
     },
-    sendTweetId(tweetId){
-      this.tweetId = tweetId
-      console.log('sendTweetId:', this.tweetId)
+    sendTweetId(tweetId) {
+      this.tweetId = tweetId;
+      // console.log('sendTweetId:', this.tweetId)
     },
     async replyTweetSubmit({ tweetId, currentReply }) {
       try {
@@ -334,7 +333,7 @@ export default {
             title: "請填寫推文內容",
           });
         }
-        console.log(123);
+        // console.log(123);
         const response = await tweetsAPI.replyTweet({
           tweetId: tweetId,
           comment: currentReply,
@@ -343,7 +342,7 @@ export default {
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
-        console.log(response)
+        console.log(response);
         //以重新整理的方法關閉modal
         setTimeout("location.reload()", 2200);
         // document.querySelector("#replyTweet").modal("hide");

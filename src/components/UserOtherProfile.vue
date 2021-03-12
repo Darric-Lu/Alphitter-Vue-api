@@ -130,8 +130,11 @@ export default {
     async unFollow(id) {
       try {
         const response = await usersAPI.deleteFollowship(id);
-        console.log("follow:", id);
-        console.log(response);
+        // console.log("follow:", id);
+        // console.log(response);
+        if (response.data.status !== "success") {
+          throw new Error(response.data.message);
+        }
         // 通知userother頁面更新旁邊的推薦名單資料
         this.$emit("after-click-follow");
       } catch (error) {
@@ -144,8 +147,8 @@ export default {
     async Follow(id) {
       try {
         const response = await usersAPI.createFollowship({ id: id });
-        console.log("follow:", id);
-        console.log("follow:", response);
+        // console.log("follow:", id);
+        // console.log("follow:", response);
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }
@@ -186,7 +189,6 @@ export default {
   top: 124px;
   left: 14px;
   overflow: hidden;
-  /* background: url("../assets/working-with-laptop.svg"); */
   background-color: #999999;
 }
 .avatar-img {
@@ -306,7 +308,7 @@ export default {
   position: absolute;
   content: "";
   width: 100%;
-  height: 2px; /* cross thickness */
+  height: 2px;
   background-color: #ff6600;
 }
 
@@ -329,7 +331,6 @@ export default {
   font-weight: bold;
   width: 64px;
   height: 30px;
-  /* margin: 10px 15px 0 0; */
 }
 .modal-avatar {
   position: absolute;
@@ -339,7 +340,6 @@ export default {
   width: 180px;
   top: 100px;
   left: 20px;
-  /* z-index: 999; */
   overflow: hidden;
   background: url("../assets/working-with-laptop.svg");
   background-color: #999999;

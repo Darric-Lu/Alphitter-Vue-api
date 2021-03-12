@@ -190,12 +190,12 @@ export default {
 
         //以重新整理的方法關閉modal
         setTimeout("location.reload()", 2200);
-        console.log(
-          "tweet",
-          this.description,
-          "length",
-          this.description.length
-        );
+        // console.log(
+        //   "tweet",
+        //   this.description,
+        //   "length",
+        //   this.description.length
+        // );
       } catch (error) {
         PostToast.fire({
           icon: "error",

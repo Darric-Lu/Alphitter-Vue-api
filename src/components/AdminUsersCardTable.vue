@@ -34,8 +34,6 @@
           </p>
         </div>
       </div>
-
-      <!-- <div class="col-12 col-md-6 col-lg-4 col-xl-3">9</div> -->
     </div>
   </div>
 </template>
@@ -43,7 +41,6 @@
 <style scoped>
 * {
   box-sizing: border-box;
-  /* border: 1px black solid; */
 }
 .wrapping {
   height: 1200px;
@@ -58,7 +55,6 @@
 .wrapping-users {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  /* grid-template-rows: repeat(auto-fit, minmax(360px, 1fr)); */
   grid-gap: 15px;
   height: 1144px;
   overflow-y: auto;
@@ -119,13 +115,6 @@
 .bold {
   font-weight: 900;
 }
-/* @media screen and (max-width: 657px) {
-  .user-img {
-    width: 12rem;
-    height: 12rem;
-    top: 40%;
-  }
-} */
 </style>
 
 <script>
@@ -134,8 +123,8 @@ export default {
   props: {
     users: {
       type: Array,
-      require: true
-    }
-  }
+      require: true,
+    },
+  },
 };
 </script>

@@ -123,7 +123,6 @@ import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
-//指搞定首頁的串接 功能都還沒...
 export default {
   name: "RecommendationTable",
   props: {
@@ -141,7 +140,6 @@ export default {
   data() {
     return {
       recommendUsers: [...this.initialRecommendUsers],
-      // followings: [],
       noneAvatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
     };
   },
@@ -164,7 +162,7 @@ export default {
     async unFollow(id) {
       try {
         const response = await usersAPI.deleteFollowship(id);
-        console.log("follow:", id);
+        // console.log("follow:", id);
         console.log(response);
         this.recommendUsers = this.recommendUsers.map((user) => {
           if (user.id === id) {
@@ -185,10 +183,10 @@ export default {
     },
     async Follow(id) {
       try {
-        const response = await usersAPI.createFollowship({id:id});
-        console.log("follow:", id);
-        console.log('follow:', response);
-        console.log(typeof id)
+        const response = await usersAPI.createFollowship({ id: id });
+        // console.log("follow:", id);
+        // console.log('follow:', response);
+        // console.log(typeof id)
         if (response.data.status !== "success") {
           throw new Error(response.data.message);
         }

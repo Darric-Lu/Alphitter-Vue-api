@@ -97,7 +97,7 @@ export default {
   created() {
     this.fetchRecommendUsers();
     this.fetchCurrentUser();
-    console.log("crate-id", this.currentUser.id);
+    // console.log("crate-id", this.currentUser.id);
     // const { id: currentUserId } = this.$route.params;
     // console.log("currentUserId", currentUserId);
     // this.fetchUserself();
@@ -174,7 +174,7 @@ export default {
       }
     },
     async fetchUserself(id) {
-      console.log("id", this.currentUser.id);
+      // console.log("id", this.currentUser.id);
       try {
         const response = await usersAPI.getUserTweet(id);
         // console.log("fetchUserself id:", currentUserId);
@@ -190,8 +190,8 @@ export default {
     async fetchUserLike(currentUserId) {
       try {
         const response = await usersAPI.getUserLikes(currentUserId);
-        console.log("fetchUserLike id:", currentUserId);
-        console.log("response -like ", response);
+        // console.log("fetchUserLike id:", currentUserId);
+        // console.log("response -like ", response);
         this.tweets = response.data;
         //在構築一次
         this.afterGetLike();
@@ -205,8 +205,8 @@ export default {
     async fetchUserRepliedTweets(currentUserId) {
       try {
         const response = await usersAPI.getUserRepliedTweets(currentUserId);
-        console.log("fetchreplied_tweets id:", currentUserId);
-        console.log("response -replied_tweets ", response);
+        // console.log("fetchreplied_tweets id:", currentUserId);
+        // console.log("response -replied_tweets ", response);
         this.tweets = response.data;
         //在構築一次
         // this.afterGetData();
@@ -234,12 +234,12 @@ export default {
     afterClickFollow() {
       // 點了追蹤中之後再次fetch currentuser去更新畫面
       this.fetchCurrentUser();
-      console.log("after click follow to get currentuser again");
-      console.log("after follow someone", this.currentUser);
+      // console.log("after click follow to get currentuser again");
+      // console.log("after follow someone", this.currentUser);
     },
     afterHadleChangeActive(e) {
       //改變Tab的active，且串API時改變中下方資料讓畫面改變
-      console.log("change", e);
+      // console.log("change", e);
       this.tabActive = {
         tweetsArea: "",
         replyTweestArea: "",
@@ -283,24 +283,14 @@ export default {
 
 <style scoped>
 .col-2 {
-  /* position: sticky; */
-  /* top: 0; */
-  /* left: 0; */
-  /* box-sizing: border-box; */
   /*好像一定要有 */
   height: 800px;
 }
-/* .col-4 {
-  position: sticky;
-  top: 0;
-  right: 0;
-} */
 .mid-col {
   overflow-y: scroll;
   height: 100vh;
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
-  /* height: auto; */
 }
 .mid-col::-webkit-scrollbar {
   display: none;
@@ -309,8 +299,6 @@ export default {
   height: fit-content;
 }
 .mid-down {
-  /* border: 1px solid black; */
   width: 100%;
-  /* height: auto; */
 }
 </style>

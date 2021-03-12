@@ -107,6 +107,7 @@ router.beforeEach(async (to, from, next) => {
   // 如果有token的話才驗證
   if (token) {
     // 取得驗證成功與否
+    // 使用dispatch呼叫vuex內的actions
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
 
@@ -126,7 +127,5 @@ router.beforeEach(async (to, from, next) => {
   // 如果token有效則轉址到餐廳首頁
   next()
 })
-// 使用dispatch呼叫vuex內的actions
-
 
 export default router

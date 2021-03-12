@@ -139,10 +139,10 @@ export default {
           password: this.password,
           checkPassword: this.checkPassword,
         });
-        console.log(response);
+        // console.log(response);
 
         const { data } = response;
-        console.log({ data });
+        // console.log({ data });
         if (data.status !== "success") {
           throw new Error(data.message);
         }

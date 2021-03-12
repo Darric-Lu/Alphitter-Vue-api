@@ -27,11 +27,6 @@
 </template>
 
 <style scoped>
-/* .tab {
-  display: flex;
-  justify-content: space-around;
-  width: 390px;
-} */
 .tab-link {
   display: flex;
   justify-content: center;
