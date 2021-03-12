@@ -31,6 +31,7 @@
         </div>
         <div
           class="delete-btn"
+          :title="tweet.id"
           @click.stop.prevent="deleteTweet(tweet.id)"
         ></div>
       </div>
@@ -53,7 +54,7 @@ export default {
   },
   data() {
     return {
-      tweets: this.initialTweets,
+      tweets: [],
     };
   },
   watch: {
@@ -64,16 +65,24 @@ export default {
       };
     },
   },
+  created() {
+    this.tweets = this.initialTweets.filter((e) => {
+      return e;
+    });
+  },
   methods: {
     async deleteTweet(tweetId) {
       try {
-        const response = await adminAPI.deleteAdminTweet(tweetId);
+        const { data } = await adminAPI.deleteAdminTweet(tweetId);
 
-        if (response.data.status !== "success") {
-          throw Error(response.data.message);
+        if (data.status !== "success") {
+          throw Error(data.message);
         }
 
-        this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
+        this.tweets = this.tweets.filter((tweet) => {
+          return tweet.id !== tweetId;
+        });
+
         Toast.fire({
           icon: "success",
           title: "You delete this tweet successfully!",
@@ -95,18 +104,23 @@ export default {
   box-sizing: border-box;
 }
 .wrapping {
-  height: 1200px;
-  border: 1px solid #e6ecf0;
+  height: 100vh;
+  /* border: 1px solid #e6ecf0; */
   box-sizing: border-box;
 }
 .wrapping-tweets {
-  height: 1144px;
+  height: 100vw;
   overflow-y: auto;
+  border-right: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+}
+.wrapping-tweets::-webkit-scrollbar {
+  display: none;
 }
 .twitter-title {
   line-height: 55px;
   padding-left: 26.5px;
-  border-bottom: 1px solid #e6ecf0;
+  border: 1px solid #e6ecf0;
 }
 .tweet {
   position: relative;

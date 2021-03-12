@@ -36,14 +36,16 @@
         </div>
       </div>
     </router-link>
-    <div class="mt-auto">
+    <div class="mt-auto sign-out">
       <router-link :to="{ name: 'admin-users' }" class="nav-link">
         <div class="logout row mt-3 d-flex justify-content-center">
           <div class="logout-icon col-2">
             <font-awesome-icon icon="sign-in-alt" />
           </div>
-          <div class="userCard-content col-8 d-none d-md-block" 
-          @click.stop.prevent="logout">
+          <div
+            class="userCard-content col-8 d-none d-md-block"
+            @click.stop.prevent="logout"
+          >
             <p>登出</p>
           </div>
         </div>
@@ -54,7 +56,7 @@
 
 <style scoped>
 .wrapping {
-  height: 1200px;
+  height: 800px;
   box-sizing: border-box;
 }
 .twitter-icon {
@@ -82,6 +84,10 @@
 .active {
   color: #ff6600;
 }
+.sign-out {
+  position: fixed;
+  bottom: 20px;
+}
 </style> 
 
 <script>
@@ -101,6 +107,6 @@ export default {
       this.$store.commit("revokeAuthentication");
       this.$router.push("/admin/signin");
     },
-  }
+  },
 };
 </script>
