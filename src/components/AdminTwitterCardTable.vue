@@ -2,34 +2,6 @@
   <div class="wrapping">
     <div class="twitter-title fw-bold">推文清單</div>
     <div class="wrapping-tweets">
-      <!-- 原始Tweet -->
-      <!-- <div class="tweet d-flex">
-        <div class="tweet-img">
-          <img
-            class="tweet-img-user"
-            src="../assets/Icon.svg"
-            alt="ALPHAcamp logo"
-          />
-        </div>
-        <div class="tweet-content">
-          <div class="tweet-content-info">
-            <span>
-              <span class="tweet-content-name">ALPHAcamp</span>
-              <span class="tweet-content-account">@ac</span>‧
-              <span class="tweet-content-time">3小時前</span>
-            </span>
-            <p>
-              Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis
-              ullamco cillum dolor. Voluptate exercitation incididunt aliquip
-              deserunt reprehenderit elit laborum.
-            </p>
-          </div>
-        </div>
-        <div class="delete-btn">
-          <a type="button"> </a>
-        </div>
-      </div> -->
-      <!--  -->
       <div v-for="tweet in tweets" :key="tweet.id" class="tweet d-flex">
         <div class="tweet-img">
           <img
@@ -49,7 +21,7 @@
               >
               ‧
               <span class="tweet-content-time">{{
-                tweet.User ? tweet.User.updatedAt : "未顯示"
+                tweet.User ? tweet.User.updatedAt : "未顯示" | fromNow
               }}</span>
             </span>
           </div>
@@ -67,46 +39,45 @@
 </template>
 
 <script>
-// import Swal from "sweetalert2";
+import { fromNowFilter } from "./../utils/mixins";
 import { Toast } from "../utils/helpers";
-import adminAPI from "../apis/admin"
+import adminAPI from "../apis/admin";
 
 export default {
+  mixins: [fromNowFilter],
   props: {
-    tweets: {
+    initialTweets: {
       type: Array,
       require: true,
     },
   },
-  // data() {
-  //   return {
-  //     tweets: this.initialTweets
-  //   }
-  // },
+  data() {
+    return {
+      tweets: this.initialTweets,
+    };
+  },
+  watch: {
+    initialTweets(newValue) {
+      this.tweets = {
+        ...this.tweets,
+        ...newValue,
+      };
+    },
+  },
   methods: {
     async deleteTweet(tweetId) {
       try {
-        const response = await adminAPI.deleteAdminTweet(tweetId)
+        const response = await adminAPI.deleteAdminTweet(tweetId);
 
-        if(response.data.status !== 'success') {
-          throw Error(response.data.message)
+        if (response.data.status !== "success") {
+          throw Error(response.data.message);
         }
 
         this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
-        // Swal.fire({
-        //   title: "Are you sure?",
-        //   text: "You won't be able to revert this!",
-        //   icon: "warning",
-        //   showCancelButton: true,
-        //   confirmButtonColor: "#3085d6",
-        //   cancelButtonColor: "#d33",
-        //   confirmButtonText: "Yes, delete it!",
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        //     this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
-        //   }
-        // });
+        Toast.fire({
+          icon: "success",
+          title: "You delete this tweet successfully!",
+        });
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -122,7 +93,6 @@ export default {
 <style scoped>
 * {
   box-sizing: border-box;
-  /* border: 1px black solid; */
 }
 .wrapping {
   height: 1200px;
@@ -189,7 +159,7 @@ export default {
   position: absolute;
   content: "";
   width: 100%;
-  height: 1px; /* cross thickness */
+  height: 1px;
   background-color: black;
 }
 

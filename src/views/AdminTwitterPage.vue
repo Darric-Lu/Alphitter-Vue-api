@@ -5,7 +5,7 @@
         <AdminSideBar :active="active" />
       </div>
       <div class="col-10">
-        <AdminTwitterCardTable :tweets="tweets"/>
+        <AdminTwitterCardTable :initial-tweets="tweets" />
       </div>
     </div>
   </div>
@@ -14,8 +14,6 @@
 <style scoped>
 .col-3,
 .col-9 {
-  /* border: 0.2rem black solid;
-  background-color: rgb(255, 255, 255); */
   box-sizing: border-box;
   height: 1196px;
 }
@@ -24,8 +22,8 @@
 <script>
 import AdminSideBar from "../components/AdminSideBar";
 import AdminTwitterCardTable from "../components/AdminTwitterCardTable";
-import adminAPI from "../apis/admin"
-import { Toast } from "../utils/helpers"
+import adminAPI from "../apis/admin";
+import { Toast } from "../utils/helpers";
 
 export default {
   name: "AdminTwitterPage",
@@ -43,21 +41,21 @@ export default {
     };
   },
   created() {
-    this.fetchAllTweets()
+    this.fetchAllTweets();
   },
   methods: {
     async fetchAllTweets() {
       try {
-        const response = await adminAPI.getAdminTweets()
-        console.log(response)
-        this.tweets = response.data      
-      } catch(error) {
+        const response = await adminAPI.getAdminTweets();
+        // console.log(response);
+        this.tweets = response.data;
+      } catch (error) {
         Toast.fire({
-          icon:"error",
-          title: "無法拿到資料捏，請稍後再試～"
-        })
+          icon: "error",
+          title: "無法拿到資料捏，請稍後再試～",
+        });
       }
-    }
-  }
+    },
+  },
 };
 </script>
