@@ -32,7 +32,10 @@
         </div>
         <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable 在小於md時消失 -->
-          <RecommendationTable :initial-recommend-users="recommendUsers" @after-click-follow="afterClickFollow"/>
+          <RecommendationTable
+            :initial-recommend-users="recommendUsers"
+            @after-click-follow="afterClickFollow"
+          />
         </div>
       </div>
     </div>
@@ -230,9 +233,9 @@ export default {
     },
     afterClickFollow() {
       // 點了追蹤中之後再次fetch currentuser去更新畫面
-      this.fetchCurrentUser()
-      console.log('after click follow to get currentuser again')
-      console.log('after follow someone', this.currentUser)
+      this.fetchCurrentUser();
+      console.log("after click follow to get currentuser again");
+      console.log("after follow someone", this.currentUser);
     },
     afterHadleChangeActive(e) {
       //改變Tab的active，且串API時改變中下方資料讓畫面改變
@@ -308,6 +311,6 @@ export default {
 .mid-down {
   /* border: 1px solid black; */
   width: 100%;
-  height: auto;
+  /* height: auto; */
 }
 </style>

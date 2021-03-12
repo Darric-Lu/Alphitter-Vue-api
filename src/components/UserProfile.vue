@@ -30,7 +30,7 @@
       <div class="name-text">
         <span class="name-content">{{ currentUser.name }}</span>
         <span class="name-account">@{{ currentUser.account }}</span>
-        <div class="mt-3">
+        <div class="mt-3 user-introduction">
           {{ currentUser.introduction }}
         </div>
         <div class="follow mt-2">
@@ -316,7 +316,7 @@ export default {
   object-fit: cover;
 }
 .information {
-  height: 200px;
+  height: auto;
   width: 100%;
 }
 /* .buttongroup {
