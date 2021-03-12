@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-8 px-0 mid-col">
           <!-- 中間在小於md時 顯示全寬10/12 -->
           <!-- UserNavbar -->
-          <UserNavbar :currentUser="currentUser" />
+          <UserNavbar :currentUser="user" />
           <div class="follower-table">
             <!-- FollowersTable -->
             <FollowersTable :initial-followers="followers" />
@@ -61,6 +61,7 @@ export default {
       },
       recommendUsers: [],
       followers: [],
+      user: {},
     };
   },
   created() {
@@ -68,12 +69,13 @@ export default {
     this.fetchRecommendUsers();
     const { id: userId } = this.$route.params;
     this.fetchFollower(userId);
+    this.fetchUser(userId);
   },
   methods: {
     async fetchCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();
-        console.log("currentUser:", response);
+        // console.log("currentUser:", response);
         this.currentUser = {
           ...this.currentUser,
           ...response.data,
@@ -85,10 +87,22 @@ export default {
         });
       }
     },
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUser(userId);
+        // console.log("getuser:", response);
+        this.user = response.data;
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料，請稍後再試～",
+        });
+      }
+    },
     async fetchFollower(userId) {
       try {
         const response = await usersAPI.getUserFollower(userId);
-        console.log("fetchFollower", response);
+        // console.log("fetchFollower", response);
         this.followers = response.data;
       } catch (error) {
         Toast.fire({
@@ -100,10 +114,10 @@ export default {
     async fetchRecommendUsers() {
       try {
         const response = await usersAPI.getTopUsers();
-        console.log("fetchRecommendUsers", response);
+        // console.log("fetchRecommendUsers", response);
 
         this.recommendUsers = [...response.data];
-        console.log("RecommendUsers", this.recommendUsers);
+        // console.log("RecommendUsers", this.recommendUsers);
       } catch (error) {
         Toast.fire({
           icon: "error",
