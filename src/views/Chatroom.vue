@@ -7,11 +7,15 @@
       </div>
       <div class="row col-10 px-0">
         <!-- 中間上線名單包含chatlog  顯示全寬10/12-->
-        <div class="col-4 col-lg-4 d-none d-lg-block px-0 mid-col">
-          <!-- 中間在小於md時消失 -->
-          <div class="onlineList"></div>
+        <!-- <div class="col-4 col-lg-4 d-none d-lg-block px-0 mid-col"> -->
+        <!-- 中間在小於md時消失 -->
+        <div class="col-12 col-md-4 mid-col onlineList-wrapping px-0">
+          <div class="onlineList-title">
+            <span class="onlineList-title-word">上線使用者(5)</span>
+          </div>
+          <div class="onlineList-users"></div>
         </div>
-        <div class="col-8 right-col">
+        <div class="col-12 col-md-8 right-col chatlog-wrapping px-0">
           <!-- Chatlog -->
           <Chatlog />
         </div>
@@ -34,9 +38,6 @@ export default {
   data() {
     return {
       active: {
-        home: "row",
-        self: "row",
-        setting: "row",
         chatroom: "active",
       },
       currentUser: {
@@ -77,22 +78,38 @@ export default {
 <style scoped>
 .col-2 {
   /* border: 1px solid black; */
-  height: 1196px;
+  height: 100vh;
 }
 .col-10 {
   /* border: 1px solid blue; */
-  height: 1196px;
+  height: 100vh;
 }
-.col-8 {
-  border: 1px solid green;
-  height: 1196px;
+.onlineList-wrapping {
+  border-left: 1px #e6ecf0 solid;
+  border-right: 1px #e6ecf0 solid;
+  border-bottom: 1px #e6ecf0 solid;
+  height: 25vh;
 }
-.col-lg-8 {
-  /* border: 1px solid red; */
-  height: 1196px;
+.chatlog-wrapping {
+  border-left: 1px #e6ecf0 solid;
+  border-right: 1px #e6ecf0 solid;
+  height: 75vh;
 }
-.col-4 {
-  border: 1px solid purple;
-  height: 1196px;
+@media (min-width: 768px) {
+  .onlineList-wrapping {
+    border-right: 0;
+    height: 100vh;
+  }
+  .chatlog-wrapping {
+    height: 100vh;
+  }
+}
+
+/* onlineList css */
+.onlineList-title {
+  height: 55px;
+  line-height: 55px;
+  border-bottom: 1px #e6ecf0 solid;
+  padding: 0 0 0 15px;
 }
 </style>

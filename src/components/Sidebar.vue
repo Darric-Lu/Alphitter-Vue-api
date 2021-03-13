@@ -172,9 +172,6 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
   },
-  created() {
-    console.log("actvie", this.active);
-  },
   methods: {
     async newTweetSubmit() {
       try {

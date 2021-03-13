@@ -1,87 +1,208 @@
 <template>
-  <div class="container">
+  <div class="wrapping d-flex flex-column px-0">
     <div class="title">公開聊天室</div>
-    <div class="dialogue">
-      <div class="user remote">
-        <div class="avatar">
-          <div class="pic">
-            <img
-              src="https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg"
-              alt=""
-            />
+    <div class="dialogue d-flex flex-column-reverse">
+      <div
+        class="message-data"
+        :class="data.massegeOwner"
+        v-for="data in datas"
+        :key="data.id"
+      >
+        <div class="avatar-area">
+          <div class="avatar">
+            <img class="avatar-img" :src="data.User.avatar" alt="使用者照片" />
           </div>
         </div>
-        <div class="txt">
-          這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！
+        <div class="text">
+          <div class="text-content">
+            {{ data.content }}
+          </div>
+          <div class="text-time">{{ data.createdAt | fromNow }}</div>
         </div>
       </div>
-      <div class="user local">
-        <div class="txt">沒錯！爆肝小組再爆兩天也是OK的！</div>
-      </div>
-      <div class="typearea row">
-        <div class="typing-area col-10">
-          <input type="text" placeholder="輸入訊息...">
+    </div>
+    <div class="footer-space"></div>
+    <div class="footer">
+      <div class="row px-3">
+        <div class="col-10 typing-area px-0">
+          <input type="text" placeholder="輸入訊息..." />
         </div>
-        <div class="enterButton col-2">
-          <button>enter</button>
+        <div
+          class="col-2 enter-button d-flex justify-content-center align-items-center px-0"
+        >
+          <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
+          <!-- <div>enter</div> -->
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<script>
+import { fromNowFilter } from "./../utils/mixins";
+
+const dummyMessage = [
+  {
+    id: 1,
+    content: "沒錯！爆肝小組再爆兩天也是OK的！！",
+    createdAt: "2021-03-08T07:23:25.000Z",
+    User: {
+      name: "Darric",
+      avatar:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
+    },
+    massegeOwner: "self",
+  },
+  {
+    id: 2,
+    content:
+      "這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！",
+    createdAt: "2021-03-08T15:23:25.000Z",
+    User: {
+      name: "Claire",
+      avatar:
+        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
+    },
+    massegeOwner: "other",
+  },
+];
+
+export default {
+  name: "chatlog",
+  mixins: [fromNowFilter],
+  data() {
+    return {
+      datas: [],
+    };
+  },
+  created() {
+    this.fetchData();
+    console.log("dummyMessage", dummyMessage);
+    console.log(this.datas);
+  },
+  methods: {
+    fetchData() {
+      this.datas = [...dummyMessage];
+    },
+  },
+};
+</script>
+
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+.wrapping {
+  position: relative;
+  height: 100%;
+}
 .title {
-  padding: 20px;
-  border: 1px solid #e6ecf0;
+  height: 55px;
+  line-height: 55px;
+  padding: 0 0 0 20px;
+  border-bottom: 1px solid #e6ecf0;
 }
 .dialogue {
+  overflow-y: scroll;
   width: auto;
-  height: 600px;
-  display: flex;
+  height: 90%;
+  /* display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-end; */
+  padding: 0 16px;
 }
-.user {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 20px;
+.dialogue::-webkit-scrollbar {
+  display: none;
 }
-.local {
-  justify-content: flex-end;
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  line-height: 20px;
+  border-top: 1px #e6ecf0 solid;
+  width: 100%;
 }
-.user .avatar {
+.footer-space {
+  height: 50px;
+  width: 100%;
+}
+.enter-button-icon {
+  font-size: 30px;
+}
+input[type="text"] {
+  margin: 10px;
+  padding: 5px 15px;
+  background: #ccc;
+  border: 0 none;
+  cursor: pointer;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  width: 100%;
+}
+.avatar {
   width: 40px;
-  text-align: center;
-  flex-shrink: 0;
-  align-items: flex-end;
-}
-.user .pic {
+  height: 40px;
   border-radius: 50%;
   overflow: hidden;
 }
-.user .pic img {
+.avatar-img {
   width: 100%;
-  vertical-align: middle;
+  height: 100%;
+  object-fit: cover;
 }
-.user .txt {
+
+.other {
+  display: flex;
+}
+.other > .avatar-area {
+  width: 50px;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-bottom: 14px;
+}
+.other > .text {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
   padding: 10px;
 }
-.remote .txt {
-  margin-left: 10px;
-  margin-right: 70px;
+.other > .text > .text-content {
+  width: 100%;
+  padding: 15px;
+  background-color: #e6ecf0;
   border-radius: 25px 25px 25px 0px;
-  background: #e6ecf0;
 }
-.local .txt {
-  margin-right: 10px;
-  margin-left: 70px;
-  order: -1;
+.other > .text > .text-time {
+  font-weight: 500;
+  font-size: 14px;
+  height: 14px;
+}
+.self {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.self > .avatar-area {
+  width: 0px;
+}
+.self > .avatar-area > .avatar {
+  display: none;
+}
+.self > .text {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 10px;
+}
+.self > .text > .text-content {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff6600;
+  color: #fff;
   border-radius: 25px 25px 0px 25px;
-  background: #ff6600;
-  color: white;
 }
-.typearea .typing-area {
-  width: auto;
+.self > .text > .text-time {
+  font-weight: 500;
+  font-size: 14px;
+  height: 14px;
 }
 </style>
