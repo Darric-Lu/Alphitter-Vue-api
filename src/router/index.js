@@ -11,6 +11,7 @@ import Userself from '../views/Userself.vue'
 // import UserselfFollower from '../views/UserselfFollower.vue'
 // import UserselfFollowing from '../views/UserselfFollowing.vue'
 import UserOther from '../views/UserOther.vue'
+import Chatroom from '../views/Chatroom'
 import store from '../store'
 // import { component } from 'vue/types/umd'
 
@@ -86,6 +87,11 @@ const routes = [
     path: '/user/:id',
     name: 'user-other',
     component: UserOther
+  },
+  {
+    path: '/chatroom',
+    name: 'chatroom',
+    component: Chatroom
   },
   {
     path: '*',
