@@ -69,9 +69,7 @@ export default {
     return {
       tweets: [],
       active: {
-        home: "row",
         self: "active",
-        setting: "row",
       },
       tabActive: {
         tweetsArea: "active",

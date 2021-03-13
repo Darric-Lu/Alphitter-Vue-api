@@ -83,8 +83,8 @@ export default {
       tweets: [],
       active: {
         home: "active",
-        self: "row",
-        setting: "row",
+        // self: "row",
+        // setting: "row",
       },
       currentUser: {
         id: "",

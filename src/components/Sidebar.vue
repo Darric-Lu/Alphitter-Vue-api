@@ -27,6 +27,21 @@
         </div>
       </div>
     </router-link>
+    <!-- 公開聊天室 -->
+    <router-link :to="{ name: 'chatroom' }" class="nav-link">
+      <div
+        class="twitter row mt-4 d-flex justify-content-center"
+        :class="active.chatroom"
+      >
+        <div class="twitter-icon col-2">
+          <div class="notice-point" v-show="!active.chatroom"></div>
+          <font-awesome-icon icon="envelope" />
+        </div>
+        <div class="nav-content col-8 d-none d-md-block">
+          <p>公開聊天室</p>
+        </div>
+      </div>
+    </router-link>
     <!-- 個人資料 -->
     <router-link :to="{ name: 'user-self' }" class="nav-link">
       <div
@@ -41,7 +56,7 @@
         </div>
       </div>
     </router-link>
-    <!-- 個人資料 -->
+    <!-- 設定 -->
     <router-link :to="{ name: 'setting' }" class="nav-link">
       <div
         class="twitter row mt-4 d-flex justify-content-center"
@@ -145,6 +160,7 @@ export default {
         home: "",
         self: "",
         setting: "",
+        chatroom: "",
       }),
     },
   },
@@ -155,6 +171,9 @@ export default {
   },
   computed: {
     ...mapState(["currentUser"]),
+  },
+  created() {
+    console.log("actvie", this.active);
   },
   methods: {
     async newTweetSubmit() {
@@ -281,5 +300,13 @@ textarea {
 }
 .modal-footer {
   border-style: none;
+}
+.notice-point {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgb(255, 0, 0);
+  position: absolute;
+  right: -1px;
 }
 </style>

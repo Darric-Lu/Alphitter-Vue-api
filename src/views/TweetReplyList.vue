@@ -214,11 +214,7 @@ export default {
       likeCount: "",
       repliesLength: "",
       replies: [],
-      active: {
-        home: "row",
-        self: "row",
-        setting: "row",
-      },
+      active: {},
       currentUser: {
         id: "",
         account: "",

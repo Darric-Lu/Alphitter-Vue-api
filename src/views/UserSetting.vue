@@ -113,8 +113,6 @@ export default {
       password: "",
       checkPassword: "",
       active: {
-        home: "row",
-        self: "row",
         setting: "active",
       },
       isProcessing: false,

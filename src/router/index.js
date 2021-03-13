@@ -84,14 +84,14 @@ const routes = [
     component: () => import('../views/UserFollowing.vue')
   },
   {
+    path: '/user/chatroom',
+    name: 'chatroom',
+    component: Chatroom
+  },
+  {
     path: '/user/:id',
     name: 'user-other',
     component: UserOther
-  },
-  {
-    path: '/chatroom',
-    name: 'chatroom',
-    component: Chatroom
   },
   {
     path: '*',

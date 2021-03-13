@@ -42,9 +42,9 @@
         </div>
         <div class="col-4 d-none d-lg-block right-col">
           <!-- Recommendationtable 在小於md時消失 -->
-          <RecommendationTable 
-          :initial-recommend-users="recommendUsers" 
-          @after-click-follow="afterClickFollow"
+          <RecommendationTable
+            :initial-recommend-users="recommendUsers"
+            @after-click-follow="afterClickFollow"
           />
         </div>
       </div>
@@ -76,11 +76,7 @@ export default {
   data() {
     return {
       tweets: [],
-      active: {
-        home: "row",
-        self: "row",
-        setting: "row",
-      },
+      active: {},
       tabActive: {
         tweetsArea: "active",
         replyTweestArea: "",

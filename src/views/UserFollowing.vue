@@ -45,11 +45,7 @@ export default {
   },
   data() {
     return {
-      active: {
-        home: "row",
-        self: "row",
-        setting: "row",
-      },
+      active: {},
       currentUser: {
         id: "",
         account: "",
