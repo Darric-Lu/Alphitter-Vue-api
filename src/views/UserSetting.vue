@@ -148,6 +148,7 @@ export default {
             icon: "error",
             title: "密碼要打一樣唷～",
           });
+          this.isProcessing = false;
           return;
         }
         // 建立FormData
