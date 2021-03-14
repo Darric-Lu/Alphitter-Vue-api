@@ -3,8 +3,7 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar 
-        :active="active" :currentUser="currentUser" />
+        <Sidebar :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <!-- 中間上線名單包含chatlog  顯示全寬10/12-->
@@ -12,7 +11,9 @@
         <!-- 中間在小於md時消失 -->
         <div class="col-12 col-md-4 mid-col onlineList-wrapping px-0">
           <div class="onlineList-title">
-            <span class="onlineList-title-word">上線使用者(5)</span>
+            <span class="onlineList-title-word"
+              >上線使用者({{ onlineUsers.length }})</span
+            >
           </div>
           <div class="onlineList-users">
             <div
