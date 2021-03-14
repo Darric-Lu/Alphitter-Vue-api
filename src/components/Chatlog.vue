@@ -43,8 +43,6 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import { mapState } from "vuex";
-import { io } from "socket.io-client";
-const socket = io("https://serene-tor-37529.herokuapp.com/");
 
 const dummyMessage = [
   {
@@ -93,8 +91,13 @@ export default {
     fetchData() {
       this.datas = [...dummyMessage];
     },
+    // 連接socket
+    connect() {
+      this.$socket.open() // 開始連接socket
+    },
     send() {
-      socket.emit("publicMessage", {
+      // 要用this.$socket
+      this.$socket.emit("publicMessage", {
         id: this.currentUser.id,
         msg: this.text,
       });
@@ -104,13 +107,10 @@ export default {
     },
   },
   sockets: {
-    connect() {
-      console.log("connect");
-    },
     publicMessage(data) {
       console.log('data:', data)
     }
-  },
+  }
 };
 </script>
 

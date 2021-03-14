@@ -44,9 +44,6 @@
 </template>
 
 <script>
-// import { io } from "socket.io-client";
-// const socket = io("https://serene-tor-37529.herokuapp.com/");
-
 
 const dummyData = [
   {
@@ -119,9 +116,6 @@ export default {
   created() {
     this.fetchCurrentUser();
     this.fetchOnlineUsers();
-    // const currentUserName = this.currentUser.name
-    // console.log('created:', currentUserName)
-    // this.enterChatroom(currentUserName)
   },
   methods: {
     async fetchCurrentUser() {
