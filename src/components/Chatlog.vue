@@ -25,7 +25,12 @@
     <div class="footer">
       <div class="row px-3">
         <div class="col-10 typing-area px-0">
-          <input type="text" placeholder="輸入訊息..." v-model="text" @keyup.enter="send"/>
+          <input
+            type="text"
+            placeholder="輸入訊息..."
+            v-model="text"
+            @keyup.enter="send"
+          />
         </div>
         <div
           class="col-2 enter-button d-flex justify-content-center align-items-center px-0"
@@ -56,16 +61,12 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
   },
-  created() {
-    
-  },
-  watch: {
-
-  },
+  created() {},
+  watch: {},
   methods: {
     // 連接socket
     connect() {
-      this.$socket.open() // 開始連接socket
+      this.$socket.open(); // 開始連接socket
     },
     send() {
       // 要用this.$socket
@@ -82,17 +83,17 @@ export default {
   sockets: {
     publicMessage(data) {
       if (data.id === this.currentUser.id) {
-        data.messageOwner = "self"
-        console.log('aftersend:', data)
-        this.datas.unshift(data)
+        data.messageOwner = "self";
+        console.log("aftersend:", data);
+        this.datas.unshift(data);
       } else {
-        data.messageOwner = "other"
-        console.log('aftersend:', data)
-        this.datas.unshift(data)
+        data.messageOwner = "other";
+        console.log("aftersend:", data);
+        this.datas.unshift(data);
       }
-      console.log('data:', this.datas)
-    }
-  }
+      console.log("data:", this.datas);
+    },
+  },
 };
 </script>
 
@@ -189,6 +190,7 @@ button {
   font-weight: 500;
   font-size: 14px;
   height: 14px;
+  margin: 0 0 0 8px;
 }
 .self {
   display: flex;
@@ -217,5 +219,7 @@ button {
   font-weight: 500;
   font-size: 14px;
   height: 14px;
+  text-align: right;
+  margin: 0 8px 0 0;
 }
 </style>
