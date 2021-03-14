@@ -7,6 +7,9 @@ export const fromNowFilter = {
     },
     postTime(dateTime) {
       return dateTime ? moment(dateTime).format('lll') : '-'
+    },
+    chatTime(dateTime) {
+      return dateTime ? moment(dateTime).format('LT') : '-'
     }
   },
 }

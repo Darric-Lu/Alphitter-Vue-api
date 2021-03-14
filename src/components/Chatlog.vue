@@ -4,20 +4,20 @@
     <div class="dialogue d-flex flex-column-reverse">
       <div
         class="message-data"
-        :class="data.massegeOwner"
+        :class="data.messageOwner"
         v-for="data in datas"
-        :key="data.id"
+        :key="data.msg"
       >
         <div class="avatar-area">
           <div class="avatar">
-            <img class="avatar-img" :src="data.User.avatar" alt="使用者照片" />
+            <img class="avatar-img" :src="data.avatar" alt="使用者照片" />
           </div>
         </div>
         <div class="text">
           <div class="text-content">
-            {{ data.content }}
+            {{ data.msg }}
           </div>
-          <div class="text-time">{{ data.createdAt | fromNow }}</div>
+          <div class="text-time">{{ data.time | chatTime }}</div>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <div
           class="col-2 enter-button d-flex justify-content-center align-items-center px-0"
         >
-          <button @click="send">
+          <button @click.prevent.stop="send" @keyup.enter="send">
             <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
           </button>
           <!-- <div>enter</div> -->
@@ -43,32 +43,6 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import { mapState } from "vuex";
-
-const dummyMessage = [
-  {
-    id: 1,
-    content: "沒錯！爆肝小組再爆兩天也是OK的！！",
-    createdAt: "2021-03-08T07:23:25.000Z",
-    User: {
-      name: "Darric",
-      avatar:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
-    },
-    massegeOwner: "self",
-  },
-  {
-    id: 2,
-    content:
-      "這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！",
-    createdAt: "2021-03-08T15:23:25.000Z",
-    User: {
-      name: "Claire",
-      avatar:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-    },
-    massegeOwner: "other",
-  },
-];
 
 export default {
   name: "chatlog",
@@ -83,14 +57,12 @@ export default {
     ...mapState(["currentUser"]),
   },
   created() {
-    this.fetchData();
-    console.log("dummyMessage", dummyMessage);
-    console.log(this.datas);
+    
+  },
+  watch: {
+
   },
   methods: {
-    fetchData() {
-      this.datas = [...dummyMessage];
-    },
     // 連接socket
     connect() {
       this.$socket.open() // 開始連接socket
@@ -106,9 +78,19 @@ export default {
       this.text = "";
     },
   },
+  // 接收socket事件
   sockets: {
     publicMessage(data) {
-      console.log('data:', data)
+      if (data.id === this.currentUser.id) {
+        data.messageOwner = "self"
+        console.log('aftersend:', data)
+        this.datas.unshift(data)
+      } else {
+        data.messageOwner = "other"
+        console.log('aftersend:', data)
+        this.datas.unshift(data)
+      }
+      console.log('data:', this.datas)
     }
   }
 };
@@ -164,6 +146,10 @@ input[type="text"] {
   border-radius: 15px;
   -webkit-border-radius: 15px;
   width: 100%;
+}
+button {
+  border: none;
+  background: #fff;
 }
 .avatar {
   width: 40px;
