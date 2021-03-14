@@ -56,20 +56,52 @@ import { Toast } from "../utils/helpers";
 
 export default {
   name: "chatlog",
+  props: {
+    onlineUsersName: {
+      type: Array,
+      required: true,
+    },
+  },
   mixins: [fromNowFilter],
   data() {
     return {
       datas: [],
       text: "",
+      onlineUsers: [],
+      // test: [
+      //   "user1上線",
+      //   "熊熊來了~上線",
+      //   "user3上線",
+      //   "user4上線",
+      //   "user5上線",
+      //   "stan_wang上線",
+      //   "test上線",
+      //   "Claire上線",
+      //   "JiaWen上線",
+      //   "WJY上線",
+      //   "asdf上線",
+      //   "as上線",
+      //   "test上線",
+      // ],
     };
   },
   computed: {
     ...mapState(["currentUser"]),
   },
   created() {
+    console.log("Chatlog---onlineUser", this.onlineUsersName);
+    this.onlineSend();
+    // this.$socket.emit("startChat");
+  },
+  mounted() {
     this.$socket.emit("startChat");
   },
-  watch: {},
+  // watch: {
+  //   onlineUsersName(newValue) {
+  //     this.onlineUsers = [...this.onlineUsers, ...newValue];
+  //     console.log("這是watch", this.onlineUsers);
+  //   },
+  // },
   methods: {
     // 連接socket
     connect() {
@@ -88,39 +120,71 @@ export default {
         id: this.currentUser.id,
         content: this.text,
       });
-      // console.log("text:", this.text);
+      console.log("text:", this.text);
       // console.log("currentUserId:", this.currentUser.id);
       this.text = "";
+    },
+    onlineSend() {
+      // console.log("onlineSend", this.currentUser.name);
+      // 要用this.$socket
+      // const currentUserName = this.currentUser.name;
+      this.$socket.emit("publicMessage", {
+        id: this.currentUser.id,
+        content: this.currentUser.name + "上線",
+      });
+      // this.$socket.emit("startChat");
     },
   },
   // 接收socket事件
   sockets: {
     publicMessage(data) {
+      // console.log("publicMessage-data", data);
+      // const currentUserName = this.currentUser.name;
       if (data.id === this.currentUser.id) {
-        data.messageOwner = "self";
-        // console.log("aftersend:", data);
-        this.datas.unshift(data);
+        if (data.content === this.currentUser.name + "上線") {
+          // console.log("aftersend:-moment", data);
+          data.messageOwner = "moment";
+          this.datas.unshift(data);
+        } else {
+          data.messageOwner = "self";
+          // console.log("aftersend:-self", data);
+          this.datas.unshift(data);
+        }
       } else {
         data.messageOwner = "other";
-        // console.log("aftersend:", data);
+        // console.log("aftersend:-other", data);
         this.datas.unshift(data);
       }
       // console.log("data:", this.datas);
     },
     history(data) {
+      const dataName = this.onlineUsers;
+      console.log("test-1", dataName);
       // 先翻轉順序，較新的訊息在前
       const oldHistoryMsg = data.reverse();
+      // console.log("oldHistoryMsg", oldHistoryMsg);
       // 用map去找出屬於currentUser的訊息並賦值給messageOwner
       const currentUserId = this.currentUser.id;
-      oldHistoryMsg.forEach(function(msg) {
+      const currentUserName = this.currentUser.name;
+
+      oldHistoryMsg.forEach(function (msg) {
         if (msg.UserId === currentUserId) {
-          msg.messageOwner = "self"
+          if (msg.content === currentUserName + "上線") {
+            msg.messageOwner = "moment";
+          } else {
+            msg.messageOwner = "self";
+          }
         } else {
-          msg.messageOwner = "other";
+          console.log("test-2", dataName);
+          if (dataName.some((e) => e !== msg.name + "上線")) {
+            msg.messageOwner = "moment";
+          } else {
+            msg.messageOwner = "other";
+          }
         }
-      })
-      this.datas.push(...oldHistoryMsg)
-      // console.log("historyMsg:", oldHistoryMsg)
+      });
+      this.datas.push(...oldHistoryMsg);
+      // console.log("historyMsg:", oldHistoryMsg);
     },
   },
 };
@@ -250,5 +314,37 @@ button {
   height: 14px;
   text-align: right;
   margin: 0 8px 0 0;
+}
+.moment {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0;
+}
+.moment > .avatar-area {
+  width: 0px;
+}
+.moment > .avatar-area > .avatar {
+  display: none;
+}
+.moment > .text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 24px;
+  width: auto;
+  font-size: 14px;
+  line-height: 24px;
+  color: #fff;
+  background-color: #657786;
+  padding: 0 15px;
+  border-radius: 12px;
+}
+.moment > .text > .text-content {
+  width: auto;
+}
+.moment > .text > .text-time {
+  width: auto;
+  margin: 0 0 0 8px;
 }
 </style>
