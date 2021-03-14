@@ -112,28 +112,26 @@ export default {
       const oldHistoryMsg = data.reverse();
       // 用map去找出屬於currentUser的訊息並賦值給messageOwner
       const currentUserId = this.currentUser.id;
-      const newHistoryMsg = oldHistoryMsg.map(function (msg) {
-        if (msg.UserId === currentUserId) {
-          return msg = {
-            ...msg,
-            msg.messageOwner = "self"
-          }
-        } else {
-          msg.messageOwner = "other";
-          
-        }
-      });
-      // oldHistoryMsg.forEach(function(msg) {
+      // const newHistoryMsg = oldHistoryMsg.map(function (msg) {
       //   if (msg.UserId === currentUserId) {
-      //     msg.messageOwner = "self"
-      //     this.datas.push(msg)
+      //     return msg = {
+      //       ...msg,
+      //       msg.messageOwner = "self"
+      //     }
       //   } else {
       //     msg.messageOwner = "other";
-      //     this.datas.push(msg)
+          
       //   }
-      // })
-      // this.datas.push(...historyMsg)
-      // console.log("historyMsg:", newHistoryMsg)
+      // });
+      oldHistoryMsg.forEach(function(msg) {
+        if (msg.UserId === currentUserId) {
+          msg.messageOwner = "self"
+        } else {
+          msg.messageOwner = "other";
+        }
+      })
+      this.datas.push(...oldHistoryMsg)
+      console.log("historyMsg:", oldHistoryMsg)
     },
   },
 };
