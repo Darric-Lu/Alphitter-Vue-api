@@ -25,12 +25,12 @@
     <div class="footer">
       <div class="row px-3">
         <div class="col-10 typing-area px-0">
-          <input type="text" placeholder="輸入訊息..." v-model="text" />
+          <input type="text" placeholder="輸入訊息..." v-model="text" @keyup.enter="send"/>
         </div>
         <div
           class="col-2 enter-button d-flex justify-content-center align-items-center px-0"
         >
-          <button @click.prevent.stop="send" @keyup.enter="send">
+          <button @click.prevent.stop="send">
             <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
           </button>
           <!-- <div>enter</div> -->
