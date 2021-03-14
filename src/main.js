@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import VueSocketIO from 'vue-socket.io'
+import SocketIO from 'socket.io-client'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faHome } from '@fortawesome/free-solid-svg-icons'
@@ -15,30 +17,25 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+// 註冊socket.io
+Vue.use(
+  new VueSocketIO({
+    debug: true,
+    connection: SocketIO('https://serene-tor-37529.herokuapp.com/')
+  })
+)
+
 library.add(faHome, faUser, faCog, faSignInAlt, faArrowLeft, faEnvelope, faPaperPlane)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
+  // 全域監聽socket事件
+  sockets: {
+    connect() {
+      console.log('socket connected')
+    }
+  },
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
-
-// router.beforeEach((to, from, next) => {
-//   console.log("導航守衛啟動")
-//   if (to.meta.requiresAuth) {  //to表示要進去的那頁
-//     console.log("need auth")
-//     apiHelper.post('/signin').then(response => {
-//       console.log(response.data.success);
-//       if (response.data.success) {
-//         next()
-//       } else {
-//         next({
-//           path: '/signin'
-//         })
-//       }
-//     });
-
-//   } else next()
-
-// })
