@@ -95,7 +95,7 @@ export default {
     async fetchOnlineUsers() {
       try {
         const { data } = await usersAPI.getOtherUsers();
-        console.log("response", data);
+        // console.log("response", data);
         this.onlineUsers = [...data];
       } catch (error) {
         Toast.fire({
@@ -104,21 +104,15 @@ export default {
         });
       }
     },
-    // enterChatroom(currentUserName) {
-    //   socket.emit('startChat', currentUserName)
-    //   console.log('socket username:', currentUserName)
-    // }
   },
 };
 </script>
 
 <style scoped>
 .col-2 {
-  /* border: 1px solid black; */
   height: 100vh;
 }
 .col-10 {
-  /* border: 1px solid blue; */
   height: 100vh;
 }
 .onlineList-wrapping {

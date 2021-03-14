@@ -88,8 +88,8 @@ export default {
         id: this.currentUser.id,
         content: this.text,
       });
-      console.log("text:", this.text);
-      console.log("currentUserId:", this.currentUser.id);
+      // console.log("text:", this.text);
+      // console.log("currentUserId:", this.currentUser.id);
       this.text = "";
     },
   },
@@ -98,31 +98,20 @@ export default {
     publicMessage(data) {
       if (data.id === this.currentUser.id) {
         data.messageOwner = "self";
-        console.log("aftersend:", data);
+        // console.log("aftersend:", data);
         this.datas.unshift(data);
       } else {
         data.messageOwner = "other";
-        console.log("aftersend:", data);
+        // console.log("aftersend:", data);
         this.datas.unshift(data);
       }
-      console.log("data:", this.datas);
+      // console.log("data:", this.datas);
     },
     history(data) {
       // 先翻轉順序，較新的訊息在前
       const oldHistoryMsg = data.reverse();
       // 用map去找出屬於currentUser的訊息並賦值給messageOwner
       const currentUserId = this.currentUser.id;
-      // const newHistoryMsg = oldHistoryMsg.map(function (msg) {
-      //   if (msg.UserId === currentUserId) {
-      //     return msg = {
-      //       ...msg,
-      //       msg.messageOwner = "self"
-      //     }
-      //   } else {
-      //     msg.messageOwner = "other";
-          
-      //   }
-      // });
       oldHistoryMsg.forEach(function(msg) {
         if (msg.UserId === currentUserId) {
           msg.messageOwner = "self"
@@ -131,7 +120,7 @@ export default {
         }
       })
       this.datas.push(...oldHistoryMsg)
-      console.log("historyMsg:", oldHistoryMsg)
+      // console.log("historyMsg:", oldHistoryMsg)
     },
   },
 };
