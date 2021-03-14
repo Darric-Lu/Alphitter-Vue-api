@@ -6,18 +6,22 @@
         class="message-data"
         :class="data.messageOwner"
         v-for="data in datas"
-        :key="data.msg"
+        :key="data.createdAt"
       >
         <div class="avatar-area">
           <div class="avatar">
-            <img class="avatar-img" :src="data.avatar" alt="使用者照片" />
+            <img
+              class="avatar-img"
+              :src="data.User ? data.User.avatar : data.avatar"
+              alt="使用者照片"
+            />
           </div>
         </div>
         <div class="text">
           <div class="text-content">
-            {{ data.msg }}
+            {{ data.content }}
           </div>
-          <div class="text-time">{{ data.time | chatTime }}</div>
+          <div class="text-time">{{ data.createdAt | chatTime }}</div>
         </div>
       </div>
     </div>
@@ -48,6 +52,7 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import { mapState } from "vuex";
+import { Toast } from "../utils/helpers";
 
 export default {
   name: "chatlog",
@@ -61,7 +66,9 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
   },
-  created() {},
+  created() {
+    this.$socket.emit("startChat");
+  },
   watch: {},
   methods: {
     // 連接socket
@@ -69,10 +76,17 @@ export default {
       this.$socket.open(); // 開始連接socket
     },
     send() {
+      if (!this.text) {
+        Toast.fire({
+          icon: "error",
+          title: "請輸入內容好咩～",
+        });
+        return;
+      }
       // 要用this.$socket
       this.$socket.emit("publicMessage", {
         id: this.currentUser.id,
-        msg: this.text,
+        content: this.text,
       });
       console.log("text:", this.text);
       console.log("currentUserId:", this.currentUser.id);
@@ -92,6 +106,34 @@ export default {
         this.datas.unshift(data);
       }
       console.log("data:", this.datas);
+    },
+    history(data) {
+      // 先翻轉順序，較新的訊息在前
+      const oldHistoryMsg = data.reverse();
+      // 用map去找出屬於currentUser的訊息並賦值給messageOwner
+      const currentUserId = this.currentUser.id;
+      const newHistoryMsg = oldHistoryMsg.map(function (msg) {
+        if (msg.UserId === currentUserId) {
+          return msg = {
+            ...msg,
+            msg.messageOwner = "self"
+          }
+        } else {
+          msg.messageOwner = "other";
+          
+        }
+      });
+      // oldHistoryMsg.forEach(function(msg) {
+      //   if (msg.UserId === currentUserId) {
+      //     msg.messageOwner = "self"
+      //     this.datas.push(msg)
+      //   } else {
+      //     msg.messageOwner = "other";
+      //     this.datas.push(msg)
+      //   }
+      // })
+      // this.datas.push(...historyMsg)
+      // console.log("historyMsg:", newHistoryMsg)
     },
   },
 };
