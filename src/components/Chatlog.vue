@@ -17,7 +17,7 @@
           <div class="text-content">
             {{ data.msg }}
           </div>
-          <div class="text-time">{{ data.time | chatTime }}</div>
+          <div class="text-time">{{ data.createdAt | chatTime }}</div>
         </div>
       </div>
     </div>
@@ -61,7 +61,9 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
   },
-  created() {},
+  created() {
+    this.onlineSend();
+  },
   watch: {},
   methods: {
     // 連接socket
@@ -78,17 +80,31 @@ export default {
       console.log("currentUserId:", this.currentUser.id);
       this.text = "";
     },
+    onlineSend() {
+      console.log("onlineSend", this.currentUser);
+      // 要用this.$socket
+      this.$socket.emit("publicMessage", {
+        id: this.currentUser.id,
+        msg: this.currentUser.name + "上線",
+      });
+    },
   },
   // 接收socket事件
   sockets: {
     publicMessage(data) {
       if (data.id === this.currentUser.id) {
-        data.messageOwner = "self";
-        console.log("aftersend:", data);
-        this.datas.unshift(data);
+        if (data.msg === this.currentUser.name + "上線") {
+          console.log("aftersend:-moment", data);
+          data.messageOwner = "moment";
+          this.datas.unshift(data);
+        } else {
+          data.messageOwner = "self";
+          console.log("aftersend:-self", data);
+          this.datas.unshift(data);
+        }
       } else {
         data.messageOwner = "other";
-        console.log("aftersend:", data);
+        console.log("aftersend:-other", data);
         this.datas.unshift(data);
       }
       console.log("data:", this.datas);
@@ -115,9 +131,6 @@ export default {
   overflow-y: scroll;
   width: auto;
   height: 90%;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: flex-end; */
   padding: 0 16px;
 }
 .dialogue::-webkit-scrollbar {
@@ -221,5 +234,36 @@ button {
   height: 14px;
   text-align: right;
   margin: 0 8px 0 0;
+}
+.moment {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.moment > .avatar-area {
+  width: 0px;
+}
+.moment > .avatar-area > .avatar {
+  display: none;
+}
+.moment > .text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 24px;
+  width: auto;
+  font-size: 14px;
+  line-height: 24px;
+  color: #fff;
+  background-color: #657786;
+  padding: 0 15px;
+  border-radius: 12px;
+}
+.moment > .text > .text-content {
+  width: auto;
+}
+.moment > .text > .text-time {
+  width: auto;
+  margin: 0 0 0 8px;
 }
 </style>
