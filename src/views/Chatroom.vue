@@ -37,7 +37,7 @@
         </div>
         <div class="col-12 col-md-8 right-col chatlog-wrapping px-0">
           <!-- Chatlog -->
-          <Chatlog />
+          <Chatlog :onlineUsersName="onlineUsersName" />
         </div>
       </div>
     </div>
@@ -72,6 +72,7 @@ export default {
         Followings: [],
       },
       onlineUsers: [],
+      onlineUsersName: [],
     };
   },
   created() {
@@ -96,8 +97,12 @@ export default {
     async fetchOnlineUsers() {
       try {
         const { data } = await usersAPI.getOtherUsers();
-        console.log("response", data);
+        // console.log("response", data);
         this.onlineUsers = [...data];
+        this.onlineUsersName = this.onlineUsers.map((user) => {
+          return user.name + "上線";
+        });
+        console.log("Chatroom----onlineUsersName", this.onlineUsersName);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -105,10 +110,6 @@ export default {
         });
       }
     },
-    // enterChatroom(currentUserName) {
-    //   socket.emit('startChat', currentUserName)
-    //   console.log('socket username:', currentUserName)
-    // }
   },
 };
 </script>

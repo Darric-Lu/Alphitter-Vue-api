@@ -6,16 +6,20 @@
         class="message-data"
         :class="data.messageOwner"
         v-for="data in datas"
-        :key="data.msg"
+        :key="data.createdAt"
       >
         <div class="avatar-area">
           <div class="avatar">
-            <img class="avatar-img" :src="data.avatar" alt="使用者照片" />
+            <img
+              class="avatar-img"
+              :src="data.User ? data.User.avatar : data.avatar"
+              alt="使用者照片"
+            />
           </div>
         </div>
         <div class="text">
           <div class="text-content">
-            {{ data.msg }}
+            {{ data.content }}
           </div>
           <div class="text-time">{{ data.createdAt | chatTime }}</div>
         </div>
@@ -48,66 +52,139 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import { mapState } from "vuex";
+import { Toast } from "../utils/helpers";
 
 export default {
   name: "chatlog",
+  props: {
+    onlineUsersName: {
+      type: Array,
+      required: true,
+    },
+  },
   mixins: [fromNowFilter],
   data() {
     return {
       datas: [],
       text: "",
+      onlineUsers: [],
+      // test: [
+      //   "user1上線",
+      //   "熊熊來了~上線",
+      //   "user3上線",
+      //   "user4上線",
+      //   "user5上線",
+      //   "stan_wang上線",
+      //   "test上線",
+      //   "Claire上線",
+      //   "JiaWen上線",
+      //   "WJY上線",
+      //   "asdf上線",
+      //   "as上線",
+      //   "test上線",
+      // ],
     };
   },
   computed: {
     ...mapState(["currentUser"]),
   },
   created() {
+    console.log("Chatlog---onlineUser", this.onlineUsersName);
     this.onlineSend();
+    // this.$socket.emit("startChat");
   },
-  watch: {},
+  mounted() {
+    this.$socket.emit("startChat");
+  },
+  // watch: {
+  //   onlineUsersName(newValue) {
+  //     this.onlineUsers = [...this.onlineUsers, ...newValue];
+  //     console.log("這是watch", this.onlineUsers);
+  //   },
+  // },
   methods: {
     // 連接socket
     connect() {
       this.$socket.open(); // 開始連接socket
     },
     send() {
+      if (!this.text) {
+        Toast.fire({
+          icon: "error",
+          title: "請輸入內容好咩～",
+        });
+        return;
+      }
       // 要用this.$socket
       this.$socket.emit("publicMessage", {
         id: this.currentUser.id,
-        msg: this.text,
+        content: this.text,
       });
       console.log("text:", this.text);
-      console.log("currentUserId:", this.currentUser.id);
+      // console.log("currentUserId:", this.currentUser.id);
       this.text = "";
     },
     onlineSend() {
-      console.log("onlineSend", this.currentUser);
+      // console.log("onlineSend", this.currentUser.name);
       // 要用this.$socket
+      // const currentUserName = this.currentUser.name;
       this.$socket.emit("publicMessage", {
         id: this.currentUser.id,
-        msg: this.currentUser.name + "上線",
+        content: this.currentUser.name + "上線",
       });
+      // this.$socket.emit("startChat");
     },
   },
   // 接收socket事件
   sockets: {
     publicMessage(data) {
+      // console.log("publicMessage-data", data);
+      // const currentUserName = this.currentUser.name;
       if (data.id === this.currentUser.id) {
-        if (data.msg === this.currentUser.name + "上線") {
-          console.log("aftersend:-moment", data);
+        if (data.content === this.currentUser.name + "上線") {
+          // console.log("aftersend:-moment", data);
           data.messageOwner = "moment";
           this.datas.unshift(data);
         } else {
           data.messageOwner = "self";
-          console.log("aftersend:-self", data);
+          // console.log("aftersend:-self", data);
           this.datas.unshift(data);
         }
       } else {
         data.messageOwner = "other";
-        console.log("aftersend:-other", data);
+        // console.log("aftersend:-other", data);
         this.datas.unshift(data);
       }
-      console.log("data:", this.datas);
+      // console.log("data:", this.datas);
+    },
+    history(data) {
+      const dataName = this.onlineUsers;
+      console.log("test-1", dataName);
+      // 先翻轉順序，較新的訊息在前
+      const oldHistoryMsg = data.reverse();
+      // console.log("oldHistoryMsg", oldHistoryMsg);
+      // 用map去找出屬於currentUser的訊息並賦值給messageOwner
+      const currentUserId = this.currentUser.id;
+      const currentUserName = this.currentUser.name;
+
+      oldHistoryMsg.forEach(function (msg) {
+        if (msg.UserId === currentUserId) {
+          if (msg.content === currentUserName + "上線") {
+            msg.messageOwner = "moment";
+          } else {
+            msg.messageOwner = "self";
+          }
+        } else {
+          console.log("test-2", dataName);
+          if (dataName.some((e) => e !== msg.name + "上線")) {
+            msg.messageOwner = "moment";
+          } else {
+            msg.messageOwner = "other";
+          }
+        }
+      });
+      this.datas.push(...oldHistoryMsg);
+      // console.log("historyMsg:", oldHistoryMsg);
     },
   },
 };
@@ -239,6 +316,7 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 10px 0;
 }
 .moment > .avatar-area {
   width: 0px;
