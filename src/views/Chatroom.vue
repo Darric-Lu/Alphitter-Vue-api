@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :currentUser="currentUser" />
+        <Sidebar 
+        :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <!-- 中間上線名單包含chatlog  顯示全寬10/12-->
@@ -43,6 +44,10 @@
 </template>
 
 <script>
+// import { io } from "socket.io-client";
+// const socket = io("https://serene-tor-37529.herokuapp.com/");
+
+
 const dummyData = [
   {
     id: 1,
@@ -114,6 +119,9 @@ export default {
   created() {
     this.fetchCurrentUser();
     this.fetchOnlineUsers();
+    // const currentUserName = this.currentUser.name
+    // console.log('created:', currentUserName)
+    // this.enterChatroom(currentUserName)
   },
   methods: {
     async fetchCurrentUser() {
@@ -133,6 +141,10 @@ export default {
     fetchOnlineUsers() {
       this.onlineUsers = [...dummyData];
     },
+    // enterChatroom(currentUserName) {
+    //   socket.emit('startChat', currentUserName)
+    //   console.log('socket username:', currentUserName)
+    // }
   },
 };
 </script>

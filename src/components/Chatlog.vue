@@ -25,12 +25,14 @@
     <div class="footer">
       <div class="row px-3">
         <div class="col-10 typing-area px-0">
-          <input type="text" placeholder="輸入訊息..." />
+          <input type="text" placeholder="輸入訊息..." v-model="text" />
         </div>
         <div
           class="col-2 enter-button d-flex justify-content-center align-items-center px-0"
         >
-          <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
+          <button @click="send">
+            <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
+          </button>
           <!-- <div>enter</div> -->
         </div>
       </div>
@@ -40,6 +42,9 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
+import { mapState } from "vuex";
+import { io } from "socket.io-client";
+const socket = io("https://serene-tor-37529.herokuapp.com/");
 
 const dummyMessage = [
   {
@@ -73,7 +78,11 @@ export default {
   data() {
     return {
       datas: [],
+      text: "",
     };
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
   created() {
     this.fetchData();
@@ -84,6 +93,23 @@ export default {
     fetchData() {
       this.datas = [...dummyMessage];
     },
+    send() {
+      socket.emit("publicMessage", {
+        id: this.currentUser.id,
+        msg: this.text,
+      });
+      console.log("text:", this.text);
+      console.log("currentUserId:", this.currentUser.id);
+      this.text = "";
+    },
+  },
+  sockets: {
+    connect() {
+      console.log("connect");
+    },
+    publicMessage(data) {
+      console.log('data:', data)
+    }
   },
 };
 </script>
