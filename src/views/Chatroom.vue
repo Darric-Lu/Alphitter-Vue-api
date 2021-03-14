@@ -43,45 +43,6 @@
 </template>
 
 <script>
-const dummyData = [
-  {
-    id: 1,
-    name: "user1",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 2,
-    name: "user2",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 3,
-    name: "user3",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 4,
-    name: "user4",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 5,
-    name: "user5",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 6,
-    name: "user6",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-];
-
 import Chatlog from "../components/Chatlog";
 import Sidebar from "../components/Sidebar";
 import usersAPI from "../apis/users";
@@ -130,8 +91,17 @@ export default {
         });
       }
     },
-    fetchOnlineUsers() {
-      this.onlineUsers = [...dummyData];
+    async fetchOnlineUsers() {
+      try {
+        const { data } = await usersAPI.getOtherUsers();
+        console.log("response", data);
+        this.onlineUsers = [...data];
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得上線使用者資料",
+        });
+      }
     },
   },
 };
@@ -179,9 +149,10 @@ export default {
   padding: 5px;
 }
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
+  overflow: hidden;
 }
 .avatar-img {
   width: 100%;
