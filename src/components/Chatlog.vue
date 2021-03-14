@@ -136,6 +136,7 @@ export default {
 }
 .enter-button-icon {
   font-size: 30px;
+  color: #ff6600;
 }
 input[type="text"] {
   margin: 10px;
