@@ -21,7 +21,12 @@ Vue.config.productionTip = false
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: SocketIO('https://serene-tor-37529.herokuapp.com/')
+    connection: SocketIO('https://serene-tor-37529.herokuapp.com/'),
+    reconnectionDelayMax: 10000,
+    auth: {
+      token: "token",
+      userId: "11"
+    }
   })
 )
 
