@@ -45,6 +45,7 @@
           <RecommendationTable
             :initial-recommend-users="recommendUsers"
             @after-click-follow="afterClickFollow"
+            @after-click-user="afterClickUser"
           />
         </div>
       </div>
@@ -119,6 +120,9 @@ export default {
     this.fetchOtherUser(userId);
     this.fetchOtherUserTweets(userId);
     this.fetchRecommendUsers();
+  },
+  watch: {
+
   },
   methods: {
     async afterHandleBeLike(id) {
@@ -268,6 +272,11 @@ export default {
       this.fetchOtherUser(userId);
       // console.log("after click follow to get recommendUsers again");
       // console.log("after follow someone", this.recommendUsers);
+    },
+    afterClickUser(userId) {
+      this.fetchOtherUser(userId);
+      this.fetchOtherUserTweets(userId)
+      console.log('fetchOtherUser: ', userId)
     },
     afterHadleChangeActive(e) {
       //改變Tab的active，且串API時改變中下方資料讓畫面改變

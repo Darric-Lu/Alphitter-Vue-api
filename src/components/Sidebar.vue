@@ -3,7 +3,9 @@
     class="d-flex flex-column wrapping align-items-start align-items-md-stretch"
   >
     <!-- Alpha logo 連結至首頁 -->
-    <div class="twitter row mt-4 d-flex justify-content-center">
+    <!-- 助教說要修正的地方：首頁logo不能連到首頁 -->
+    <router-link :to="{ name: 'main' }" class="nav-link">
+      <div class="twitter row mt-4 d-flex justify-content-center">
       <div class="twitter-icon col-2 me-3 me-md-0 ms-md-3">
         <img
           class="logo-img"
@@ -13,6 +15,7 @@
       </div>
       <div class="twitter-content col-8 d-none d-md-block"></div>
     </div>
+    </router-link>
     <!-- 連結至首頁 -->
     <router-link :to="{ name: 'main' }" class="nav-link">
       <div

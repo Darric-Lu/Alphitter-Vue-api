@@ -8,11 +8,12 @@
             class="user-image-picture"
             :src="user.avatar ? user.avatar : noneAvatar"
             alt="user-picture"
+            @click.prevent.stop="usersPage(user.id)"
           />
         </div>
       </div>
       <div class="user-info ms-2">
-        <p class="mt-2 mb-0 user-name" :title="user.FollowerCount">
+        <p class="mt-2 mb-0 user-name" :title="user.FollowerCount" @click.prevent.stop="usersPage(user.id)">
           {{ user.name }}
         </p>
         <p class="user-account">@{{ user.account }}</p>
@@ -151,6 +152,11 @@ export default {
     ...mapState(["currentUser"]),
   },
   methods: {
+    usersPage(userId) {
+      this.$router.push(`/user/${userId}`);
+      this.$emit("after-click-user", userId);
+      console.log("after-click-user", userId)
+    },
     top5() {
       this.recommendUsers = this.recommendUsers.slice(0, 5);
       // console.log("x", this.recommendUsers);
