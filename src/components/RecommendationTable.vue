@@ -152,6 +152,7 @@ export default {
     ...mapState(["currentUser"]),
   },
   methods: {
+    // 助教說要修正的地方：在人名或id上可以多加上導頁功能
     usersPage(userId) {
       this.$router.push(`/user/${userId}`);
       this.$emit("after-click-user", userId);

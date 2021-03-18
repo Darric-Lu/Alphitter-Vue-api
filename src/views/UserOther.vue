@@ -273,6 +273,7 @@ export default {
       // console.log("after click follow to get recommendUsers again");
       // console.log("after follow someone", this.recommendUsers);
     },
+    // 助教說要修正的地方：在人名或id上可以多加上導頁功能
     afterClickUser(userId) {
       this.fetchOtherUser(userId);
       this.fetchOtherUserTweets(userId)
