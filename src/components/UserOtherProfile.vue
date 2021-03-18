@@ -166,6 +166,9 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 .user-profile {
   position: relative;
 }
@@ -197,7 +200,7 @@ export default {
   object-fit: cover;
 }
 .information {
-  height: 200px;
+  height: auto;
   width: 100%;
 }
 .message-button-wrapping {
@@ -286,6 +289,7 @@ export default {
 
 .bold {
   font-weight: 900;
+  color: black;
 }
 .gray {
   color: rgb(101, 119, 134, 1);

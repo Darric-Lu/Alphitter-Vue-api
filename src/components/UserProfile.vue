@@ -69,6 +69,7 @@
                 class="close-btn"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                id="closeModal"
               ></div>
               <h5 class="modal-title" id="exampleModalLabel">
                 <span class="title-content">編輯個人資料</span>
@@ -191,6 +192,7 @@ export default {
     return {
       currentUser: this.initialCurrentUser,
       isProcess: false,
+      showModal: true,
     };
   },
   // 用watch監聽因為請求API的時間差的新資料的寫入
@@ -248,11 +250,11 @@ export default {
         // 建立FormData
         const form = e.target; // <form></form>
         const formData = new FormData(form);
-        for (let [name, value] of formData.entries()) {
-          console.log(name + ":" + value);
-        }
+        // for (let [name, value] of formData.entries()) {
+        //   console.log(name + ":" + value);
+        // }
         const currentUserId = this.currentUser.id;
-        console.log(currentUserId);
+        // console.log(currentUserId);
         const response = await usersAPI.editUserProfile({
           currentUserId,
           formData,
@@ -265,12 +267,14 @@ export default {
           icon: "success",
           title: "更新完成",
         });
-        window.setTimeout(function () {
-          location.reload();
-        }, 2000);
 
+        // 先請使用者自行關閉Modal...
         // 重新帶一次更新過後的currentuser資料;
-        this.fetchCurrentUser();
+        // this.fetchCurrentUser();
+        // setTimeout(function () {
+        //   if (response.data.status !== "success") {
+        //     document.getElementById("closeModal").click();
+        //   }}, 2000);
       } catch (error) {
         Toast.fire({
           icon: "error",

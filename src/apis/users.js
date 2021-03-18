@@ -50,11 +50,17 @@ export default {
   createFollowship({ id: id }) {
     return apiHelper.post('/followships', { id: id }, {
       headers: {
-        Authorization: `Bearer ${getToken()}`}
+        Authorization: `Bearer ${getToken()}`
+      }
     })
   },
   deleteFollowship(userId) {
     return apiHelper.delete(`/followships/${userId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  getOtherUsers() {
+    return apiHelper.get(`/users/other`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   }

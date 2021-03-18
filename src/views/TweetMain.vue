@@ -23,6 +23,7 @@
                     id="floatingTextarea2"
                     rows="2"
                     v-model="description"
+                    @keyup.enter="newTweetSubmit"
                   >
                   </textarea>
                 </div>
@@ -134,15 +135,12 @@ export default {
           icon: "success",
           title: "發文成功，enjoy!!",
         });
+        
+        // 重新抓取首頁tweets
+        this.fetchMain()
 
-        //以重新整理的方法關閉modal
-        setTimeout("location.reload()", 2200);
-        // console.log(
-        //   "tweet",
-        //   this.description,
-        //   "length",
-        //   this.description.length
-        // );
+        // 把輸入欄清空
+        this.description = ""
       } catch (error) {
         PostToast.fire({
           icon: "error",

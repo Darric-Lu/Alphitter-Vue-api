@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-2">
         <!-- Sidebar 顯示全寬2/12-->
-        <Sidebar :active="active" :currentUser="currentUser" />
+        <Sidebar 
+        :active="active" :currentUser="currentUser" />
       </div>
       <div class="row col-10 px-0">
         <!-- 中間上線名單包含chatlog  顯示全寬10/12-->
@@ -35,7 +36,7 @@
         </div>
         <div class="col-12 col-md-8 right-col chatlog-wrapping px-0">
           <!-- Chatlog -->
-          <Chatlog />
+          <Chatlog :onlineUsersName="onlineUsersName" />
         </div>
       </div>
     </div>
@@ -43,48 +44,6 @@
 </template>
 
 <script>
-import { io } from "socket.io-client";
-const socket = io("https://serene-tor-37529.herokuapp.com/");
-
-const dummyData = [
-  {
-    id: 1,
-    name: "user1",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 2,
-    name: "user2",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 3,
-    name: "user3",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 4,
-    name: "user4",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 5,
-    name: "user5",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-  {
-    id: 6,
-    name: "user6",
-    account: "user1",
-    avatar: "https://avatars.githubusercontent.com/u/8667311?s=200&v=4",
-  },
-];
-
 import Chatlog from "../components/Chatlog";
 import Sidebar from "../components/Sidebar";
 import usersAPI from "../apis/users";
@@ -112,6 +71,7 @@ export default {
         Followings: [],
       },
       onlineUsers: [],
+      onlineUsersName: [],
     };
   },
   created() {
@@ -140,8 +100,21 @@ export default {
         });
       }
     },
-    fetchOnlineUsers() {
-      this.onlineUsers = [...dummyData];
+    async fetchOnlineUsers() {
+      try {
+        const { data } = await usersAPI.getOtherUsers();
+        // console.log("response", data);
+        this.onlineUsers = [...data];
+        this.onlineUsersName = this.onlineUsers.map((user) => {
+          return user.name + "上線";
+        });
+        console.log("Chatroom----onlineUsersName", this.onlineUsersName);
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得上線使用者資料",
+        });
+      }
     },
   },
 };
@@ -149,11 +122,9 @@ export default {
 
 <style scoped>
 .col-2 {
-  /* border: 1px solid black; */
   height: 100vh;
 }
 .col-10 {
-  /* border: 1px solid blue; */
   height: 100vh;
 }
 .onlineList-wrapping {
@@ -189,9 +160,10 @@ export default {
   padding: 5px;
 }
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
+  overflow: hidden;
 }
 .avatar-img {
   width: 100%;

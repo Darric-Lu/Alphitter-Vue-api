@@ -4,20 +4,24 @@
     <div class="dialogue d-flex flex-column-reverse">
       <div
         class="message-data"
-        :class="data.massegeOwner"
+        :class="data.messageOwner"
         v-for="data in datas"
-        :key="data.id"
+        :key="data.createdAt"
       >
         <div class="avatar-area">
           <div class="avatar">
-            <img class="avatar-img" :src="data.User.avatar" alt="使用者照片" />
+            <img
+              class="avatar-img"
+              :src="data.User ? data.User.avatar : data.avatar"
+              alt="使用者照片"
+            />
           </div>
         </div>
         <div class="text">
           <div class="text-content">
             {{ data.content }}
           </div>
-          <div class="text-time">{{ data.createdAt | fromNow }}</div>
+          <div class="text-time">{{ data.createdAt | chatTime }}</div>
         </div>
       </div>
     </div>
@@ -25,12 +29,19 @@
     <div class="footer">
       <div class="row px-3">
         <div class="col-10 typing-area px-0">
-          <input type="text" placeholder="輸入訊息..." />
+          <input
+            type="text"
+            placeholder="輸入訊息..."
+            v-model="text"
+            @keyup.enter="send"
+          />
         </div>
         <div
           class="col-2 enter-button d-flex justify-content-center align-items-center px-0"
         >
-          <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
+          <button @click.prevent.stop="send">
+            <font-awesome-icon icon="paper-plane" class="enter-button-icon" />
+          </button>
           <!-- <div>enter</div> -->
         </div>
       </div>
@@ -40,49 +51,140 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
-
-const dummyMessage = [
-  {
-    id: 1,
-    content: "沒錯！爆肝小組再爆兩天也是OK的！！",
-    createdAt: "2021-03-08T07:23:25.000Z",
-    User: {
-      name: "Darric",
-      avatar:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/3667/medium_15167678_1178483582230024_5591486097358830794_o.jpg",
-    },
-    massegeOwner: "self",
-  },
-  {
-    id: 2,
-    content:
-      "這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！這兩天是黑客松耶！大家一起加油！",
-    createdAt: "2021-03-08T15:23:25.000Z",
-    User: {
-      name: "Claire",
-      avatar:
-        "https://assets-lighthouse.alphacamp.co/uploads/user/photo/4167/medium_IMG_5449.JPG",
-    },
-    massegeOwner: "other",
-  },
-];
+import { mapState } from "vuex";
+import { Toast } from "../utils/helpers";
 
 export default {
   name: "chatlog",
+  props: {
+    onlineUsersName: {
+      type: Array,
+      required: true,
+    },
+  },
   mixins: [fromNowFilter],
   data() {
     return {
       datas: [],
+      text: "",
+      onlineUsers: [],
+      // test: [
+      //   "user1上線",
+      //   "熊熊來了~上線",
+      //   "user3上線",
+      //   "user4上線",
+      //   "user5上線",
+      //   "stan_wang上線",
+      //   "test上線",
+      //   "Claire上線",
+      //   "JiaWen上線",
+      //   "WJY上線",
+      //   "asdf上線",
+      //   "as上線",
+      //   "test上線",
+      // ],
     };
   },
-  created() {
-    this.fetchData();
-    console.log("dummyMessage", dummyMessage);
-    console.log(this.datas);
+  computed: {
+    ...mapState(["currentUser"]),
   },
+  created() {
+    console.log("Chatlog---onlineUser", this.onlineUsersName);
+    this.onlineSend();
+    // this.$socket.emit("startChat");
+  },
+  mounted() {
+    this.$socket.emit("startChat");
+  },
+  // watch: {
+  //   onlineUsersName(newValue) {
+  //     this.onlineUsers = [...this.onlineUsers, ...newValue];
+  //     console.log("這是watch", this.onlineUsers);
+  //   },
+  // },
   methods: {
-    fetchData() {
-      this.datas = [...dummyMessage];
+    // 連接socket
+    connect() {
+      this.$socket.open(); // 開始連接socket
+    },
+    send() {
+      if (!this.text) {
+        Toast.fire({
+          icon: "error",
+          title: "請輸入內容好咩～",
+        });
+        return;
+      }
+      // 要用this.$socket
+      this.$socket.emit("publicMessage", {
+        id: this.currentUser.id,
+        content: this.text,
+      });
+      console.log("text:", this.text);
+      // console.log("currentUserId:", this.currentUser.id);
+      this.text = "";
+    },
+    onlineSend() {
+      // console.log("onlineSend", this.currentUser.name);
+      // 要用this.$socket
+      // const currentUserName = this.currentUser.name;
+      this.$socket.emit("publicMessage", {
+        id: this.currentUser.id,
+        content: this.currentUser.name + "上線",
+      });
+      // this.$socket.emit("startChat");
+    },
+  },
+  // 接收socket事件
+  sockets: {
+    publicMessage(data) {
+      // console.log("publicMessage-data", data);
+      // const currentUserName = this.currentUser.name;
+      if (data.id === this.currentUser.id) {
+        if (data.content === this.currentUser.name + "上線") {
+          // console.log("aftersend:-moment", data);
+          data.messageOwner = "moment";
+          this.datas.unshift(data);
+        } else {
+          data.messageOwner = "self";
+          // console.log("aftersend:-self", data);
+          this.datas.unshift(data);
+        }
+      } else {
+        data.messageOwner = "other";
+        // console.log("aftersend:-other", data);
+        this.datas.unshift(data);
+      }
+      // console.log("data:", this.datas);
+    },
+    history(data) {
+      const dataName = this.onlineUsers;
+      console.log("test-1", dataName);
+      // 先翻轉順序，較新的訊息在前
+      const oldHistoryMsg = data.reverse();
+      // console.log("oldHistoryMsg", oldHistoryMsg);
+      // 用map去找出屬於currentUser的訊息並賦值給messageOwner
+      const currentUserId = this.currentUser.id;
+      const currentUserName = this.currentUser.name;
+
+      oldHistoryMsg.forEach(function (msg) {
+        if (msg.UserId === currentUserId) {
+          if (msg.content === currentUserName + "上線") {
+            msg.messageOwner = "moment";
+          } else {
+            msg.messageOwner = "self";
+          }
+        } else {
+          console.log("test-2", dataName);
+          if (dataName.some((e) => e !== msg.name + "上線")) {
+            msg.messageOwner = "moment";
+          } else {
+            msg.messageOwner = "other";
+          }
+        }
+      });
+      this.datas.push(...oldHistoryMsg);
+      // console.log("historyMsg:", oldHistoryMsg);
     },
   },
 };
@@ -128,6 +230,7 @@ export default {
 }
 .enter-button-icon {
   font-size: 30px;
+  color: #ff6600;
 }
 input[type="text"] {
   margin: 10px;
@@ -138,6 +241,10 @@ input[type="text"] {
   border-radius: 15px;
   -webkit-border-radius: 15px;
   width: 100%;
+}
+button {
+  border: none;
+  background: #fff;
 }
 .avatar {
   width: 40px;
@@ -176,6 +283,7 @@ input[type="text"] {
   font-weight: 500;
   font-size: 14px;
   height: 14px;
+  margin: 0 0 0 8px;
 }
 .self {
   display: flex;
@@ -204,5 +312,39 @@ input[type="text"] {
   font-weight: 500;
   font-size: 14px;
   height: 14px;
+  text-align: right;
+  margin: 0 8px 0 0;
+}
+.moment {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0;
+}
+.moment > .avatar-area {
+  width: 0px;
+}
+.moment > .avatar-area > .avatar {
+  display: none;
+}
+.moment > .text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 24px;
+  width: auto;
+  font-size: 14px;
+  line-height: 24px;
+  color: #fff;
+  background-color: #657786;
+  padding: 0 15px;
+  border-radius: 12px;
+}
+.moment > .text > .text-content {
+  width: auto;
+}
+.moment > .text > .text-time {
+  width: auto;
+  margin: 0 0 0 8px;
 }
 </style>
