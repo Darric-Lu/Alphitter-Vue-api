@@ -18,10 +18,15 @@ import store from './store'
 Vue.config.productionTip = false
 
 // 註冊socket.io
+const getToken = () => localStorage.getItem('token')
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: SocketIO('https://serene-tor-37529.herokuapp.com/')
+    connection: SocketIO('https://serene-tor-37529.herokuapp.com/', {
+      reconnectionDelayMax: 10000,
+      auth: {
+        token: getToken()
+      }})
   })
 )
 

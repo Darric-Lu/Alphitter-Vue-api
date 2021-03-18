@@ -163,7 +163,7 @@ export default {
       // 先翻轉順序，較新的訊息在前
       const oldHistoryMsg = data.reverse();
       // console.log("oldHistoryMsg", oldHistoryMsg);
-      // 用map去找出屬於currentUser的訊息並賦值給messageOwner
+      // 用forEach去找出屬於currentUser的訊息並賦值給messageOwner
       const currentUserId = this.currentUser.id;
       const currentUserName = this.currentUser.name;
 
@@ -186,6 +186,9 @@ export default {
       this.datas.push(...oldHistoryMsg);
       // console.log("historyMsg:", oldHistoryMsg);
     },
+    userOnline(data) {
+      console.log('userOnline:', data)
+    }
   },
 };
 </script>

@@ -77,13 +77,6 @@ export default {
   created() {
     this.fetchCurrentUser();
     this.fetchOnlineUsers();
-    let data = {
-      name: "Robby",
-      id: 21,
-      msg: "Helloooooo~",
-    };
-
-    socket.emit("publicMessage", data);
   },
   methods: {
     async fetchCurrentUser() {
