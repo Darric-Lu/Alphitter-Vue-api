@@ -339,6 +339,11 @@ export default {
   height: 12px;
   cursor: pointer;
 }
+/* 助教說要改的地方：喜歡與不喜歡的 icon 大小不一致。 */
+.heart .mx-2 {
+  width: 12px;
+  height: 12px;
+}
 .icon {
   cursor: pointer;
 }

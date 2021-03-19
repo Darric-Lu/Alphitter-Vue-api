@@ -130,6 +130,14 @@ export default {
           return;
         }
 
+        // 助教說要修改的地方：輸入密碼錯誤會跳帳號被註冊過的提示與事實不相符合
+        if (this.password !== this.checkPassword) {
+          Toast.fire({
+            icon: "warning",
+            title: "嘿～兩次密碼要打一樣唷～",
+          });
+          return;
+        }
         this.isProcessing = true;
 
         const response = await authorizationAPI.signUp({

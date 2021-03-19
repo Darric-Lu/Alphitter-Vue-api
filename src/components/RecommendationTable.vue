@@ -13,7 +13,11 @@
         </div>
       </div>
       <div class="user-info ms-2">
-        <p class="mt-2 mb-0 user-name" :title="user.FollowerCount" @click.prevent.stop="usersPage(user.id)">
+        <p
+          class="mt-2 mb-0 user-name"
+          :title="user.FollowerCount"
+          @click.prevent.stop="usersPage(user.id)"
+        >
           {{ user.name }}
         </p>
         <p class="user-account">@{{ user.account }}</p>
@@ -31,8 +35,17 @@
         </a>
       </div>
     </div>
-    <div class="recommmendation-footer ps-3" v-if="recommendUsers.length === 5">
-      <div class="displayMore" @click="moreRecommendUsers">顯示更多</div>
+    <div>
+      <div
+        class="recommmendation-footer ps-3"
+        v-if="recommendUsers.length === 5"
+      >
+        <div class="displayMore" @click="moreRecommendUsers">顯示更多</div>
+      </div>
+      <!-- 助教說要修改的地方：可以顯示更多不能顯示較少 -->
+      <div class="recommmendation-footer ps-3" v-else>
+        <div class="displayLess" @click="lessRecommendUsers">顯示更少</div>
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +127,10 @@ a {
   top: 20px;
   font-weight: 700;
 }
-.displayMore {
+.user-image-picture,
+.user-name,
+.displayMore,
+.displayLess {
   cursor: pointer;
 }
 </style>
@@ -156,7 +172,7 @@ export default {
     usersPage(userId) {
       this.$router.push(`/user/${userId}`);
       this.$emit("after-click-user", userId);
-      console.log("after-click-user", userId)
+      console.log("after-click-user", userId);
     },
     top5() {
       this.recommendUsers = this.recommendUsers.slice(0, 5);
@@ -165,6 +181,10 @@ export default {
     moreRecommendUsers() {
       this.recommendUsers = [...this.initialRecommendUsers];
       // this.sortFollowedCount();
+    },
+    // 助教說要修改的地方：可以顯示更多不能顯示較少
+    lessRecommendUsers() {
+      this.top5();
     },
     async unFollow(id) {
       try {

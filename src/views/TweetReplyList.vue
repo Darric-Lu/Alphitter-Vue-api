@@ -415,6 +415,11 @@ export default {
   width: 24px;
   height: 24px;
 }
+/* 助教說要改的地方：喜歡與不喜歡的 icon 大小不一致。 */
+.heart .mx-2 {
+  width: 12px;
+  height: 12px;
+}
 .mid-down {
   border: 1px solid black;
   margin-top: 10px;
